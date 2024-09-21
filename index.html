@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="AdminLTE-3.2.0/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="AdminLTE-3.2.0/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card">
+          <div class="card-body login-card-body">
+            <p class="login-box-msg">Inicia sesión para continuar</p>
+            <form id="loginForm" method="post">
+              <!-- Campo de Usuario -->
+              <div class="input-group mb-3">
+                <input type="text" name="usuario" class="form-control" placeholder="Usuario" required>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+              <!-- Campo de Contraseña -->
+              <div class="input-group mb-3">
+                <input type="password" name="contraseña" class="form-control" placeholder="Contraseña" required>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+              <!-- Botón de Inicio de Sesión -->
+              <div class="row">
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- /.login-card-body -->
+        </div>
+    </div>
+
+    <script src="AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
+    <script src="AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="AdminLTE-3.2.0/dist/js/adminlte.js"></script>
+    <script src="AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        // Interceptar el envío del formulario para manejar con AJAX
+        $("#loginForm").on("submit", function(e) {
+            e.preventDefault(); // Evita que se recargue la página
+
+            $.ajax({
+                type: "POST",
+                url: "procesar_login.php", // Archivo PHP que procesará el login
+                data: $(this).serialize(), // Envía los datos del formulario
+                dataType: "json", // Espera respuesta en JSON
+                success: function(response) {
+                    if (response.success) {
+                        // Mostrar mensaje de éxito
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: response.message
+                        });
+                    } else {
+                        // Mostrar mensaje de error
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ocurrió un error al procesar tu solicitud.'
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>
+
+
+
+</body>
+</html>
