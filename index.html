@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario</title>
@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <link rel="stylesheet" href="assets/styles.css">
 </head>
+<body>
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="card">
@@ -16,14 +17,14 @@
             <p class="login-box-msg">Inicia sesión para continuar</p>
             <form id="loginForm" method="post">
               <!-- Campo de Usuario/Correo -->
-              <div class="input-group mb-3">
-                <input type="text" name="usuario_o_correo" class="form-control" placeholder="Usuario o Correo" required>
-                <div class="input-group-append">
+                <div class="input-group mb-3">
+                  <input type="text" name="usuario_o_correo" class="form-control" placeholder="Usuario o Correo" required>
+                  <div class="input-group-append">
                   <div class="input-group-text">
-                    <span class="fas fa-user"></span>
+                  <span class="fas fa-user"></span>
+                  </div>
                   </div>
                 </div>
-              </div>
               <!-- Campo de Contraseña -->
               <div class="input-group mb-3">
                 <input type="password" name="contraseña" class="form-control" placeholder="Contraseña" required>
@@ -62,16 +63,23 @@
                 data: $(this).serialize(), // Envía los datos del formulario
                 dataType: "json", // Espera respuesta en JSON
                 success: function(response) {
-                    if (response.success) {
-                        // Redirigir al usuario según el rol
-                        window.location.href = response.redirect;
-                    } else {
-                        // Mostrar mensaje de error
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: response.message
-                        });
+    if (response.success) {
+        // Mostrar mensaje de éxito
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: response.message
+        }).then(() => {
+            // Redirigir a la página correspondiente
+            window.location.href = response.redirect;
+        });
+    } else {
+        // Mostrar mensaje de error
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: response.message
+        });
                     }
                 },
                 error: function() {
@@ -88,7 +96,6 @@
 
 </body>
 </html>
-
 
 
 
