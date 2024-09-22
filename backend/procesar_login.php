@@ -1,11 +1,11 @@
 <?php
 // Conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mi_base_de_datos";
+$servername = "localhost"; // Cambia según tu configuración
+$username = "root";        // Cambia según tu configuración
+$password = "";            // Cambia según tu configuración
+$dbname = "bdform";        // Nombre de tu base de datos
 
-// Crear la conexión
+// Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Verificar la conexión
@@ -13,41 +13,62 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Obtener los datos del formulario
-$usuario = $_POST['usuario_o_correo'];
-$contraseña = $_POST['contraseña'];
+// Iniciar la sesión
+session_start();
 
-// Escapar los valores para evitar inyecciones SQL
-$usuario = $conn->real_escape_string($usuario);
-$contraseña = $conn->real_escape_string($contraseña);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usuario_o_correo = $_POST['usuario_o_correo'];
+    $password = $_POST['contraseña'];
 
-// Consulta a la base de datos
-$sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' OR correo = '$usuario'";
-$result = $conn->query($sql);
+    // Consultar por nombre de usuario o correo
+    $sql = "SELECT id, name, correo, password, rol FROM usuario WHERE name = ? OR correo = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $usuario_o_correo, $usuario_o_correo);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
-    // Usuario encontrado
-    $row = $result->fetch_assoc();
-    
-    // Verificar la contraseña
-    if (password_verify($contraseña, $row['contraseña'])) {
-        // Inicio de sesión exitoso
-        $rol = $row['rol']; // Obtener el rol del usuario
+    // Verificar si se encontró algún registro
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
         
-        if ($rol == 'admin') {
-            // Redirigir a la página de administrador
-            echo json_encode(array("success" => true, "redirect" => "admin.html"));
-        } else {
-            // Redirigir a la página de usuario normal
-            echo json_encode(array("success" => true, "redirect" => "usuario_normal.html"));
+        // Verificar si la contraseña es correcta
+        if (password_verify($password, $user['password'])) {
+            // Guardar información del usuario en la sesión
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['rol'];
+            
+            // Actualizar el campo estatus a 1
+            $update_sql = "UPDATE usuario SET estatus = 1 WHERE id = ?";
+            $update_stmt = $conn->prepare($update_sql);
+            $update_stmt->bind_param("i", $user['id']);
+            $update_stmt->execute();
+
+            // Redirigir según el rol del usuario
+            if ($user['rol'] == 'admin') {
+                $response = [
+                    "success" => true,
+                    "message" => "Inicio de sesión exitoso. Bienvenido, admin!",
+                    "redirect" => "admin.html"
+                ];
+            } elseif ($user['rol'] == 'user') {
+                $response = [
+                    "success" => true,
+                    "message" => "Inicio de sesión exitoso. Bienvenido!",
+                    "redirect" => "usuario_normal.html"
+                ];
+            }
+            echo json_encode($response);
+            exit();
         }
     } else {
-        // Contraseña incorrecta
-        echo json_encode(array("success" => false, "message" => "Contraseña incorrecta."));
+        // Usuario o correo no encontrado
+        $response = [
+            "success" => false,
+            "message" => "Usuario o correo no encontrado."
+        ];
+        echo json_encode($response);
     }
-} else {
-    // Usuario no encontrado
-    echo json_encode(array("success" => false, "message" => "Usuario no encontrado."));
 }
 
 // Cerrar la conexión
