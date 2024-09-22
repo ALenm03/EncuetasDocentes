@@ -28,15 +28,16 @@
           <div class="card-body login-card-body">
             <p class="login-box-msg">Inicia sesión para continuar</p>
             <form id="loginForm" method="post">
-              <!-- Campo de Usuario -->
-              <div class="input-group mb-3">
-                <input type="text" name="usuario" class="form-control" placeholder="Usuario" required>
-                <div class="input-group-append">
+              <!-- Campo de Usuario/Correo -->
+                <div class="input-group mb-3">
+                  <input type="text" name="usuario_o_correo" class="form-control" placeholder="Usuario o Correo" required>
+                  <div class="input-group-append">
                   <div class="input-group-text">
-                    <span class="fas fa-user"></span>
+                  <span class="fas fa-user"></span>
                   </div>
-                </div>
-              </div>
+                  </div>
+                  </div>
+
               <!-- Campo de Contraseña -->
               <div class="input-group mb-3">
                 <input type="password" name="contraseña" class="form-control" placeholder="Contraseña" required>
