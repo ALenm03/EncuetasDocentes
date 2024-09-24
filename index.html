@@ -13,9 +13,17 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="card">
+          <div class="card card-primary" style="background-color: #777DA7; text-align: center; color: white;">
+            <div class="card-title">
+              <h1>Iniciar sesion</h1>
+            </div>
+          </div>
+          
           <div class="card-body login-card-body">
-            <p class="login-box-msg">Inicia sesión para continuar</p>
+            
+            
             <form id="loginForm" method="post">
+              <label for="txtcaja">Usuario</label>
               <!-- Campo de Usuario/Correo -->
                 <div class="input-group mb-3">
                   <input type="text" name="usuario_o_correo" class="form-control" placeholder="Usuario o Correo" required>
@@ -26,6 +34,7 @@
                   </div>
                 </div>
               <!-- Campo de Contraseña -->
+              <label for="txtcaja">Contraseña</label>
               <div class="input-group mb-3">
                 <input type="password" name="contraseña" class="form-control" placeholder="Contraseña" required>
                 <div class="input-group-append">
