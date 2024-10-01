@@ -49,13 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $response = [
                     "success" => true,
                     "message" => "Inicio de sesión exitoso. Bienvenido, admin!",
-                    "redirect" => "admin.html"
+                    "redirect" => "admin.php"
                 ];
             } elseif ($user['rol'] == 'user') {
                 $response = [
                     "success" => true,
                     "message" => "Inicio de sesión exitoso. Bienvenido!",
-                    "redirect" => "usuario_normal.html"
+                    "redirect" => "usuario_normal.php"
                 ];
             }
             echo json_encode($response);

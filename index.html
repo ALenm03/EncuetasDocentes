@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body>
+
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="card">
@@ -61,52 +61,58 @@
     <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-        // Interceptar el envío del formulario para manejar con AJAX
-        $("#loginForm").on("submit", function(e) {
-            e.preventDefault(); // Evita que se recargue la página
-
-            $.ajax({
-                type: "POST",
-                url: "backend/procesar_login.php", // Archivo PHP que procesará el login
-                data: $(this).serialize(), // Envía los datos del formulario
-                dataType: "json", // Espera respuesta en JSON
-                success: function(response) {
-    if (response.success) {
-        // Mostrar mensaje de éxito
-        Swal.fire({
-            icon: 'success',
-            title: 'Éxito',
-            text: response.message
-        }).then(() => {
-            // Redirigir a la página correspondiente
-            window.location.href = response.redirect;
-        });
-    } else {
-        // Mostrar mensaje de error
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: response.message
-        });
-                    }
-                },
-                error: function() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Ocurrió un error al procesar tu solicitud.'
-                    });
-                }
-            });
-        });
-    });
-    </script>
+      $(document).ready(function() {
+          // Interceptar el envío del formulario para manejar con AJAX
+          $("#loginForm").on("submit", function(e) {
+              e.preventDefault(); // Evita que se recargue la página
+  
+              $.ajax({
+                  type: "POST",
+                  url: "backend/procesar_login.php", // Archivo PHP que procesará el login
+                  data: $(this).serialize(), // Envía los datos del formulario
+                  dataType: "json", // Espera respuesta en JSON
+                  success: function(response) {
+                      if (response.success) {
+                          // Mostrar mensaje de éxito con un temporizador
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Éxito',
+                              text: response.message,
+                              timer: 700, // El modal se cerrará automáticamente después de 3 segundos
+                              showConfirmButton: false, // No mostrar el botón "OK"
+                              allowOutsideClick: false, // No permitir cerrar el modal haciendo clic afuera
+                              allowEscapeKey: false, // No permitir cerrar el modal con la tecla ESC
+                              allowEnterKey: false // No permitir cerrar el modal con la tecla Enter
+                          }).then(() => {
+                              // Redirigir a la página correspondiente después de 3 segundos
+                              window.location.href = response.redirect;
+                          });
+                      } else {
+                          // Mostrar mensaje de error
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error',
+                              text: response.message
+                          });
+                      }
+                  },
+                  error: function() {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error',
+                          text: 'Ocurrió un error al procesar tu solicitud.'
+                      });
+                  }
+              });
+          });
+      });
+  </script>
+  
 
 </body>
 </html>
 
 
 
-</body>
-</html>
+
+
