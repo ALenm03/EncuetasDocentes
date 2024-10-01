@@ -1,3 +1,5 @@
+        
+        /* ESTILOS PARA EL LOGIN*/
         /* Para que el login-box permanezca en su lugar */
         .login-box {
             position: fixed; /* Fijo en la ventana */
@@ -6,12 +8,53 @@
             transform: translate(-50%, -50%);
             z-index: 999;
         }
-        .btn-primary {
+        .btn-login {
             background-color: #777DA7; /* Color de fondo personalizado */
             border-color: #777DA7; /* Color del borde personalizado */
+            color: #FFFFFF;
         }
 
-        .btn-primary:hover {
+        .btn-login:hover {
             background-color: #5f6690; /* Color al pasar el cursor */
             border-color: #5f6690; /* Color del borde al pasar el cursor */
         }
+
+
+
+
+        /* ESTILOS PARA LA PAGINA DE CREACION DE FORMULARIOS*/
+
+.nombre_del_from_bg {
+    background-color: #777DA7;
+}
+.nombre_del_from {
+    color: #FFFFFF;
+}
+
+.btn_anadir_pregunta {
+    color: #FFFFFF;
+    background-color: #777DA7;
+}
+.btn_anadir_pregunta:hover {
+    color: #FFFFFF;
+    background-color: #5f6690;
+}
+.btn_guardar_form {
+    color: #FFFFFF;
+    background-color: #4281A4;
+}
+.btn_guardar_form:hover {
+    color: #FFFFFF;
+    background-color: #366a86;
+}
+.btn-secondary{
+    margin: 10px;
+}
+.btn_borrar{
+    background-color: red;
+    color: #FFFFFF;
+}
+.btn_borrar:hover{
+    background-color: rgb(212, 0, 0);
+    color: #FFFFFF;
+}
