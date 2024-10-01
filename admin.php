@@ -20,7 +20,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
     <h1>ERES ADMIN</h1>
     <img src="img/soy_admin.jpg" alt="Imagen de admin">
     <!-- Botón de Cerrar Sesión -->
-    <form action="logout.php" method="POST">
+    <form action="backend/logout.php" method="POST">
         <button type="submit">Cerrar sesión</button>
     </form>
 </body>

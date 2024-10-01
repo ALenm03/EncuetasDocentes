@@ -6,6 +6,6 @@ session_start();
 session_destroy();
 
 // Redirigir a la página de inicio
-header("Location: /index.html");
+header("Location: /EncuetasDocentes/index.html");
 exit();
 ?>
