@@ -44,10 +44,9 @@
                             <div id="form-preguntas">  </div>
 
                             <button type="button" class="btn btn_anadir_pregunta" id="anadir_pregunta">Añadir Pregunta</button>
-                            <button type="submit" class="btn btn_guardar_form">Guardar Formulario</button>
+                            <button type="button" class="btn btn_guardar_form" id="guardar_formulario">Guardar Formulario</button>
                             <button type="button" class="btn btn_borrar" id="borrar_pregunta">Borrar Última Pregunta</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -61,33 +60,33 @@
 
     <script>
         const formContainer = document.getElementById('form-preguntas');
-    
+
         // Función para agregar una nueva pregunta
         document.getElementById('anadir_pregunta').addEventListener('click', function () {
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('form-group', 'mb-4');
-    
+
             // Contar cuántas preguntas existen y asignar el número de la nueva pregunta
             const numPreguntas = formContainer.querySelectorAll('.form-group').length + 1;
-    
+
             // Crear el label para el número de la pregunta
             const questionLabel = document.createElement('label');
             questionLabel.textContent = `Pregunta número ${numPreguntas}`;
             questionLabel.classList.add('form-label', 'mb-2');
-    
+
             // Crear el campo para ingresar la pregunta
             const questionInput = document.createElement('input');
             questionInput.setAttribute('type', 'text');
             questionInput.setAttribute('placeholder', 'Escribe la pregunta');
             questionInput.classList.add('form-control', 'mb-2', 'pregunta');
-    
+
             // Crear el contenedor para los botones de tipo de respuesta
             const buttonGroup = document.createElement('div');
             buttonGroup.classList.add('btn-group', 'mb-2');
-    
+
             // Variable para almacenar el tipo de respuesta seleccionado
             let tipoSeleccionado = null;
-    
+
             // Botón para agregar respuesta tipo párrafo
             const btnParrafo = document.createElement('button');
             btnParrafo.classList.add('btn', 'btn-secondary');
@@ -99,7 +98,7 @@
                     agregarRespuesta(questionDiv, 'parrafo');
                 }
             });
-    
+
             // Botón para agregar respuesta tipo checkbox
             const btnCheckbox = document.createElement('button');
             btnCheckbox.classList.add('btn', 'btn-secondary');
@@ -114,7 +113,7 @@
                     agregarRespuesta(questionDiv, 'checkbox');
                 }
             });
-    
+
             // Botón para agregar respuesta tipo opción múltiple
             const btnOpcionMultiple = document.createElement('button');
             btnOpcionMultiple.classList.add('btn', 'btn-secondary');
@@ -129,7 +128,7 @@
                     agregarRespuesta(questionDiv, 'opcion_multiple');
                 }
             });
-    
+
             // Botón para borrar la última respuesta añadida
             const btnBorrarAnterior = document.createElement('button');
             btnBorrarAnterior.classList.add('btn', 'btn-secondary');
@@ -137,24 +136,24 @@
             btnBorrarAnterior.addEventListener('click', function () {
                 borrarUltimaRespuesta(questionDiv);
             });
-    
+
             // Añadir los botones al grupo de botones
             buttonGroup.appendChild(btnParrafo);
             buttonGroup.appendChild(btnCheckbox);
             buttonGroup.appendChild(btnOpcionMultiple);
             buttonGroup.appendChild(btnBorrarAnterior);
-    
+
             // Añadir los elementos al contenedor de la pregunta
             questionDiv.appendChild(questionLabel);
             questionDiv.appendChild(questionInput);
             questionDiv.appendChild(buttonGroup);
             formContainer.appendChild(questionDiv);
         });
-    
+
         // Función para agregar la respuesta según el tipo seleccionado
         function agregarRespuesta(questionDiv, tipoRespuesta) {
             let respuestaDiv;
-    
+
             if (tipoRespuesta === 'parrafo') {
                 respuestaDiv = document.createElement('textarea');
                 respuestaDiv.setAttribute('placeholder', 'Escribe tu respuesta aquí...');
@@ -162,45 +161,45 @@
             } else if (tipoRespuesta === 'checkbox') {
                 respuestaDiv = document.createElement('div');
                 respuestaDiv.classList.add('respuesta', 'mb-2');
-    
+
                 const checkbox = document.createElement('input');
                 checkbox.setAttribute('type', 'checkbox');
                 checkbox.classList.add('mr-2');
-    
+
                 const optionInput = document.createElement('input');
                 optionInput.setAttribute('type', 'text');
                 optionInput.setAttribute('placeholder', 'Escribe una opción');
                 optionInput.classList.add('form-control', 'd-inline-block', 'w-50', 'respuesta-input');
-    
+
                 respuestaDiv.appendChild(checkbox);
                 respuestaDiv.appendChild(optionInput);
             } else if (tipoRespuesta === 'opcion_multiple') {
                 respuestaDiv = document.createElement('div');
                 respuestaDiv.classList.add('respuesta', 'mb-2');
-    
+
                 const radio1 = document.createElement('input');
                 radio1.setAttribute('type', 'radio');
                 radio1.setAttribute('name', 'opcionMultiple');
                 radio1.classList.add('mr-2');
-    
+
                 const optionInput1 = document.createElement('input');
                 optionInput1.setAttribute('type', 'text');
                 optionInput1.setAttribute('placeholder', 'Escribe una opción');
                 optionInput1.classList.add('form-control', 'd-inline-block', 'w-50', 'respuesta-input');
-    
+
                 respuestaDiv.appendChild(radio1);
                 respuestaDiv.appendChild(optionInput1);
                 respuestaDiv.appendChild(document.createElement('br'));
             }
             questionDiv.appendChild(respuestaDiv);
         }
-    
+
         // Función para borrar todas las respuestas de una pregunta
         function borrarRespuestas(questionDiv) {
             const respuestas = questionDiv.querySelectorAll('.respuesta');
             respuestas.forEach(respuesta => respuesta.remove());
         }
-    
+
         // Función para borrar la última respuesta añadida
         function borrarUltimaRespuesta(questionDiv) {
             const respuestas = questionDiv.querySelectorAll('.respuesta');
@@ -209,118 +208,69 @@
                 ultimaRespuesta.remove();
             }
         }
-    
+
         // Función para borrar la última pregunta añadida
         document.getElementById('borrar_pregunta').addEventListener('click', function () {
-            const preguntas = document.querySelectorAll('#form-preguntas .form-group');
+            const preguntas = formContainer.querySelectorAll('.form-group');
             if (preguntas.length > 0) {
                 const ultimaPregunta = preguntas[preguntas.length - 1];
                 ultimaPregunta.remove();
             }
         });
-    
-        // Función para validar el formulario antes de guardar
-        document.querySelector('.btn_guardar_form').addEventListener('click', function (event) {
-    console.log("Botón Guardar Formulario presionado");
-    let error = false;
-    const preguntas = document.querySelectorAll('.pregunta');
 
-    // Validar el título
-    const titulo = document.getElementById('txtcaja').value.trim();
-    if (!titulo) {
-        error = true;
-        document.getElementById('txtcaja').classList.add('is-invalid');
-    } else {
-        document.getElementById('txtcaja').classList.remove('is-invalid');
-    }
+        // Función para guardar el formulario usando AJAX
+        document.getElementById('guardar_formulario').addEventListener('click', function () {
+            const nombreFormulario = document.getElementById('txtcaja').value;
+            const preguntas = formContainer.querySelectorAll('.form-group');
+            const datosPreguntas = [];
 
-    // Validar que haya al menos una pregunta
-    if (preguntas.length === 0) {
-        error = true;
-        alert('Debe agregar al menos una pregunta.');
-    }
+            preguntas.forEach((pregunta, index) => {
+                const preguntaTexto = pregunta.querySelector('input[type="text"]').value;
+                const respuestas = pregunta.querySelectorAll('.respuesta');
+                const datosRespuestas = [];
 
-    const datosPreguntas = [];
-
-    preguntas.forEach(function (preguntaDiv, index) {
-        const pregunta = preguntaDiv.value.trim();
-        if (!pregunta) {
-            error = true;
-            preguntaDiv.classList.add('is-invalid');
-        } else {
-            preguntaDiv.classList.remove('is-invalid');
-        }
-
-        // Validar que cada pregunta tenga al menos una respuesta
-        const respuestas = preguntaDiv.parentElement.querySelectorAll('.respuesta');
-        let respuestaValida = false;
-        const respuestasArray = [];
-        let respuestasCorrectas = [];
-
-        respuestas.forEach(function (respuestaDiv) {
-            // Validar respuesta tipo párrafo
-            if (respuestaDiv.classList.contains('parrafo')) {
-                respuestaValida = true; // No requiere respuesta adicional
-            } else {
-                const respuestaInput = respuestaDiv.querySelector('.respuesta-input');
-                if (respuestaInput) {
-                    if (respuestaInput.value.trim() !== '') {
-                        respuestasArray.push(respuestaInput.value.trim());
-                        // Verificar si es una respuesta correcta
-                        if (respuestaDiv.querySelector('input[type="checkbox"]:checked')) {
-                            respuestasCorrectas.push(respuestaInput.value.trim());
-                        }
-                        respuestaValida = true;
+                respuestas.forEach(respuesta => {
+                    if (respuesta.querySelector('textarea')) {
+                        // Respuesta tipo párrafo
+                        datosRespuestas.push(respuesta.querySelector('textarea').value);
+                    } else if (respuesta.querySelector('input[type="checkbox"]')) {
+                        // Respuesta tipo checkbox
+                        datosRespuestas.push(respuesta.querySelector('input[type="text"]').value);
+                    } else if (respuesta.querySelector('input[type="radio"]')) {
+                        // Respuesta tipo opción múltiple
+                        datosRespuestas.push(respuesta.querySelector('input[type="text"]').value);
                     }
-                }
-            }
-        });
+                });
 
-        if (!respuestaValida) {
-            error = true;
-            alert('Cada pregunta debe tener al menos una respuesta válida (excepto para párrafos).');
-        }
+                datosPreguntas.push({
+                    pregunta: preguntaTexto,
+                    respuestas: datosRespuestas
+                });
+            });
 
-        datosPreguntas.push({
-            pregunta: pregunta,
-            tipo_respuesta: tipoSeleccionado,
-            respuestas: respuestasArray,
-            respuesta_correcta: respuestasCorrectas,
-        });
-    });
+            // Crear un objeto para enviar
+            const formData = {
+                nombre_formulario: nombreFormulario,
+                preguntas: datosPreguntas
+            };
 
-    // Evitar envío si hay errores
-    if (error) {
-        event.preventDefault();
-        alert('Por favor, completa todos los campos obligatorios.');
-    } else {
-        // Enviar los datos al servidor
-        const formData = new FormData();
-        formData.append('nombre_formulario', titulo);
-        formData.append('preguntas', JSON.stringify(datosPreguntas));
-
-        fetch('backend/guardar_formulario.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log("Datos recibidos:", data); // Verificar datos recibidos
-            alert(data); // Mostrar el mensaje de éxito o error
-            if (data.includes('éxito')) { // Cambia esta condición según tu mensaje de éxito
-                limpiarFormulario(); // Limpiar el formulario si el envío fue exitoso
-            }
-        })
-        .catch(error => {
-            console.error('Error al guardar el formulario:', error);
-            alert('Error al guardar el formulario. Por favor, intenta nuevamente.');
-        });
-
-        event.preventDefault(); // Prevenir el envío del formulario normal
+            // Enviar datos al servidor usando AJAX
+            // Enviar datos al servidor usando AJAX
+$.ajax({
+    type: 'POST',
+    url: 'backend/guardar_formulario.php',
+    data: { formData: JSON.stringify(formData) }, // Asegúrate de que esto sea correcto
+    contentType: 'application/x-www-form-urlencoded', // Asegúrate de que el tipo de contenido sea correcto
+    success: function (response) {
+        alert(response); // Puedes mostrar una notificación o realizar alguna acción
+    },
+    error: function (xhr, status, error) {
+        console.error('Error:', error);
+        alert('Error al guardar el formulario.'); // Manejar error
     }
-});  
+});
 
-    </script> 
+        });
+    </script>
 </body>
 </html>
-

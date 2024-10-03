@@ -8,26 +8,23 @@ $dbname = "bdform";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Verificar la conexión
-// Verificar la conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
-} else {
-    echo "Conexión exitosa."; // Para depuración
 }
 
 // Recibir los datos del formulario
-$nombre_formulario = $_POST['nombre_formulario'] ?? '';
-$preguntas = json_decode($_POST['preguntas'] ?? '[]', true);
+$formData = json_decode($_POST['formData'] ?? '', true); // Decodifica correctamente
+$nombre_formulario = $formData['nombre_formulario'] ?? '';
+$preguntas = $formData['preguntas'] ?? [];
 
 // Comprobar si se han recibido datos
 if (empty($nombre_formulario) || empty($preguntas)) {
-    echo "Error: El nombre del formulario y las preguntas son obligatorios.";
-    exit;
+    die("Error: El nombre del formulario y las preguntas son obligatorios.");
 }
 
 // Preparar la consulta para insertar los datos
-$stmt = $conn->prepare("INSERT INTO formularios (nombre_formulario, pregunta_num, pregunta, respuesta_1, respuesta_2, respuesta_3, respuesta_4, respuesta_correcta, tipo_respuesta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sisssssss", $nombre_formulario, $pregunta_num, $pregunta, $respuesta_1, $respuesta_2, $respuesta_3, $respuesta_4, $respuesta_correcta, $tipo_respuesta);
+$stmt = $conn->prepare("INSERT INTO formularios (nombre_formulario, pregunta_num, pregunta, respuesta_1, respuesta_2, respuesta_3, respuesta_4, tipo_respuesta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("sissssss", $nombre_formulario, $pregunta_num, $pregunta, $respuesta_1, $respuesta_2, $respuesta_3, $respuesta_4, $tipo_respuesta);
 
 // Insertar cada pregunta y sus respuestas
 foreach ($preguntas as $index => $preguntaData) {
@@ -45,9 +42,6 @@ foreach ($preguntas as $index => $preguntaData) {
             elseif ($i == 3) $respuesta_4 = $respuesta;
         }
     }
-    
-    // Manejar respuestas correctas
-    $respuesta_correcta = json_encode($preguntaData['respuesta_correcta'] ?? []);
 
     // Tipo de respuesta
     $tipo_respuesta = $preguntaData['tipo_respuesta'] ?? '';

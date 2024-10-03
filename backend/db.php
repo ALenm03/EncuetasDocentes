@@ -4,14 +4,10 @@ $username = "root";
 $password = "";            
 $dbname = "bdform";        
 
-try {
-    // Crear la conexión PDO
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    // Configurar el modo de error de PDO a excepción
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    // Manejo de errores
-    echo "Error de conexión: " . $e->getMessage();
-    exit();
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
+echo "Conexión exitosa."; // Esto debe aparecer si la conexión es exitosa
+
 ?>
