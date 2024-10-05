@@ -44,22 +44,14 @@
                             <div id="form-preguntas">  </div>
 
                             <button type="button" class="btn btn_anadir_pregunta" id="anadir_pregunta">Añadir Pregunta</button>
-                            <button type="submit" class="btn btn_guardar_form">Guardar Formulario</button>
+                            <button type="button" class="btn btn_guardar_form" id="guardar_formulario">Guardar Formulario</button>
                             <button type="button" class="btn btn_borrar" id="borrar_pregunta">Borrar Última Pregunta</button>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
-
-
-    
 
     <!-- AdminTLE JavaScript -->
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
@@ -86,18 +78,25 @@
             const questionInput = document.createElement('input');
             questionInput.setAttribute('type', 'text');
             questionInput.setAttribute('placeholder', 'Escribe la pregunta');
-            questionInput.classList.add('form-control', 'mb-2');
+            questionInput.classList.add('form-control', 'mb-2', 'pregunta');
 
             // Crear el contenedor para los botones de tipo de respuesta
             const buttonGroup = document.createElement('div');
             buttonGroup.classList.add('btn-group', 'mb-2');
-            
+
+            // Variable para almacenar el tipo de respuesta seleccionado
+            let tipoSeleccionado = null;
+
             // Botón para agregar respuesta tipo párrafo
             const btnParrafo = document.createElement('button');
             btnParrafo.classList.add('btn', 'btn-secondary');
             btnParrafo.textContent = 'Añadir Respuesta Párrafo';
             btnParrafo.addEventListener('click', function () {
-            agregarRespuesta(questionDiv, 'parrafo');
+                if (tipoSeleccionado !== 'parrafo') {
+                    borrarRespuestas(questionDiv);
+                    tipoSeleccionado = 'parrafo';
+                    agregarRespuesta(questionDiv, 'parrafo');
+                }
             });
 
             // Botón para agregar respuesta tipo checkbox
@@ -105,7 +104,14 @@
             btnCheckbox.classList.add('btn', 'btn-secondary');
             btnCheckbox.textContent = 'Añadir Respuesta Checkbox';
             btnCheckbox.addEventListener('click', function () {
-                agregarRespuesta(questionDiv, 'checkbox');
+                if (tipoSeleccionado !== 'checkbox') {
+                    borrarRespuestas(questionDiv);
+                    tipoSeleccionado = 'checkbox';
+                }
+                const respuestas = questionDiv.querySelectorAll('.respuesta');
+                if (respuestas.length < 4) {
+                    agregarRespuesta(questionDiv, 'checkbox');
+                }
             });
 
             // Botón para agregar respuesta tipo opción múltiple
@@ -113,7 +119,14 @@
             btnOpcionMultiple.classList.add('btn', 'btn-secondary');
             btnOpcionMultiple.textContent = 'Añadir Respuesta Opción Múltiple';
             btnOpcionMultiple.addEventListener('click', function () {
-                agregarRespuesta(questionDiv, 'opcion_multiple');
+                if (tipoSeleccionado !== 'opcion_multiple') {
+                    borrarRespuestas(questionDiv);
+                    tipoSeleccionado = 'opcion_multiple';
+                }
+                const respuestas = questionDiv.querySelectorAll('.respuesta');
+                if (respuestas.length < 4) {
+                    agregarRespuesta(questionDiv, 'opcion_multiple');
+                }
             });
 
             // Botón para borrar la última respuesta añadida
@@ -121,7 +134,7 @@
             btnBorrarAnterior.classList.add('btn', 'btn-secondary');
             btnBorrarAnterior.textContent = 'Borrar Última Respuesta';
             btnBorrarAnterior.addEventListener('click', function () {
-            borrarUltimaRespuesta(questionDiv);
+                borrarUltimaRespuesta(questionDiv);
             });
 
             // Añadir los botones al grupo de botones
@@ -139,55 +152,52 @@
 
         // Función para agregar la respuesta según el tipo seleccionado
         function agregarRespuesta(questionDiv, tipoRespuesta) {
-
-
             let respuestaDiv;
 
             if (tipoRespuesta === 'parrafo') {
                 respuestaDiv = document.createElement('textarea');
                 respuestaDiv.setAttribute('placeholder', 'Escribe tu respuesta aquí...');
-                respuestaDiv.classList.add('form-control', 'respuesta', 'mb-2');
+                respuestaDiv.classList.add('form-control', 'respuesta', 'mb-2', 'parrafo');
             } else if (tipoRespuesta === 'checkbox') {
-                
                 respuestaDiv = document.createElement('div');
                 respuestaDiv.classList.add('respuesta', 'mb-2');
 
-                // Crear el checkbox
                 const checkbox = document.createElement('input');
                 checkbox.setAttribute('type', 'checkbox');
                 checkbox.classList.add('mr-2');
 
-                // Crear el campo de texto para permitir que el usuario escriba una opción
                 const optionInput = document.createElement('input');
                 optionInput.setAttribute('type', 'text');
                 optionInput.setAttribute('placeholder', 'Escribe una opción');
-                optionInput.classList.add('form-control', 'd-inline-block', 'w-50');
+                optionInput.classList.add('form-control', 'd-inline-block', 'w-50', 'respuesta-input');
 
-                // Añadir el checkbox y el campo de texto al contenedor de respuesta
                 respuestaDiv.appendChild(checkbox);
                 respuestaDiv.appendChild(optionInput);
             } else if (tipoRespuesta === 'opcion_multiple') {
                 respuestaDiv = document.createElement('div');
                 respuestaDiv.classList.add('respuesta', 'mb-2');
 
-                // Crear el botón de opción múltiple (radio button)
                 const radio1 = document.createElement('input');
                 radio1.setAttribute('type', 'radio');
                 radio1.setAttribute('name', 'opcionMultiple');
                 radio1.classList.add('mr-2');
 
-                // Crear el campo de texto para que el usuario pueda escribir la opción
                 const optionInput1 = document.createElement('input');
                 optionInput1.setAttribute('type', 'text');
                 optionInput1.setAttribute('placeholder', 'Escribe una opción');
-                optionInput1.classList.add('form-control', 'd-inline-block', 'w-50');
+                optionInput1.classList.add('form-control', 'd-inline-block', 'w-50', 'respuesta-input');
 
-                // Añadir el radio button y el campo de texto al contenedor de respuesta
                 respuestaDiv.appendChild(radio1);
                 respuestaDiv.appendChild(optionInput1);
                 respuestaDiv.appendChild(document.createElement('br'));
             }
             questionDiv.appendChild(respuestaDiv);
+        }
+
+        // Función para borrar todas las respuestas de una pregunta
+        function borrarRespuestas(questionDiv) {
+            const respuestas = questionDiv.querySelectorAll('.respuesta');
+            respuestas.forEach(respuesta => respuesta.remove());
         }
 
         // Función para borrar la última respuesta añadida
@@ -196,26 +206,71 @@
             if (respuestas.length > 0) {
                 const ultimaRespuesta = respuestas[respuestas.length - 1];
                 ultimaRespuesta.remove();
-            } 
-            else {
-
             }
         }
 
-
         // Función para borrar la última pregunta añadida
         document.getElementById('borrar_pregunta').addEventListener('click', function () {
-            const preguntas = document.querySelectorAll('#form-preguntas .form-group');
+            const preguntas = formContainer.querySelectorAll('.form-group');
             if (preguntas.length > 0) {
                 const ultimaPregunta = preguntas[preguntas.length - 1];
                 ultimaPregunta.remove();
-            } else {
-
             }
         });
 
+        // Función para guardar el formulario usando AJAX
+        document.getElementById('guardar_formulario').addEventListener('click', function () {
+            const nombreFormulario = document.getElementById('txtcaja').value;
+            const preguntas = formContainer.querySelectorAll('.form-group');
+            const datosPreguntas = [];
+
+            preguntas.forEach((pregunta, index) => {
+                const preguntaTexto = pregunta.querySelector('input[type="text"]').value;
+                const respuestas = pregunta.querySelectorAll('.respuesta');
+                const datosRespuestas = [];
+
+                respuestas.forEach(respuesta => {
+                    if (respuesta.querySelector('textarea')) {
+                        // Respuesta tipo párrafo
+                        datosRespuestas.push(respuesta.querySelector('textarea').value);
+                    } else if (respuesta.querySelector('input[type="checkbox"]')) {
+                        // Respuesta tipo checkbox
+                        datosRespuestas.push(respuesta.querySelector('input[type="text"]').value);
+                    } else if (respuesta.querySelector('input[type="radio"]')) {
+                        // Respuesta tipo opción múltiple
+                        datosRespuestas.push(respuesta.querySelector('input[type="text"]').value);
+                    }
+                });
+
+                datosPreguntas.push({
+                    pregunta: preguntaTexto,
+                    respuestas: datosRespuestas
+                });
+            });
+
+            // Crear un objeto para enviar
+            const formData = {
+                nombre_formulario: nombreFormulario,
+                preguntas: datosPreguntas
+            };
+
+            // Enviar datos al servidor usando AJAX
+            // Enviar datos al servidor usando AJAX
+$.ajax({
+    type: 'POST',
+    url: 'backend/guardar_formulario.php',
+    data: { formData: JSON.stringify(formData) }, // Asegúrate de que esto sea correcto
+    contentType: 'application/x-www-form-urlencoded', // Asegúrate de que el tipo de contenido sea correcto
+    success: function (response) {
+        alert(response); // Puedes mostrar una notificación o realizar alguna acción
+    },
+    error: function (xhr, status, error) {
+        console.error('Error:', error);
+        alert('Error al guardar el formulario.'); // Manejar error
+    }
+});
+
+        });
     </script>
-    
-    
 </body>
 </html>

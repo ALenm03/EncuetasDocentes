@@ -45,16 +45,67 @@
               </div>
               <!-- Botón de Inicio de Sesión -->
               <div class="row">
-                <div class="col-12">
+                <div class="col-12" style="text-align: center">
                   <button type="submit" class="btn btn-login btn-block">Iniciar Sesión</button>
+                  <button type="button" class="btn btn-registrar btn-block" data-toggle="modal" data-target="#modal-dafult"> Registrate</button>
                 </div>
               </div>
             </form>
           </div>
-          <!-- /.login-card-body -->
         </div>
     </div>
 
+  <!--Ventana Modal para registro de usuarios-->
+    <div class="modal fade" id="modal-dafult">
+      <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+              <div class="modal-header encabezado-menu-registro">
+                  <h4 class="modal-title">Registrate</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                <label for="txtcaja">Usuario</label>
+                <!-- Campo de Usuario/Correo -->
+                  <div class="input-group mb-3">
+                    <input type="text" name="usuario_o_correo" class="form-control" placeholder="Usuario" required>
+                    <div class="input-group-append">
+                    <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                    </div>
+                    </div>
+                  </div>
+                  <label for="txtcaja">Correo</label>
+                  <!-- Campo de Correo -->
+                    <div class="input-group mb-3">
+                      <input type="text" name="usuario_o_correo" class="form-control" placeholder="Correo" required>
+                      <div class="input-group-append">
+                      <div class="input-group-text">
+                      <span class="fas fa-envelope"></span>
+                      </div>
+                      </div>
+                    </div>
+                <!-- Campo de Contraseña -->
+                <label for="txtcaja">Contraseña</label>
+                <div class="input-group mb-3">
+                  <input type="password" name="contraseña" class="form-control" placeholder="Contraseña" required>
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-lock"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--BOTON DE REGISTRAAAR-->
+              <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                Registrar
+              </button>
+              </div>
+          </div>
+      </div>
+  </div>
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>

@@ -13,12 +13,23 @@
             border-color: #777DA7; /* Color del borde personalizado */
             color: #FFFFFF;
         }
+        .btn-registrar {
+            background-color: #777DA7; /* Color de fondo personalizado */
+            border-color: #777DA7; /* Color del borde personalizado */
+            color: #FFFFFF;
+        }
 
         .btn-login:hover {
             background-color: #5f6690; /* Color al pasar el cursor */
             border-color: #5f6690; /* Color del borde al pasar el cursor */
         }
-
+        .encabezado-menu-registro{
+            background-color: #5f6690;
+            color: white;
+        }
+        .encabezado-menu-registro .close {
+            color: white;
+        } 
 
 
 
