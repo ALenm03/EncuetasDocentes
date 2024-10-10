@@ -113,33 +113,32 @@
 
     <script>
       $(document).ready(function() {
-          // Interceptar el envío del formulario para manejar con AJAX
+          // Interceptar el envío del formulario de Login
           $("#loginForm").on("submit", function(e) {
               e.preventDefault(); // Evita que se recargue la página
-  
+    
               $.ajax({
                   type: "POST",
                   url: "backend/procesar_login.php", // Archivo PHP que procesará el login
-                  data: $(this).serialize(), // Envía los datos del formulario
-                  dataType: "json", // Espera respuesta en JSON
+                  data: $(this).serialize(),
+                  dataType: "json",
                   success: function(response) {
                       if (response.success) {
-                          // Mostrar mensaje de éxito con un temporizador
+                          // Animación de éxito
                           Swal.fire({
                               icon: 'success',
                               title: 'Éxito',
                               text: response.message,
-                              timer: 700, // El modal se cerrará automáticamente después de 3 segundos
-                              showConfirmButton: false, // No mostrar el botón "OK"
-                              allowOutsideClick: false, // No permitir cerrar el modal haciendo clic afuera
-                              allowEscapeKey: false, // No permitir cerrar el modal con la tecla ESC
-                              allowEnterKey: false // No permitir cerrar el modal con la tecla Enter
+                              timer: 700,
+                              showConfirmButton: false,
+                              allowOutsideClick: false,
+                              allowEscapeKey: false,
+                              allowEnterKey: false
                           }).then(() => {
-                              // Redirigir a la página correspondiente después de 3 segundos
                               window.location.href = response.redirect;
                           });
                       } else {
-                          // Mostrar mensaje de error
+                          // Animación de error
                           Swal.fire({
                               icon: 'error',
                               title: 'Error',
@@ -156,8 +155,55 @@
                   }
               });
           });
+    
+          // Manejar el evento del botón de registrar
+          $(".btn-default").on("click", function() {
+              // Simulación del envío de registro con AJAX
+              $.ajax({
+                  type: "POST",
+                  url: "backend/procesar_registro.php", // Archivo PHP que procesará el registro
+                  data: {
+                      usuario: $("#registro_usuario").val(),
+                      correo: $("#registro_correo").val(),
+                      contraseña: $("#registro_contra").val()
+                  },
+                  dataType: "json",
+                  success: function(response) {
+                      if (response.success) {
+                          // Animación de éxito
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Registrado',
+                              text: response.message,
+                              timer: 700,
+                              showConfirmButton: false,
+                              allowOutsideClick: false,
+                              allowEscapeKey: false,
+                              allowEnterKey: false
+                          }).then(() => {
+                              // Redirigir o cerrar el modal
+                              $('#modal-dafult').modal('hide');
+                          });
+                      } else {
+                          // Animación de error
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error en el registro',
+                              text: response.message
+                          });
+                      }
+                  },
+                  error: function() {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error',
+                          text: 'Ocurrió un error al procesar tu registro.'
+                      });
+                  }
+              });
+          });
       });
-  </script>
+    </script>
   
 
 </body>
