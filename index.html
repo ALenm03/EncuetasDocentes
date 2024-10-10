@@ -116,7 +116,7 @@
           // Interceptar el envío del formulario de Login
           $("#loginForm").on("submit", function(e) {
               e.preventDefault(); // Evita que se recargue la página
-    
+        
               $.ajax({
                   type: "POST",
                   url: "backend/procesar_login.php", // Archivo PHP que procesará el login
@@ -155,16 +155,29 @@
                   }
               });
           });
-    
+        
           // Manejar el evento del botón de registrar
           $(".btn-default").on("click", function() {
-              // Simulación del envío de registro con AJAX
+              var correo = $("#registro_correo").val();
+              var correoValido = /^[a-zA-Z0-9._-]+@[sitio del correo]+$/; // Expresión regular para validar el correo
+    
+              if (!correoValido.test(correo)) {
+                  // Mostrar mensaje de error si el correo no es válido
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Correo inválido',
+                      text: 'Por favor, introduce un correo que termine en @[sitio del correo]'
+                  });
+                  return; // Detener el proceso si el correo no es válido
+              }
+    
+              // Simulación del envío de registro con AJAX si el correo es válido
               $.ajax({
                   type: "POST",
                   url: "backend/procesar_registro.php", // Archivo PHP que procesará el registro
                   data: {
                       usuario: $("#registro_usuario").val(),
-                      correo: $("#registro_correo").val(),
+                      correo: correo,
                       contraseña: $("#registro_contra").val()
                   },
                   dataType: "json",
@@ -204,6 +217,7 @@
           });
       });
     </script>
+    
   
 
 </body>
