@@ -69,3 +69,102 @@
     background-color: rgb(212, 0, 0);
     color: #FFFFFF;
 }
+#adm_regresar {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_regresar:hover {
+    background-color: #366a86;
+}
+
+
+
+        /* ESTILOS PARA LA PAGINA DE ADMIN*/
+
+.adm_CabezaTabla{
+    background-color:  #372549;
+    color: white;
+    margin-top: 0.5%;
+    border-radius: 5px;
+}
+
+#header_pagina {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+    background-color: #372549;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#adm_body {
+    padding-top: 70px; /* Ajusta el desplazamiento del contenido */
+}
+#adm_logout {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_logout:hover {
+    background-color: #c82333;
+}
+#crear_nueva_encuesta{
+    background-color: #F0F7F4;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#crear_nueva_encuesta:hover {
+    background-color: #d4dbd8;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn_ver {
+    background-color: #777DA7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn_ver:hover {
+    background-color: #1A1423;
+}
+.btn_editar {
+    background-color: #777DA7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn_editar:hover {
+    background-color: #1A1423;
+}
+.btn_eliminar_encuesta {
+    background-color: #777DA7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn_eliminar_encuesta:hover {
+    background-color: #1A1423;
+}

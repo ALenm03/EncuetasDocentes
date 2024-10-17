@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: black;
+        }
+
+        .grid {
+            background: hsl(36, 100%, 99%);
+            width: 100%;
+            max-width: 1300px;
+            height: 800px;
+            display: grid;
+            gap: 0.5vw;
+            padding: 1vw;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            grid-template-areas:
+                "g1 g1 g3 g4"
+                "g1 g1 g3 g4"
+                "g2 g2 g2 g4"
+                "g2 g2 g2 g4"
+                "g2 g2 g2 g5"
+                "g2 g2 g2 g5";
+            margin: 0 auto;
+        }
+
+        .item {
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .grid .item:nth-child(1) {
+            grid-area: g1;
+        }
+
+        .grid .item:nth-child(2) {
+            grid-area: g2;
+        }
+
+        .grid .item:nth-child(3) {
+            grid-area: g3;
+        }
+
+        .grid .item:nth-child(4) {
+            grid-area: g4;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .grid .item:nth-child(5) {
+            grid-area: g5;
+        }
+
+        /* Dividir el item en 5 partes iguales */
+        .paleta-item {
+            flex: 1;
+            width: 100%;
+        }
+
+        .color1 { background-color: #1A1423; border-top-left-radius: 5px; border-top-right-radius: 5px;} /* Color 1 */
+        .color2 { background-color: #372549; } /* Color 2 */
+        .color3 { background-color: #F0F7F4; } /* Color 3 */
+        .color4 { background-color: #777DA7; } /* Color 4 */
+        .color5 { background-color: #4281A4; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;} /* Color 5 */
+
+        /* Estilos para el texto superpuesto */
+        .paleta-texto {
+            position: absolute;
+            top: 51%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0px 0px 15px rgba(0, 0, 0, 1); /* Un poco de sombra para destacar el texto */
+        }
+
+        #Princ{
+            background: rgb(26,20,35);
+            background: linear-gradient(315deg, rgba(26,20,35,1) 0%, rgba(55,37,73,1) 100%);
+        }
+        
+        #Descripcion {
+            background: rgb(255,0,0);
+            background: linear-gradient(165deg, rgba(255,0,0,0) 0%, rgba(41,29,54,1) 60%);
+
+        } 
+        #Icons {
+            background: #1A1423;
+        }
+        #Icons span {
+            font-size: 30px;
+            margin: 10px;
+        }
+        #Fuente {
+            background: rgb(26,20,35);
+            background: linear-gradient(45deg, rgba(26,20,35,1) 30%, rgba(55,37,73,1) 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid" style="background-color: black;">
+        <div class="item" id="Descripcion">
+            <h2 style="font-size: 19px;"> Desarrollo de una plataforma de encuestas sobre el tema y que permita la visualización de las respuestas en forma de gráficas para su análisis. </h2>
+        </div>
+        <div class="item" id="Princ">
+            <h2 style="font-size: 35px; font-weight: 1000;">Plataforma de Encuestas</h2>
+        </div>
+        <div class="item" id="Icons">
+            <h2>Iconos</h2>
+            <span class="fas fa-user"></span>
+            <span class="fas fa-envelope"></span>
+            <span class="fas fa-lock"></span>
+
+        </div>
+        <div class="item">
+            <!-- Texto superpuesto -->
+            <div class="paleta-texto" style="color: #1A1423;">Paleta de Colores</div>
+            <!-- Paleta de colores -->
+            <div class="paleta-item color1" style="align-items: center; color: white;"> <p>1A1423</p></div>
+            <div class="paleta-item color2" style="align-items: center; color: white;"> <p>372549</p></div>
+            <div class="paleta-item color3" style="align-items: center; color: black;"> <p>F0F7F4</p></div>
+            <div class="paleta-item color4" style="align-items: center; color: white;"> <p>777DA7</p></div>
+            <div class="paleta-item color5" style="align-items: center; color: white;"> <p>4281A4</p></div>
+        </div>
+        <div class="item" id="Fuente">
+            <h2 style="font-size: 20px;">Fuentes</h2>
+            <p style="font-size: 34px;">SERIF</p>
+        </div>
+    </div>
+</body>
+</html>
