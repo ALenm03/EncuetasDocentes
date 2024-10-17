@@ -22,16 +22,33 @@ if ($_SESSION['user_role'] == 'admin') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="assets/styles.css">
     <title>Usuario Normal</title>
 </head>
-<body>
-    <h1>Eres un usuario normal</h1>
-    <img src="img/soy_miembro.jpg" alt="Imagen de usuario normal">
-    <!-- Botón de Cerrar Sesión -->
-    <form action="backend/logout.php" method="POST">
-        <button type="submit">Cerrar sesión</button>
-    </form>
+<body id="adm_body">
+
+    <!-- Header fijo con el botón de Cerrar Sesión -->
+    <div id="header_pagina">
+        <h2>Panel de Usuario</h2>
+        <div class="header-buttons">
+            <form action="backend/logout.php" method="POST">
+                <button type="submit" id="adm_logout">Cerrar sesión</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+
+
 </body>
 </html>
-
-
