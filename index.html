@@ -55,57 +55,62 @@
         </div>
     </div>
 
-  <!--Ventana Modal para registro de usuarios-->
-    <div class="modal fade" id="modal-dafult">
-      <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-              <div class="modal-header encabezado-menu-registro">
-                  <h4 class="modal-title">Registrate</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                <label for="txtcaja">Usuario</label>
-                <!-- Campo de Usuario/Correo -->
-                  <div class="input-group mb-3">
-                    <input type="text" name="usuario_o_correo" class="form-control" placeholder="Usuario" id="registro_usuario"required>
-                    <div class="input-group-append">
-                    <div class="input-group-text">
-                    <span class="fas fa-user"></span>
-                    </div>
-                    </div>
+    <form id="registroForm" action="backend/agregrar_usuario.php" method="post">
+      <!--Ventana Modal para registro de usuarios-->
+      <div class="modal fade" id="modal-dafult">
+          <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                  <div class="modal-header encabezado-menu-registro">
+                      <h4 class="modal-title">Registrate</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
-                  <label for="txtcaja">Correo</label>
-                  <!-- Campo de Correo -->
-                    <div class="input-group mb-3">
-                      <input type="text" name="usuario_o_correo" class="form-control" placeholder="Correo" id="registro_correo"required>
-                      <div class="input-group-append">
-                      <div class="input-group-text">
-                      <span class="fas fa-envelope"></span>
+                  <div class="modal-body">
+                      <label for="name">Usuario</label>
+                      <!-- Campo de Usuario -->
+                      <div class="input-group mb-3">
+                          <input type="text" id="name" name="name" class="form-control" placeholder="Usuario" required>
+                          <div class="input-group-append">
+                              <div class="input-group-text">
+                                  <span class="fas fa-user"></span>
+                              </div>
+                          </div>
                       </div>
+                      <label for="email">Correo</label>
+                      <!-- Campo de Correo -->
+                      <div class="input-group mb-3">
+                          <input type="email" id="email" name="email" class="form-control" placeholder="Correo" required>
+                          <div class="input-group-append">
+                              <div class="input-group-text">
+                                  <span class="fas fa-envelope"></span>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                <!-- Campo de Contraseña -->
-                <label for="txtcaja">Contraseña</label>
-                <div class="input-group mb-3">
-                  <input type="password" name="contraseña" class="form-control" placeholder="Contraseña" id="registro_contra"required>
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-lock"></span>
-                    </div>
+                      <!-- Campo de Contraseña -->
+                      <label for="password">Contraseña</label>
+                      <div class="input-group mb-3">
+                          <input type="password" name="password" class="form-control" placeholder="Contraseña" id="password" required>
+                          <div class="input-group-append">
+                              <div class="input-group-text">
+                                  <span class="fas fa-lock"></span>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                </div>
-              </div>
-              <!--BOTON DE REGISTRAAAR-->
-              <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">
-                Registrar
-              </button>
+                  <!-- Contenedor de mensaje de éxito o error -->
+                  <div id="mensaje" class="mensaje"></div>
+                  <!--BOTON DE REGISTRO-->
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-default">
+                          Registrar
+                      </button>
+                  </div>
               </div>
           </div>
       </div>
-  </div>
+  </form>
+  
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>
@@ -156,68 +161,48 @@
               });
           });
         
-          // Manejar el evento del botón de registrar
-          $(".btn-default").on("click", function() {
-              var correo = $("#registro_correo").val();
-              var correoValido = /^[a-zA-Z0-9._-]+@[sitio del correo]+$/; // Expresión regular para validar el correo
-    
-              if (!correoValido.test(correo)) {
-                  // Mostrar mensaje de error si el correo no es válido
-                  Swal.fire({
-                      icon: 'error',
-                      title: 'Correo inválido',
-                      text: 'Por favor, introduce un correo que termine en @gmail @outlook etc...'
-                  });
-                  return; // Detener el proceso si el correo no es válido
-              }
-    
-              // Simulación del envío de registro con AJAX si el correo es válido
-              $.ajax({
-                  type: "POST",
-                  url: "backend/procesar_registro.php", // Archivo PHP que procesará el registro
-                  data: {
-                      usuario: $("#registro_usuario").val(),
-                      correo: correo,
-                      contraseña: $("#registro_contra").val()
-                  },
-                  dataType: "json",
-                  success: function(response) {
-                      if (response.success) {
-                          // Animación de éxito
-                          Swal.fire({
-                              icon: 'success',
-                              title: 'Registrado',
-                              text: response.message,
-                              timer: 700,
-                              showConfirmButton: false,
-                              allowOutsideClick: false,
-                              allowEscapeKey: false,
-                              allowEnterKey: false
-                          }).then(() => {
-                              // Redirigir o cerrar el modal
-                              $('#modal-dafult').modal('hide');
-                          });
-                      } else {
-                          // Animación de error
-                          Swal.fire({
-                              icon: 'error',
-                              title: 'Error en el registro',
-                              text: response.message
-                          });
-                      }
-                  },
-                  error: function() {
-                      Swal.fire({
-                          icon: 'error',
-                          title: 'Error',
-                          text: 'Ocurrió un error al procesar tu registro.'
-                      });
-                  }
-              });
-          });
       });
     </script>
-    
+    <script>
+      document.getElementById("registroForm").addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevenir envío automático del formulario
+      
+          const emailField = document.getElementById("email").value;
+          const mensaje = document.getElementById("mensaje");
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|outlook|yahoo)\.com$/;
+      
+          // Validar si el correo es válido
+          if (!emailRegex.test(emailField)) {
+              mostrarMensaje("El correo debe terminar con @gmail.com, @outlook.com o @yahoo.com", "error");
+              return;
+          }
+      
+          // Intentar enviar el formulario usando Fetch para manejar respuestas
+          const formData = new FormData(this);
+          fetch(this.action, {
+              method: "POST",
+              body: formData
+          })
+          .then(response => {
+              if (response.ok) {
+                  mostrarMensaje("Usuario registrado exitosamente", "success");
+              } else {
+                  throw new Error("Error al registrar usuario");
+              }
+          })
+          .catch(error => {
+              mostrarMensaje("Error de conexión: " + error.message, "error");
+          });
+      });
+      
+      // Función para mostrar el mensaje con animación
+      function mostrarMensaje(texto, tipo) {
+          const mensaje = document.getElementById("mensaje");
+          mensaje.textContent = texto;
+          mensaje.className = "mensaje " + tipo;
+          mensaje.style.display = "block";
+      }
+      </script>
   
 
 </body>
