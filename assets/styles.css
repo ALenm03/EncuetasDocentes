@@ -168,3 +168,29 @@
 .btn_eliminar_encuesta:hover {
     background-color: #1A1423;
 }
+
+
+
+
+/* ESTILOS PARA EDITAR ENCUESTAAA*/
+
+.Btn_Edit_Pregunta {
+    margin: 5px;
+}
+.Btn_Eliminar_Pregunta {
+    margin: 5px
+}
+.Btn_Cambiar_a_Texto {
+    margin: 2px;
+    background-color: #366a86;
+}
+.Btn_Cambiar_a_Checkbox {
+    margin: 2px;
+    background-color: #366a86;
+
+}
+.Btn_Cambiar_a_OpMul {
+    margin: 2px;
+    background-color: #366a86;
+
+}

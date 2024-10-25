@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Dinámico</title>
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        .button-container {
+            margin-right: 15px; /* Espaciado a la derecha de los botones */
+        }
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px; /* Espaciado interno */
+        }
+        .action-buttons {
+            margin-top: 10px; /* Espaciado arriba de los botones de acción */
+        }
+    </style>
+</head>
+<body class="body" style="padding-top: 150px;">
+
+    <div id="header_pagina">
+        <h2>Admin - Editar</h2>
+        <div class="header-buttons">
+            <button id="adm_regresar">Regresar</button>
+            <form action="backend/logout.php" method="POST">
+                <button type="submit" id="adm_logout">Cerrar sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header nombre_del_from_bg">
+                        <div class="card-title nombre_del_from text-center w-100">
+                            <h1>Editar FORMULARIO X</h1>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Pregunta 1 -->
+                        <div class="mb-3 d-flex align-items-start">
+                            <div class="button-container d-flex flex-column justify-content-center">
+                                <button class="btn btn-light Btn_Edit_Pregunta" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="flex-grow-1">
+                                <label for="textarea-input" class="form-label">Pregunta 1</label>
+                                <textarea id="textarea-input" class="form-control" rows="5" placeholder="Ingresa tu respuesta aquí"></textarea>
+
+                                <div class="action-buttons d-flex">
+                                    <button class="btn Btn_Cambiar_a_Texto">Botón 1</button>
+                                    <button class="btn  Btn_Cambiar_a_Checkbox">Botón 2</button>
+                                    <button class="btn Btn_Cambiar_a_OpMul">Botón 3</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Pregunta 2 -->
+                        <div class="mb-3 d-flex align-items-start">
+                            <div class="button-container d-flex flex-column justify-content-center">
+                                <button class="btn btn-light Btn_Edit_Pregunta" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-label">Pregunta 2</label>
+                                <div>
+                                    <input type="checkbox" id="checkbox1">
+                                    <label for="checkbox1">1</label><br>
+
+                                    <input type="checkbox" id="checkbox2">
+                                    <label for="checkbox2">2</label><br>
+
+                                    <input type="checkbox" id="checkbox3">
+                                    <label for="checkbox3">3</label><br>
+
+                                    <input type="checkbox" id="checkbox4">
+                                    <label for="checkbox4">4</label><br>
+                                </div>
+
+                                <div class="action-buttons d-flex">
+                                    <button class="btn Btn_Cambiar_a_Texto">Botón 1</button>
+                                    <button class="btn  Btn_Cambiar_a_Checkbox">Botón 2</button>
+                                    <button class="btn Btn_Cambiar_a_OpMul">Botón 3</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Pregunta 3 -->
+                        <div class="mb-3 d-flex align-items-start">
+                            <div class="button-container d-flex flex-column justify-content-center">
+                                <button class="btn btn-light Btn_Edit_Pregunta" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-label">Pregunta 3</label>
+                                <div>
+                                    <input type="radio" id="puntito1" name="puntito">
+                                    <label for="puntito1">1</label><br>
+
+                                    <input type="radio" id="puntito2" name="puntito">
+                                    <label for="puntito2">2</label><br>
+
+                                    <input type="radio" id="puntito3" name="puntito">
+                                    <label for="puntito3">3</label><br>
+
+                                    <input type="radio" id="puntito4" name="puntito">
+                                    <label for="puntito4">4</label><br>
+                                </div>
+                                <div class="action-buttons d-flex">
+                                    <button class="btn Btn_Cambiar_a_Texto">Botón 1</button>
+                                    <button class="btn  Btn_Cambiar_a_Checkbox">Botón 2</button>
+                                    <button class="btn Btn_Cambiar_a_OpMul">Botón 3</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AdminLTE JavaScript -->
+    <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+
+    <script>
+        // Para regresar al panel de admin
+        document.getElementById('adm_regresar').addEventListener('click', function() {
+            window.location.href = 'admin.php'; 
+        });
+    </script>
+</body>
+</html>
+
+
+
