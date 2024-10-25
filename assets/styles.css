@@ -178,19 +178,50 @@
     margin: 5px;
 }
 .Btn_Eliminar_Pregunta {
-    margin: 5px
+    margin: 5px;
 }
 .Btn_Cambiar_a_Texto {
-    margin: 2px;
+    margin: 5px;
+    color: white;
     background-color: #366a86;
 }
 .Btn_Cambiar_a_Checkbox {
-    margin: 2px;
+    margin: 5px;
     background-color: #366a86;
+    color: white;
+
 
 }
 .Btn_Cambiar_a_OpMul {
-    margin: 2px;
+    margin: 5px;
     background-color: #366a86;
+    color: white;
 
+
+}
+.Btn_Eliminar_Preguntas_Seleccionadas {
+    margin: 5px;
+    background-color: red;
+    color: white;
+}
+.Btn_Eliminar_Preguntas_Seleccionadas:disabled {
+    background-color: black;
+}
+
+
+.Btn_Guardar_Pregunta_Editada{
+    margin: 5px;
+    color: white;
+
+    background-color: #366a86;
+}
+.Btn_Cancelar_Edicion_Pregunta{
+    margin: 5px;
+}
+.seleccionar_preguntas_a_eliminar{
+    margin-right: 20px;
+}
+
+.checkboxOpcion{
+    margin-right: 15px;
 }

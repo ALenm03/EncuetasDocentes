@@ -8,20 +8,6 @@
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <link rel="stylesheet" href="assets/styles.css">
-    <style>
-        .button-container {
-            margin-right: 15px; /* Espaciado a la derecha de los botones */
-        }
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px; /* Espaciado interno */
-        }
-        .action-buttons {
-            margin-top: 10px; /* Espaciado arriba de los botones de acción */
-        }
-    </style>
 </head>
 <body class="body" style="padding-top: 150px;">
 
@@ -48,32 +34,37 @@
                     <div class="card-body">
 
                         <!-- Pregunta 1 -->
-                        <div class="mb-3 d-flex align-items-start">
-                            <div class="button-container d-flex flex-column justify-content-center">
+                        <div>
+                            <div>
                                 <button class="btn btn-light Btn_Edit_Pregunta" title="Editar"><i class="fas fa-pencil-alt"></i></button>
                                 <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar"><i class="fas fa-trash"></i></button>
                             </div>
-                            <div class="flex-grow-1">
+                            <div>
                                 <label for="textarea-input" class="form-label">Pregunta 1</label>
                                 <textarea id="textarea-input" class="form-control" rows="5" placeholder="Ingresa tu respuesta aquí"></textarea>
 
-                                <div class="action-buttons d-flex">
-                                    <button class="btn Btn_Cambiar_a_Texto">Botón 1</button>
-                                    <button class="btn  Btn_Cambiar_a_Checkbox">Botón 2</button>
-                                    <button class="btn Btn_Cambiar_a_OpMul">Botón 3</button>
+                                <div>
+                                    <button class="btn Btn_Cambiar_a_Texto">Cambiar a Texto</button>
+                                    <button class="btn  Btn_Cambiar_a_Checkbox">Cambiar a checkbox</button>
+                                    <button class="btn Btn_Cambiar_a_OpMul">Cambiar a Opcion Multiple</button>
+                                    <button class="btn Btn_Guardar_Pregunta_Editada">Guardar Pregunta</button>
+                                    <button class="btn btn-danger Btn_Eliminar_Preguntas_Seleccionadas">Eliminar Respuestas seleccionadas</button>
+                                    <button class="btn btn-warning Btn_Cancelar_Edicion_Pregunta">Cancelar</button>
                                 </div>
                             </div>
                         </div>
 
+
                         <hr>
 
+
                         <!-- Pregunta 2 -->
-                        <div class="mb-3 d-flex align-items-start">
-                            <div class="button-container d-flex flex-column justify-content-center">
+                        <div>
+                            <div>
                                 <button class="btn btn-light Btn_Edit_Pregunta" title="Editar"><i class="fas fa-pencil-alt"></i></button>
                                 <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar"><i class="fas fa-trash"></i></button>
                             </div>
-                            <div class="flex-grow-1">
+                            <div>
                                 <label class="form-label">Pregunta 2</label>
                                 <div>
                                     <input type="checkbox" id="checkbox1">
@@ -89,45 +80,56 @@
                                     <label for="checkbox4">4</label><br>
                                 </div>
 
-                                <div class="action-buttons d-flex">
-                                    <button class="btn Btn_Cambiar_a_Texto">Botón 1</button>
-                                    <button class="btn  Btn_Cambiar_a_Checkbox">Botón 2</button>
-                                    <button class="btn Btn_Cambiar_a_OpMul">Botón 3</button>
+                                <div>
+                                    <button class="btn Btn_Cambiar_a_Texto">Cambiar a Texto</button>
+                                    <button class="btn  Btn_Cambiar_a_Checkbox">Cambiar a checkbox</button>
+                                    <button class="btn Btn_Cambiar_a_OpMul">Cambiar a Opcion Multiple</button>
+                                    <button class="btn Btn_Guardar_Pregunta_Editada">Guardar Pregunta</button>
+                                    <button class="btn btn-danger Btn_Eliminar_Preguntas_Seleccionadas">Eliminar Respuestas seleccionadas</button>
+                                    <button class="btn btn-warning Btn_Cancelar_Edicion_Pregunta">Cancelar</button>
                                 </div>
                             </div>
                         </div>
+
 
                         <hr>
 
+
                         <!-- Pregunta 3 -->
-                        <div class="mb-3 d-flex align-items-start">
-                            <div class="button-container d-flex flex-column justify-content-center">
-                                <button class="btn btn-light Btn_Edit_Pregunta" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+                        <div class="d-flex">
+                            <div class="d-flex" style="flex-wrap: wrap;">
+                                <button class="btn btn-light Btn_Edit_Pregunta" id="editar_pregunta3" title="Editar"><i class="fas fa-pencil-alt"></i></button>
                                 <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar"><i class="fas fa-trash"></i></button>
                             </div>
-                            <div class="flex-grow-1">
+                            <div>
                                 <label class="form-label">Pregunta 3</label>
                                 <div>
-                                    <input type="radio" id="puntito1" name="puntito">
+                                    <input type="checkbox" class="checkboxOpcion Seleccionar_preguntas_a_eliminar_P3">
+                                    <input type="radio" id="puntito1" name="puntito" disabled>
                                     <label for="puntito1">1</label><br>
 
-                                    <input type="radio" id="puntito2" name="puntito">
+                                    <input type="checkbox" class="checkboxOpcion Seleccionar_preguntas_a_eliminar_P3">
+                                    <input type="radio" id="puntito2" name="puntito" disabled>
                                     <label for="puntito2">2</label><br>
 
-                                    <input type="radio" id="puntito3" name="puntito">
+                                    <input type="checkbox" class="checkboxOpcion Seleccionar_preguntas_a_eliminar_P3">
+                                    <input type="radio" id="puntito3" name="puntito" disabled>
                                     <label for="puntito3">3</label><br>
 
-                                    <input type="radio" id="puntito4" name="puntito">
+                                    <input type="checkbox" class="checkboxOpcion Seleccionar_preguntas_a_eliminar_P3">
+                                    <input type="radio" id="puntito4" name="puntito" disabled>
                                     <label for="puntito4">4</label><br>
                                 </div>
-                                <div class="action-buttons d-flex">
-                                    <button class="btn Btn_Cambiar_a_Texto">Botón 1</button>
-                                    <button class="btn  Btn_Cambiar_a_Checkbox">Botón 2</button>
-                                    <button class="btn Btn_Cambiar_a_OpMul">Botón 3</button>
+                                <div class="d-flex" id="Botonesss" style="flex-wrap: wrap; justify-content: center">
+                                    <button class="btn Btn_Cambiar_a_Texto">Cambiar a Texto</button>
+                                    <button class="btn  Btn_Cambiar_a_Checkbox">Cambiar a checkbox</button>
+                                    <button class="btn Btn_Cambiar_a_OpMul">Cambiar a Opcion Multiple</button>
+                                    <button class="btn Btn_Guardar_Pregunta_Editada">Guardar Pregunta</button>
+                                    <button class="btn Btn_Eliminar_Preguntas_Seleccionadas" id="eliminar_opciones_P3" disabled>Eliminar Respuestas seleccionadas</button>
+                                    <button class="btn btn-warning Btn_Cancelar_Edicion_Pregunta">Cancelar</button>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -145,6 +147,34 @@
         document.getElementById('adm_regresar').addEventListener('click', function() {
             window.location.href = 'admin.php'; 
         });
+
+
+
+        
+        //Hacer que el Boton de eliminar se desactive segun los CheckBoxes de las preguntas
+        const checkboxes = document.querySelectorAll('.Seleccionar_preguntas_a_eliminar_P3');
+        const submitButton = document.getElementById('eliminar_opciones_P3');
+        // Función para verificar si al menos un checkbox está marcado
+        function toggleButton() {
+            const isAnyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            submitButton.disabled = !isAnyChecked;
+        }
+        // Agregar el evento a cada checkbox
+        checkboxes.forEach(checkbox => checkbox.addEventListener('change', toggleButton));
+
+
+
+
+        document.getElementById('editar_pregunta3').addEventListener('click', function() {
+        const div = document.getElementById('Botonesss');
+        // Verificar si el div está oculto y alternar el estado de display
+        if (div.style.display === 'none') {
+            div.style.display = 'block'; // Mostrar el div
+        } else {
+            div.style.display = 'none'; // Ocultar el div
+        }
+        });
+        
     </script>
 </body>
 </html>
