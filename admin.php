@@ -114,7 +114,7 @@ if ($_SESSION['user_role'] == 'user') {
 
 
         document.getElementById('crear_nueva_encuesta').addEventListener('click', function() {
-        window.location.href = 'creacionFormulario.html'; 
+        window.location.href = 'creacionFormulario.php'; 
         });
     </script>
 

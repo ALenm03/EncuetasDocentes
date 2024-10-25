@@ -1,3 +1,18 @@
+<?php
+// Iniciar la sesión
+session_start();
+
+// Verificar si el usuario ha iniciado sesión y si es admin
+if (!isset($_SESSION['user_id'])) {
+    // Si no está autenticado o no es admin, redirigir a index.html
+    header("Location: index.html");
+    exit();
+}
+if ($_SESSION['user_role'] == 'user') {
+    header("Location: usuario_normal.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
