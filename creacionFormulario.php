@@ -104,7 +104,6 @@ if ($_SESSION['user_role'] == 'user') {
             }            
 
 
-
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('form-group', 'mb-4');
 
