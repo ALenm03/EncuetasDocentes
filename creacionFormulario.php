@@ -93,6 +93,18 @@ if ($_SESSION['user_role'] == 'user') {
 
         // Función para agregar una nueva pregunta
         document.getElementById('anadir_pregunta').addEventListener('click', function () {
+
+
+            //CONTAR PREGUNTAS NOMAS 10
+            const ContarNumPreguntas = formContainer.querySelectorAll('.form-group').length;
+
+            if (ContarNumPreguntas >= 10) {
+            alert('No puedes añadir más de 10 preguntas.');
+            return; // Salir de la función si ya hay 10 preguntas
+            }            
+
+
+
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('form-group', 'mb-4');
 
