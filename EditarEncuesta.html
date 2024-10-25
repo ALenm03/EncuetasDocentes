@@ -98,35 +98,23 @@
                         <!-- Pregunta 3 -->
                         <div class="d-flex">
                             <div class="d-flex" style="flex-wrap: wrap;">
-                                <button class="btn btn-light Btn_Edit_Pregunta" id="editar_pregunta3" title="Editar"><i class="fas fa-pencil-alt"></i></button>
-                                <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </div>
                             <div>
                                 <label class="form-label">Pregunta 3</label>
-                                <div>
-                                    <input type="checkbox" class="checkboxOpcion Seleccionar_preguntas_a_eliminar_P3">
-                                    <input type="radio" id="puntito1" name="puntito" disabled>
-                                    <label for="puntito1">1</label><br>
-
-                                    <input type="checkbox" class="checkboxOpcion Seleccionar_preguntas_a_eliminar_P3">
-                                    <input type="radio" id="puntito2" name="puntito" disabled>
-                                    <label for="puntito2">2</label><br>
-
-                                    <input type="checkbox" class="checkboxOpcion Seleccionar_preguntas_a_eliminar_P3">
-                                    <input type="radio" id="puntito3" name="puntito" disabled>
-                                    <label for="puntito3">3</label><br>
-
-                                    <input type="checkbox" class="checkboxOpcion Seleccionar_preguntas_a_eliminar_P3">
-                                    <input type="radio" id="puntito4" name="puntito" disabled>
-                                    <label for="puntito4">4</label><br>
+                                <div id="opcionesContainerP3">
+                                    <div class="form-group d-flex" style="justify-content: flex-start;"> 
+                                        <button class="btn btn-danger fas fa-times"></button>
+                                        <input type="radio" id="puntitoP3_1" name="puntito" disabled>
+                                        <input type="text" class="form-control" id="RespuestaP3_1" style="max-width: 50%;">
+                                    </div>
                                 </div>
                                 <div class="d-flex" id="Botonesss" style="flex-wrap: wrap; justify-content: center">
-                                    <button class="btn Btn_Cambiar_a_Texto">Cambiar a Texto</button>
-                                    <button class="btn  Btn_Cambiar_a_Checkbox">Cambiar a checkbox</button>
-                                    <button class="btn Btn_Cambiar_a_OpMul">Cambiar a Opcion Multiple</button>
-                                    <button class="btn Btn_Guardar_Pregunta_Editada">Guardar Pregunta</button>
-                                    <button class="btn Btn_Eliminar_Preguntas_Seleccionadas" id="eliminar_opciones_P3" disabled>Eliminar Respuestas seleccionadas</button>
-                                    <button class="btn btn-warning Btn_Cancelar_Edicion_Pregunta">Cancelar</button>
+                                    <button class="btn Btn_Cambiar_a_Texto" id="cambiar_incisos_a_texto">Cambiar a Texto</button>
+                                    <button class="btn Btn_Cambiar_a_Checkbox" id="cambiar_incisos_a_checkbox">Cambiar a checkbox</button>
+                                    <button class="btn Btn_Cambiar_a_OpMul" id="cambiar_incisos_a_opmult">Cambiar a Opcion Multiple</button>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +138,7 @@
 
 
 
-        
+
         //Hacer que el Boton de eliminar se desactive segun los CheckBoxes de las preguntas
         const checkboxes = document.querySelectorAll('.Seleccionar_preguntas_a_eliminar_P3');
         const submitButton = document.getElementById('eliminar_opciones_P3');
@@ -175,6 +163,51 @@
         }
         });
         
+    </script>
+
+    <script>
+    document.getElementById("cambiar_incisos_a_checkbox").addEventListener("click", function() {
+        // Seleccionar todos los inputs que tengan un id que empiece con "puntito"
+        const radioButtons = document.querySelectorAll("input[id^='puntitoP3']");
+
+        // Recorrer y cambiar el tipo de cada input a checkbox
+        radioButtons.forEach((radio) => {
+            radio.type = "checkbox";
+        });
+    });
+
+    document.getElementById("cambiar_incisos_a_opmult").addEventListener("click", function() {
+        // Seleccionar todos los inputs que tengan un id que empiece con "puntito"
+        const radioButtons = document.querySelectorAll("input[id^='puntitoP3']");
+
+        // Recorrer y cambiar el tipo de cada input a checkbox
+        radioButtons.forEach((checkbox) => {
+            checkbox.type = "radio";
+        });
+    });
+
+    document.getElementById("cambiar_incisos_a_texto").addEventListener("click", function() {
+        // Seleccionar el contenedor donde están las opciones
+        const opcionesContainer = document.getElementById("opcionesContainerP3");
+
+        // Seleccionar todos los elementos dentro del contenedor
+        const elementos = opcionesContainer.querySelectorAll("input, label, br");
+
+        // Filtrar y eliminar solo los que tienen un id que empieza con "puntitoP3"
+        elementos.forEach(elemento => {
+            if (elemento.id && elemento.id.startsWith("puntitoP3")) {
+                elemento.remove();
+            }
+        });
+
+        // Crear y agregar el textarea
+        const textArea = document.createElement("textarea");
+        textArea.classList.add("form-control");
+        textArea.placeholder = "Escribe tu respuesta aquí...";
+
+        opcionesContainer.appendChild(textArea);
+    });
+    
     </script>
 </body>
 </html>

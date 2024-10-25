@@ -207,8 +207,6 @@
 .Btn_Eliminar_Preguntas_Seleccionadas:disabled {
     background-color: black;
 }
-
-
 .Btn_Guardar_Pregunta_Editada{
     margin: 5px;
     color: white;
@@ -224,4 +222,7 @@
 
 .checkboxOpcion{
     margin-right: 15px;
+}
+.Editar_Respuesta{
+
 }
