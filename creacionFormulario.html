@@ -231,57 +231,103 @@
 
         // Función para guardar el formulario usando AJAX
         document.getElementById('guardar_formulario').addEventListener('click', function () {
-            const nombreFormulario = document.getElementById('txtcaja').value;
-            const preguntas = formContainer.querySelectorAll('.form-group');
-            const datosPreguntas = [];
+    const nombreFormulario = document.getElementById('txtcaja').value;
+    const preguntas = formContainer.querySelectorAll('.form-group');
+    const datosPreguntas = [];
 
-            preguntas.forEach((pregunta, index) => {
-                const preguntaTexto = pregunta.querySelector('input[type="text"]').value;
-                const respuestas = pregunta.querySelectorAll('.respuesta');
-                const datosRespuestas = [];
+    let formularioValido = true; // Bandera para verificar si el formulario es válido
 
-                respuestas.forEach(respuesta => {
-                    if (respuesta.querySelector('textarea')) {
-                        // Respuesta tipo párrafo
-                        datosRespuestas.push(respuesta.querySelector('textarea').value);
-                    } else if (respuesta.querySelector('input[type="checkbox"]')) {
-                        // Respuesta tipo checkbox
-                        datosRespuestas.push(respuesta.querySelector('input[type="text"]').value);
-                    } else if (respuesta.querySelector('input[type="radio"]')) {
-                        // Respuesta tipo opción múltiple
-                        datosRespuestas.push(respuesta.querySelector('input[type="text"]').value);
-                    }
-                });
+    preguntas.forEach((pregunta, index) => {
+        const preguntaTexto = pregunta.querySelector('input[type="text"]').value;
+        const respuestas = pregunta.querySelectorAll('.respuesta');
+        const datosRespuestas = [];
 
-                datosPreguntas.push({
-                    pregunta: preguntaTexto,
-                    respuestas: datosRespuestas
-                });
-            });
+        // Validar que la pregunta tenga al menos una respuesta
+        if (respuestas.length === 0) {
+            alert(`La pregunta número ${index + 1} debe tener al menos una respuesta.`);
+            formularioValido = false;
+            return; // Salir del ciclo de esta pregunta
+        }
 
-            // Crear un objeto para enviar
-            const formData = {
-                nombre_formulario: nombreFormulario,
-                preguntas: datosPreguntas
-            };
+        // Capturar el tipo de respuesta (por defecto será "parrafo")
+        let tipoRespuesta = 'parrafo'; // Tipo por defecto
 
-            // Enviar datos al servidor usando AJAX
-            // Enviar datos al servidor usando AJAX
-$.ajax({
-    type: 'POST',
-    url: 'backend/guardar_formulario.php',
-    data: { formData: JSON.stringify(formData) }, // Asegúrate de que esto sea correcto
-    contentType: 'application/x-www-form-urlencoded', // Asegúrate de que el tipo de contenido sea correcto
-    success: function (response) {
-        alert(response); // Puedes mostrar una notificación o realizar alguna acción
-    },
-    error: function (xhr, status, error) {
-        console.error('Error:', error);
-        alert('Error al guardar el formulario.'); // Manejar error
+        if (respuestas.length < 2 && (pregunta.querySelector('input[type="checkbox"]') || pregunta.querySelector('input[type="radio"]'))) {
+            alert(`La pregunta número ${index + 1} debe tener al menos dos respuestas para opción múltiple o checkbox.`);
+            formularioValido = false;
+            return;
+        }
+
+        respuestas.forEach(respuesta => {
+            if (respuesta.querySelector('textarea')) {
+                // Respuesta tipo párrafo
+                const textoRespuesta = respuesta.querySelector('textarea').value;
+                if (textoRespuesta.trim() === "") {
+                    alert(`La respuesta de la pregunta número ${index + 1} no puede estar vacía.`);
+                    formularioValido = false;
+                    return;
+                }
+                datosRespuestas.push(textoRespuesta);
+                tipoRespuesta = 'parrafo';
+            } else if (respuesta.querySelector('input[type="checkbox"]')) {
+                // Respuesta tipo checkbox
+                const textoOpcion = respuesta.querySelector('input[type="text"]').value;
+                if (textoOpcion.trim() === "") {
+                    alert(`Las opciones de checkbox en la pregunta número ${index + 1} no pueden estar vacías.`);
+                    formularioValido = false;
+                    return;
+                }
+                datosRespuestas.push(textoOpcion);
+                tipoRespuesta = 'checkbox';
+            } else if (respuesta.querySelector('input[type="radio"]')) {
+                // Respuesta tipo opción múltiple
+                const textoOpcion = respuesta.querySelector('input[type="text"]').value;
+                if (textoOpcion.trim() === "") {
+                    alert(`Las opciones de opción múltiple en la pregunta número ${index + 1} no pueden estar vacías.`);
+                    formularioValido = false;
+                    return;
+                }
+                datosRespuestas.push(textoOpcion);
+                tipoRespuesta = 'opcion_multiple';
+            }
+        });
+
+        datosPreguntas.push({
+            pregunta: preguntaTexto,
+            respuestas: datosRespuestas,
+            tipo_respuesta: tipoRespuesta // Guardar el tipo de respuesta
+        });
+    });
+
+    // Si el formulario no es válido, no se envía
+    if (!formularioValido) {
+        return;
     }
+
+    // Crear un objeto para enviar
+    const formData = {
+        nombre_formulario: nombreFormulario,
+        preguntas: datosPreguntas
+    };
+
+    // Enviar datos al servidor usando AJAX
+    $.ajax({
+        type: 'POST',
+        url: 'backend/guardar_formulario.php',
+        data: { formData: JSON.stringify(formData) }, 
+        contentType: 'application/x-www-form-urlencoded',
+        success: function (response) {
+            alert(response);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error:', error);
+            alert('Error al guardar el formulario.');
+        }
+    });
+
 });
 
-        });
+
 
 
         document.getElementById('adm_regresar').addEventListener('click', function() {
