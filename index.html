@@ -20,8 +20,6 @@
           </div>
           
           <div class="card-body login-card-body">
-            
-            
             <form id="loginForm" method="post">
               <label for="txtcaja">Usuario</label>
               <!-- Campo de Usuario/Correo -->
@@ -112,6 +110,18 @@
                               </div>
                           </div>
                       </div>
+
+                      <!--Confirmar Contra-->
+                      <label for="password">Confirmar Contraseña</label>
+                      <div class="input-group mb-3">
+                          <input type="password" name="password" class="form-control" placeholder="Contraseña" id="password3" required>
+                          <div class="input-group-append">
+                              <div class="input-group-text">
+                                    <span class="fas fa-eye" id="togglePassword3" style="cursor: pointer; margin-right: 5px;"></span>
+                                    <span class="fas fa-lock"></span>
+                              </div>
+                          </div>
+                      </div>
                   </div>
 
                   <!-- Contenedor de mensaje de éxito o error -->
@@ -194,36 +204,46 @@
       });
     </script>
     <script>
-      document.getElementById("registroForm").addEventListener("submit", function(event) {
-          event.preventDefault(); // Prevenir envío automático del formulario
+        document.getElementById("registroForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevenir envío automático del formulario
       
-          const emailField = document.getElementById("email").value;
-          const mensaje = document.getElementById("mensaje");
-          const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|outlook|yahoo)\.com$/;
+        const emailField = document.getElementById("email").value;
+        const mensaje = document.getElementById("mensaje");
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|outlook|yahoo)\.com$/;
       
-          // Validar si el correo es válido
-          if (!emailRegex.test(emailField)) {
-              mostrarMensaje("El correo debe terminar con @gmail.com, @outlook.com o @yahoo.com", "error");
-              return;
-          }
+        // Validar si el correo es válido
+        if (!emailRegex.test(emailField)) {
+            mostrarMensaje("El correo debe terminar con @gmail.com, @outlook.com o @yahoo.com", "error");
+            return;
+        }
+        event.preventDefault(); // Prevenir el envío del formulario
+
+        const password1 = document.getElementById('password2').value;
+        const password2 = document.getElementById('password3').value;
+        if (password1 !== password2) {
+            alert('Las contraseñas deben ser iguales.');
+            return;
+        }
+        event.preventDefault();
+            
       
-          // Intentar enviar el formulario usando Fetch para manejar respuestas
-          const formData = new FormData(this);
-          fetch(this.action, {
-              method: "POST",
-              body: formData
-          })
-          .then(response => {
-              if (response.ok) {
-                  mostrarMensaje("Usuario registrado exitosamente", "success");
-              } else {
-                  throw new Error("Error al registrar usuario");
-              }
-          })
-          .catch(error => {
-              mostrarMensaje("Error de conexión: " + error.message, "error");
-          });
-      });
+        // Intentar enviar el formulario usando Fetch para manejar respuestas
+        const formData = new FormData(this);
+        fetch(this.action, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                mostrarMensaje("Usuario registrado exitosamente", "success");
+            } else {
+                throw new Error("Error al registrar usuario");
+            }
+        })
+        .catch(error => {
+            mostrarMensaje("Error de conexión: " + error.message, "error");
+        });
+        });
       
       // Función para mostrar el mensaje con animación
       function mostrarMensaje(texto, tipo) {
@@ -235,35 +255,54 @@
       </script>
 
 
-      <script>
-        const togglePassword = document.querySelector('#togglePassword1');
-        const passwordField = document.querySelector('#password1');
+        <script>
+            const togglePassword = document.querySelector('#togglePassword1');
+            const passwordField = document.querySelector('#password1');
       
-        togglePassword.addEventListener('click', function () {
-          // Alterna el tipo de input entre 'password' y 'text'
-          const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-          passwordField.setAttribute('type', type);
+            togglePassword.addEventListener('click', function () {
+            // Alterna el tipo de input entre 'password' y 'text'
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
       
-          // Cambia el ícono según el estado de la contraseña
-          this.classList.toggle('fa-eye');
-          this.classList.toggle('fa-eye-slash');
-        });
-      </script>
+            // Cambia el ícono según el estado de la contraseña
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+            });
+        </script>
 
-      <script>
-        const togglePassword2 = document.querySelector('#togglePassword2');
-        const passwordField2 = document.querySelector('#password2');
+        <script>
+            const togglePassword2 = document.querySelector('#togglePassword2');
+            const passwordField2 = document.querySelector('#password2');
       
-        togglePassword2.addEventListener('click', function () {
-          // Alterna el tipo de input entre 'password' y 'text'
-          const type = passwordField2.getAttribute('type') === 'password' ? 'text' : 'password';
-          passwordField2.setAttribute('type', type);
+            togglePassword2.addEventListener('click', function () {
+            // Alterna el tipo de input entre 'password' y 'text'
+            const type = passwordField2.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField2.setAttribute('type', type);
       
-          // Cambia el ícono según el estado de la contraseña
-          this.classList.toggle('fa-eye');
-          this.classList.toggle('fa-eye-slash');
-        });
-      </script>
+            // Cambia el ícono según el estado de la contraseña
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+            });
+        </script>
+
+        <script>
+            const togglePassword3 = document.querySelector('#togglePassword3');
+            const passwordField3 = document.querySelector('#password3');
+  
+            togglePassword3.addEventListener('click', function () {
+            // Alterna el tipo de input entre 'password' y 'text'
+            const type = passwordField3.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField3.setAttribute('type', type);
+  
+            // Cambia el ícono según el estado de la contraseña
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+            });
+        </script>
+
+        
+
+      
     </body>
 </html>
 
