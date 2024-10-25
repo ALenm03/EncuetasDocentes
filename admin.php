@@ -4,7 +4,6 @@ session_start();
 
 // Verificar si el usuario ha iniciado sesión y si es admin
 if (!isset($_SESSION['user_id'])) {
-    // Si no está autenticado o no es admin, redirigir a index.html
     header("Location: index.html");
     exit();
 }
@@ -14,10 +13,10 @@ if ($_SESSION['user_role'] == 'user') {
 }
 
 // Conexión a la base de datos
-$servername = "localhost"; // Cambia según tu configuración
-$username = "root";        // Cambia según tu configuración
-$password = "";            // Cambia según tu configuración
-$dbname = "bdform";        // Nombre de tu base de datos
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "bdform";
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -91,7 +90,7 @@ $result = $stmt->get_result();
                                 echo "<td>{$row['nombre_formulario']}</td>";
                                 echo "<td><button class='btn_ver'>Ver</button></td>";
                                 echo "<td><button class='btn_editar'>Editar</button></td>";
-                                echo "<td><button class='btn_eliminar_encuesta'>Eliminar</button></td>";
+                                echo "<td><button class='btn_eliminar_encuesta' data-id='{$row['id']}' data-nombre='{$row['nombre_formulario']}'>Eliminar</button></td>";
                                 echo "</tr>";
                                 $count++;
                             }
@@ -112,6 +111,9 @@ $result = $stmt->get_result();
         // Agregar eventos a los botones de eliminar
         document.querySelectorAll('.btn_eliminar_encuesta').forEach(button => {
             button.addEventListener('click', function () {
+                const idFormulario = this.getAttribute('data-id');
+                const nombreFormulario = this.getAttribute('data-nombre');
+
                 Swal.fire({
                     title: '¿Seguro que quieres eliminar la encuesta?',
                     text: "Esta acción no se puede deshacer.",
@@ -123,13 +125,40 @@ $result = $stmt->get_result();
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Aquí puedes agregar la lógica para eliminar la encuesta
-                        Swal.fire('Eliminado', 'La encuesta ha sido eliminada.', 'success');
+                        // Enviar solicitud AJAX al backend para eliminar
+                        fetch('backend/eliminar_encuesta.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ nombreFormulario }) // Enviar solo el nombre del formulario
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Error en la respuesta del servidor');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Respuesta del servidor:', data);
+                            if (data.success) {
+                                Swal.fire('Eliminado', 'La encuesta ha sido eliminada.', 'success');
+                                // Eliminar la fila de la tabla en la interfaz
+                                this.closest('tr').remove();
+                            } else {
+                                Swal.fire('Error', data.message || 'No se pudo eliminar la encuesta.', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error en la solicitud:', error);
+                            Swal.fire('Error', 'Ocurrió un problema al eliminar la encuesta.', 'error');
+                        });
                     }
                 });
             });
         });
 
+        // Redirigir para crear nueva encuesta
         document.getElementById('crear_nueva_encuesta').addEventListener('click', function() {
             window.location.href = 'creacionFormulario.php'; 
         });
