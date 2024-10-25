@@ -21,9 +21,7 @@ if ($_SESSION['user_role'] == 'user') {
     <title>Formulario Dinámico</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <link rel="stylesheet" href="assets/styles.css">
-    
 </head>
 <body class="body"  style="padding-top: 150px;">
 
@@ -85,7 +83,6 @@ if ($_SESSION['user_role'] == 'user') {
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
     <script>
         
@@ -263,7 +260,8 @@ if ($_SESSION['user_role'] == 'user') {
         });
 
         // Función para guardar el formulario usando AJAX
-        document.getElementById('guardar_formulario').addEventListener('click', function () {
+       // Función para guardar el formulario usando AJAX
+document.getElementById('guardar_formulario').addEventListener('click', function () {
     const nombreFormulario = document.getElementById('txtcaja').value;
     const preguntas = formContainer.querySelectorAll('.form-group');
     const datosPreguntas = [];
@@ -350,23 +348,16 @@ if ($_SESSION['user_role'] == 'user') {
         data: { formData: JSON.stringify(formData) }, 
         contentType: 'application/x-www-form-urlencoded',
         success: function (response) {
-            wal({
-            title: "¡Éxito!",
-            text: "El formulario se ha guardado correctamente.",
-            icon: "success",
-            button: "Continuar",
-            }).then(() => {
-            // Redirigir a admin.php después de que el usuario cierra la alerta
-            window.location.href = 'admin.php';
-        });
+            alert('Encuesta guardada exitosamente.'); // Muestra la alerta
+            window.location.href = 'admin.php'; // Redirige a admin.php
         },
         error: function (xhr, status, error) {
             console.error('Error:', error);
             alert('Error al guardar el formulario.');
         }
-        });
+    });
+});
 
-        });
 
         document.getElementById('adm_regresar').addEventListener('click', function() {
         window.location.href = 'admin.php'; 
