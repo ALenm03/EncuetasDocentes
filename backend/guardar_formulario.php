@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Recibir los datos del formulario
-$formData = json_decode($_POST['formData'] ?? '', true); // Decodifica correctamente
+$formData = json_decode($_POST['formData'] ?? '', true);
 $nombre_formulario = $formData['nombre_formulario'] ?? '';
 $preguntas = $formData['preguntas'] ?? [];
 
@@ -22,14 +22,22 @@ if (empty($nombre_formulario) || empty($preguntas)) {
     die("Error: El nombre del formulario y las preguntas son obligatorios.");
 }
 
+session_start();
+
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    die("Error: Usuario no autenticado.");
+}
+$id_usuario = $_SESSION['user_id'];
+
 // Preparar la consulta para insertar los datos
-$stmt = $conn->prepare("INSERT INTO formularios (nombre_formulario, pregunta_num, pregunta, respuesta_1, respuesta_2, respuesta_3, respuesta_4, tipo_respuesta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sissssss", $nombre_formulario, $pregunta_num, $pregunta, $respuesta_1, $respuesta_2, $respuesta_3, $respuesta_4, $tipo_respuesta);
+$stmt = $conn->prepare("INSERT INTO formularios (nombre_formulario, pregunta_num, pregunta, respuesta_1, respuesta_2, respuesta_3, respuesta_4, tipo_respuesta, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("sissssssi", $nombre_formulario, $pregunta_num, $pregunta, $respuesta_1, $respuesta_2, $respuesta_3, $respuesta_4, $tipo_respuesta, $id_usuario);
 
 // Insertar cada pregunta y sus respuestas
 foreach ($preguntas as $index => $preguntaData) {
     $pregunta_num = $index + 1; // Número de la pregunta
-    $pregunta = $preguntaData['pregunta'] ?? ''; // Asegúrate de que esto existe
+    $pregunta = $preguntaData['pregunta'] ?? ''; 
     
     // Manejar respuestas
     $respuesta_1 = $respuesta_2 = $respuesta_3 = $respuesta_4 = null;
