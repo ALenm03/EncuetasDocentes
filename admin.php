@@ -12,7 +12,32 @@ if ($_SESSION['user_role'] == 'user') {
     header("Location: usuario_normal.php");
     exit();
 }
+
+// Conexión a la base de datos
+$servername = "localhost"; // Cambia según tu configuración
+$username = "root";        // Cambia según tu configuración
+$password = "";            // Cambia según tu configuración
+$dbname = "bdform";        // Nombre de tu base de datos
+
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Obtener encuestas relacionadas al usuario logueado sin repeticiones
+$sql = "SELECT f.id, f.nombre_formulario 
+        FROM formularios f 
+        WHERE f.id_usuario = ? 
+        GROUP BY f.nombre_formulario";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,11 +67,11 @@ if ($_SESSION['user_role'] == 'user') {
                 <div class="card-header adm_CabezaTabla">
                     <div class="card-title">
                         <h1>Encuestas</h1>
-                        <button type="submit" id="crear_nueva_encuesta">Nueva Encuesta</button>
+                        <button type="button" id="crear_nueva_encuesta">Nueva Encuesta</button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered table-striped table-hover taxt-nowrap table-head-fixed" id="Tablita">
+                    <table class="table table-bordered table-striped table-hover text-nowrap table-head-fixed" id="Tablita">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -57,19 +82,20 @@ if ($_SESSION['user_role'] == 'user') {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Ejemplo Encuesta</td>
-                                <td>
-                                    <button class="btn_ver">Ver</button>
-                                </td>
-                                <td>
-                                    <button class="btn_editar"> Editar </button>
-                                </td>
-                                <td>
-                                    <button class="btn_eliminar_encuesta"> Eliminar</button>
-                                </td>
-                            </tr>
+                            <?php
+                            // Mostrar las encuestas en la tabla
+                            $count = 1;
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>{$count}</td>";
+                                echo "<td>{$row['nombre_formulario']}</td>";
+                                echo "<td><button class='btn_ver'>Ver</button></td>";
+                                echo "<td><button class='btn_editar'>Editar</button></td>";
+                                echo "<td><button class='btn_eliminar_encuesta'>Eliminar</button></td>";
+                                echo "</tr>";
+                                $count++;
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -77,16 +103,13 @@ if ($_SESSION['user_role'] == 'user') {
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.js"></script>
-    <script src="assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
-    <script src="assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.js"></script>
-    <script src="assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
-        // Agregamos un evento a los botones de eliminar
+        // Agregar eventos a los botones de eliminar
         document.querySelectorAll('.btn_eliminar_encuesta').forEach(button => {
             button.addEventListener('click', function () {
                 Swal.fire({
@@ -98,26 +121,19 @@ if ($_SESSION['user_role'] == 'user') {
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Sí, eliminar',
                     cancelButtonText: 'Cancelar'
-                 //PARA SU CASA LA ENCUESTA
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Eliminado',
-                            'La encuesta ha sido eliminada.',
-                            'success'
-                        );
+                        // Aquí puedes agregar la lógica para eliminar la encuesta
+                        Swal.fire('Eliminado', 'La encuesta ha sido eliminada.', 'success');
                     }
                 });
             });
         });
 
-
-
         document.getElementById('crear_nueva_encuesta').addEventListener('click', function() {
-        window.location.href = 'creacionFormulario.php'; 
+            window.location.href = 'creacionFormulario.php'; 
         });
     </script>
-
 
 </body>
 </html>
