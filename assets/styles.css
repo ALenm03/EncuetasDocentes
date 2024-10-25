@@ -172,6 +172,8 @@
 
 
 
+
+
 /* ESTILOS PARA EDITAR ENCUESTAAA*/
 
 .Btn_Eliminar_Pregunta {
@@ -194,4 +196,7 @@
 }
 .Item_Form_Group{
     margin: 5px;
+}
+.Editar_Boton_Borrar_Pregunta{
+    margin-right: 20px;
 }
