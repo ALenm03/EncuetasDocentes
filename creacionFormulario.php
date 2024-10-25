@@ -347,7 +347,7 @@ if ($_SESSION['user_role'] == 'user') {
         });
 
         document.getElementById('adm_regresar').addEventListener('click', function() {
-        window.location.href = 'admin.html'; 
+        window.location.href = 'admin.php'; 
     });
     </script>
 

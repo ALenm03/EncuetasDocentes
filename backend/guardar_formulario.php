@@ -30,6 +30,18 @@ if (!isset($_SESSION['user_id'])) {
 }
 $id_usuario = $_SESSION['user_id'];
 
+// Verificar si el nombre del formulario ya existe para el usuario
+$stmtCheck = $conn->prepare("SELECT COUNT(*) FROM formularios WHERE nombre_formulario = ? AND id_usuario = ?");
+$stmtCheck->bind_param("si", $nombre_formulario, $id_usuario);
+$stmtCheck->execute();
+$stmtCheck->bind_result($count);
+$stmtCheck->fetch();
+$stmtCheck->close();
+
+if ($count > 0) {
+    die("Error: Ya existe un formulario con el nombre '$nombre_formulario' para este usuario.");
+}
+
 // Preparar la consulta para insertar los datos
 $stmt = $conn->prepare("INSERT INTO formularios (nombre_formulario, pregunta_num, pregunta, respuesta_1, respuesta_2, respuesta_3, respuesta_4, tipo_respuesta, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 $stmt->bind_param("sissssssi", $nombre_formulario, $pregunta_num, $pregunta, $respuesta_1, $respuesta_2, $respuesta_3, $respuesta_4, $tipo_respuesta, $id_usuario);
