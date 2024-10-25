@@ -13,7 +13,6 @@ if ($_SESSION['user_role'] == 'user') {
     exit();
 }
 
-
 // Conexión a la base de datos
 $servername = "localhost"; // Cambia según tu configuración
 $username = "root";        // Cambia según tu configuración
