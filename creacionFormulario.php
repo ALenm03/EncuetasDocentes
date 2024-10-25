@@ -49,7 +49,7 @@ if ($_SESSION['user_role'] == 'user') {
                     <div class="card-body">
                         <div class="form-group">
                             <label for="txtcaja">Ingrese el nombre del Formulario</label>
-                            <input type="text" class="form-control" maxlength="60" placeholder="Nombre del formulario" id="txtcaja"> 
+                            <input type="text" class="form-control" maxlength="50" placeholder="Nombre del formulario" id="txtcaja"> 
                         </div>
                     </div>
                 </div>
@@ -85,6 +85,10 @@ if ($_SESSION['user_role'] == 'user') {
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>
 
     <script>
+        
+        document.getElementById("txtcaja").value = "formulario";  // Aquí establecemos el valor "formulario" en el input con id "txtcaja"
+
+
         const formContainer = document.getElementById('form-preguntas');
 
         // Función para agregar una nueva pregunta
@@ -338,16 +342,14 @@ if ($_SESSION['user_role'] == 'user') {
             console.error('Error:', error);
             alert('Error al guardar el formulario.');
         }
-    });
+        });
 
-});
-
-
-
+        });
 
         document.getElementById('adm_regresar').addEventListener('click', function() {
         window.location.href = 'admin.html'; 
-        });
+    });
     </script>
+
 </body>
 </html>
