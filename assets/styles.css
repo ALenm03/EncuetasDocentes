@@ -1,12 +1,5 @@
     /* ESTILOS PARA EL LOGIN*/
     /* Para que el login-box permanezca en su lugar */
-    .login-box {
-        position: fixed; /* Fijo en la ventana */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 999;
-    }
     .btn-login {
         background-color: #777DA7; /* Color de fondo personalizado */
         border-color: #777DA7; /* Color del borde personalizado */
