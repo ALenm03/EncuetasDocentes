@@ -48,13 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user['rol'] == 'admin') {
                 $response = [
                     "success" => true,
-                    "message" => "Inicio de sesión exitoso. Bienvenido, admin!",
+                    "message" => "Inicio de sesión exitoso. Bienvenido, " . $user['name'] . "!",
                     "redirect" => "admin.php"
                 ];
             } elseif ($user['rol'] == 'user') {
                 $response = [
                     "success" => true,
-                    "message" => "Inicio de sesión exitoso. Bienvenido!",
+                    "message" => "Inicio de sesión exitoso. Bienvenido, " . $user['name'] . "!",
                     "redirect" => "usuario_normal.php"
                 ];
             }
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Usuario o correo no encontrado
         $response = [
             "success" => false,
-            "message" => "Usuario o correo no encontrado."
+            "message" => "El usuario o contraseña son incorrectos"
         ];
         echo json_encode($response);
     }
