@@ -30,48 +30,11 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- Ejemplo de Pregunta -->
-                        <div class="Pregunta d-flex" id="P1" style="margin-bottom: 30px;">
-                            <div class="Boton_Borrar_PreguntaP1 d-flex" id="boton_borrar_P1" style="flex-wrap: wrap;">
-                                <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                            <div class="Contenido_De_Cada_Pregunta" style="width: 90%;">
-                                <label for="Pregunta">Pregunta 1</label>
-                                <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_1" style="margin-bottom: 20px;">
-                                <div id="contenedor_de_respuestas_P1">
-                                    <div class="form-group d-flex" id="form-groupP1_1" style="justify-content: flex-start;"> 
-                                        <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-groupP1_1"></button>
-                                        <input  type="radio" class="Item_Form_Group" id="opcionP1_1" disabled>
-                                        <input  type="text" class="Item_Form_Group form-control" id="respuestaP1_1">
-                                    </div>
-                                    <div class="form-group d-flex" id="form-groupP1_2" style="justify-content: flex-start;"> 
-                                        <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-groupP1_2"></button>
-                                        <input  type="radio" class="Item_Form_Group" id="opcionP1_2" disabled>
-                                        <input  type="text" class="Item_Form_Group form-control" id="respuestaP1_2">
-                                    </div>
-                                    <div class="form-group d-flex" id="form-groupP1_3" style="justify-content: flex-start;"> 
-                                        <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-groupP1_3"></button>
-                                        <input  type="radio" class="Item_Form_Group" id="opcionP1_3" disabled>
-                                        <input  type="text" class="Item_Form_Group form-control" id="respuestaP1_3">
-                                    </div>
-                                    <div class="form-group d-flex" id="form-groupP1_4" style="justify-content: flex-start;"> 
-                                        <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-groupP1_4"></button>
-                                        <input  type="radio" class="Item_Form_Group" id="opcionP1_4" disabled>
-                                        <input  type="text" class="Item_Form_Group form-control" id="respuestaP1_4">
-                                    </div>
-                                </div>
-                                <div class="d-flex" style="flex-wrap: wrap; justify-content: center">
-                                    <button class="btn Btn_Cambiar_a_Texto"    id="cambiar_incisos_a_texto">    Cambiar a Texto</button>
-                                    <button class="btn Btn_Cambiar_a_Checkbox" id="cambiar_incisos_a_checkbox"> Cambiar a checkbox</button>
-                                    <button class="btn Btn_Cambiar_a_OpMul"    id="cambiar_incisos_a_1opcion">  Cambiar a Opcion Multiple</button>
-                                </div>
-                            </div>
-                        </div>
+
+
                         <div class="Contenedor_Btn_Agregar_Pregunta d-flex">
                             <button class="btn btn-info Btn_Agregar_Pregunta">Agregar Pregunta</button>
-                            <button class="btn btn-succes Btn_Agregar_Pregunta">Guardar Encuesta</button>
+                            <button class="btn btn-succes Btn_Guardar_Encuesta">Guardar Encuesta</button>
                         </div>
                     </div>
                 </div>
@@ -87,8 +50,9 @@
 
     <script>
         // Contador de preguntas actuales
-        let preguntaCounter = 1; // Inicializado a 1 ya que P1 ya está en el DOM
+        let preguntaCounter = 0;
 
+        //Funcion que hace jalar los botones para eliminar opciones
         function Identificar_Btns_Eliminar() {
             document.querySelectorAll('[id^="eliminar_form-groupP"]').forEach(button => {
                 button.addEventListener('click', function() {
@@ -100,10 +64,19 @@
                 });
             });
         }
+        // Función para actualizar los números de las preguntas en los labels
+        function actualizarNumerosDePreguntas() {
+            const preguntas = document.querySelectorAll('.Pregunta');
+            preguntas.forEach((pregunta, index) => {
+                const label = pregunta.querySelector('.label_pregunta');
+                label.textContent = `Pregunta ${index + 1}`;
+            });
+        }
+
 
         // Función para agregar una nueva pregunta
         document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', function() {
-            if (preguntaCounter < 11) {
+            if (preguntaCounter < 10) {
                 preguntaCounter++;
                 const newPreguntaId = `P${preguntaCounter}`;
 
@@ -120,16 +93,14 @@
                         </button>
                     </div>
                     <div class="Contenido_De_Cada_Pregunta" style="width: 90%;">
-                        <label for="Pregunta" class="label_pregunta">Pregunta ${preguntaCounter}</label>
+                        <label for="nombre_de_pregunta_${preguntaCounter}" class="label_pregunta">Pregunta ${preguntaCounter}</label>
                         <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${preguntaCounter}" style="margin-bottom: 20px;">
                         <div id="contenedor_de_respuestas_${newPreguntaId}">
-                            <div class="form-group d-flex" id="form-group${newPreguntaId}_1" style="justify-content: flex-start;">
-                                <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${newPreguntaId}_1"></button>
+                            <div class="form-group d-flex" id="form-group${newPreguntaId}_1" style="justify-content: flex-start;">                       
                                 <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_1" disabled>
                                 <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_1">
                             </div>
                             <div class="form-group d-flex" id="form-group${newPreguntaId}_2" style="justify-content: flex-start;">
-                                <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${newPreguntaId}_2"></button>
                                 <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_2" disabled>
                                 <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_2">
                             </div>
@@ -164,15 +135,13 @@
                     actualizarNumerosDePreguntas();
                 });
 
-                // Añadir eventos a los botones de cambiar opciones
+                //Eventos a los botones de cambiar opciones
                 document.getElementById(`cambiar_incisos_a_texto_${newPreguntaId}`).addEventListener('click', function() {
-                    cambiarATexto(newPreguntaId);
-                                                
-                    
+                    cambiarATexto(newPreguntaId)
                 });
                 document.getElementById(`cambiar_incisos_a_checkbox_${newPreguntaId}`).addEventListener('click', function() {
-                    cambiarACheckbox(newPreguntaId);
-                    Identificar_Btns_Eliminar();                                                                     
+                    cambiarACheckbox(newPreguntaId); 
+                    Identificar_Btns_Eliminar();                                                                
                 });
                 document.getElementById(`cambiar_incisos_a_1opcion_${newPreguntaId}`).addEventListener('click', function() {
                     cambiarA1Opcion(newPreguntaId);
@@ -180,21 +149,14 @@
                 });
 
                 actualizarNumerosDePreguntas();
-            } else {
+            }
+            else 
+            {
                 alert('Se ha alcanzado el número máximo de 10 preguntas.');
             }
         });
 
-        // Función para actualizar los números de las preguntas en los labels
-        function actualizarNumerosDePreguntas() {
-            const preguntas = document.querySelectorAll('.Pregunta');
-            preguntas.forEach((pregunta, index) => {
-                const label = pregunta.querySelector('.label_pregunta');
-                label.textContent = `Pregunta ${index + 1}`;
-            });
-        }
-
-        // Funciones de cambio de opciones
+        // Funciones para cambiar a campo de texto
         function cambiarATexto(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
             contenedor.innerHTML = `
@@ -204,35 +166,62 @@
             `;
         }
 
+        //Funcion para cambiar las opciones a Checkbox
         function cambiarACheckbox(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
-                contenedor.innerHTML += `
+                if (i <= 2){
+                    contenedor.innerHTML += `
+                    <div class="form-group d-flex" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
+                    </div>
+                `;
+                }
+                else {
+                    contenedor.innerHTML += `
                     <div class="form-group d-flex" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
                         <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${preguntaId}_${i}"></button>
                         <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
                         <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
                     </div>
                 `;
+                }
+
+                
             }
         }
 
+        //Funcion para cambiar las opciones a Opcion Multiple que solo acepta una respuesta
         function cambiarA1Opcion(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
-                contenedor.innerHTML += `
+                if (i <= 2){
+                    contenedor.innerHTML += `
+                    <div class="form-group d-flex" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <input type="radio" class="Item_Form_Group" id="opcion${preguntaId}_${i}" name="puntito${preguntaId}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
+                    </div>
+                `;
+                }
+                else {
+                    contenedor.innerHTML += `
                     <div class="form-group d-flex" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
                         <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${preguntaId}_${i}"></button>
                         <input type="radio" class="Item_Form_Group" id="opcion${preguntaId}_${i}" name="puntito${preguntaId}" disabled>
                         <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
                     </div>
                 `;
+                }
+                
             }
         }
     </script>
 
+
+    <!--Script para abrir la pagina de admin-->
     <script>
         // Para regresar al panel de admin
         document.getElementById('adm_regresar').addEventListener('click', function() {
@@ -249,136 +238,9 @@
                     }
                 });
             });
-    </script>
-
-    <!--SCRIPTS PARA CAMBIAR las opciones-->
-    <script>
-    // Función para cambiar a checkboxes
-    document.getElementById('cambiar_incisos_a_checkbox').addEventListener('click', function() {
-        const contenedor = document.getElementById('contenedor_de_respuestas_P1');
-        contenedor.innerHTML = '';
-
-        for (let i = 1; i <= 4; i++) {
-            const div = document.createElement('div');
-            div.className = 'form-group d-flex';
-            div.id = `form-groupP1_${i}`;
-            div.style.justifyContent = 'flex-start';
-
-            const button = document.createElement('button');
-            button.className = 'btn btn-danger fas fa-times Item_Form_Group';
-            button.id = `eliminar_form-groupP1_${i}`;
-            button.title = 'Eliminar';
-
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.className = 'Item_Form_Group';
-            checkbox.id = `opcionP1_${i}`;
-            checkbox.disabled = true;
-
-            const inputText = document.createElement('input');
-            inputText.type = 'text';
-            inputText.className = 'Item_Form_Group form-control';
-            inputText.id = `respuestaP1_${i}`;
-
-            div.appendChild(button);
-            div.appendChild(checkbox);
-            div.appendChild(inputText);
-            contenedor.appendChild(div);
-
-            document.querySelectorAll('[id^="eliminar_form-groupP"]').forEach(button => {
-                button.addEventListener('click', function() {
-                    const idToDelete = this.id.replace('eliminar_', '');
-                    const formGroup = document.getElementById(idToDelete);
-                    if (formGroup) {
-                        formGroup.remove();
-                    }
-                });
-            });
-        }
-    });
-
-    // Función para cambiar a radio buttons
-    document.getElementById('cambiar_incisos_a_1opcion').addEventListener('click', function() {
-        const contenedor = document.getElementById('contenedor_de_respuestas_P1');
-        contenedor.innerHTML = '';
-
-        for (let i = 1; i <= 4; i++) {
-            const div = document.createElement('div');
-            div.className = 'form-group d-flex';
-            div.id = `form-groupP1_${i}`;
-            div.style.justifyContent = 'flex-start';
-
-            const button = document.createElement('button');
-            button.className = 'btn btn-danger fas fa-times Item_Form_Group';
-            button.id = `eliminar_form-groupP1_${i}`;
-            button.title = 'Eliminar';
-
-            const radioButton = document.createElement('input');
-            radioButton.type = 'radio';
-            radioButton.className = 'Item_Form_Group';
-            radioButton.id = `opcionP1_${i}`;
-            radioButton.name = 'puntito';
-            radioButton.disabled = true;
-
-            const inputText = document.createElement('input');
-            inputText.type = 'text';
-            inputText.className = 'Item_Form_Group form-control';
-            inputText.id = `respuestaP1_${i}`;
-
-            div.appendChild(button);
-            div.appendChild(radioButton);
-            div.appendChild(inputText);
-            contenedor.appendChild(div);
-
-            document.querySelectorAll('[id^="eliminar_form-groupP"]').forEach(button => {
-                button.addEventListener('click', function() {
-                    const idToDelete = this.id.replace('eliminar_', '');
-                    const formGroup = document.getElementById(idToDelete);
-                    if (formGroup) {
-                        formGroup.remove();
-                    }
-                });
-            });
-        }
-    });
-
-
-
-    //AGREGAR UN CAMPO DE TEXTO COMO RESPUESTA
-    document.getElementById('cambiar_incisos_a_texto').addEventListener('click', function() {
-        // Selecciona el contenedor de respuestas
-        const contenedor = document.getElementById('contenedor_de_respuestas_P1');
-
-        // Limpia el contenido actual del contenedor
-        contenedor.innerHTML = '';
-
-        // Crea la nueva estructura de un solo textarea
-        const div = document.createElement('div');
-        div.className = 'form-group d-flex';
-        div.style.justifyContent = 'flex-start';
-
-        // Textarea
-        const textarea = document.createElement('textarea');
-        textarea.className = 'Item_Form_Group form-control';
-        textarea.id = 'respuestaP1'; // ID del textarea
-        textarea.rows = 4; // Puedes ajustar el número de filas según sea necesario
-        textarea.style.maxWidth = '50%'; // Ajusta el ancho si es necesario
-        textarea.readOnly = true; // Hace que el textarea sea de solo lectura
-        // Agregar el textarea al div
-        div.appendChild(textarea);
-
-
-        // Añadir el div al contenedor
-        contenedor.appendChild(div);
-    });
-
-
-    document.getElementById('boton_borrar_P1').addEventListener('click', function() {
-    const pregunta = document.getElementById('P1');
-        if (pregunta) {
-            pregunta.remove(); // Elimina el div del DOM
-        }
-    });
-    </script>
+    </script>    
 </body>
 </html>
+
+
+

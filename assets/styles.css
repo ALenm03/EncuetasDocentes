@@ -177,24 +177,18 @@
 .Btn_Eliminar_Pregunta {
     margin: 5px;
 }
-.Btn_Cambiar_a_Texto {
-    margin: 5px;
-    color: white;
-    background-color: #366a86;
-}
-.Btn_Cambiar_a_Checkbox {
-    margin: 5px;
-    background-color: #366a86;
-    color: white;
-}
-.Btn_Cambiar_a_OpMul {
-    margin: 5px;
-    background-color: #366a86;
-    color: white;
-}
 .Item_Form_Group{
     margin: 5px;
 }
 .Editar_Boton_Borrar_Pregunta{
     margin-right: 20px;
+}
+.Btn_Cambiar_a_Texto, .Btn_Cambiar_a_Checkbox, .Btn_Cambiar_a_OpMul {
+    margin: 5px;
+    background-color: #5f6690;
+    color: white;
+}
+.Btn_Cambiar_a_Texto:hover, .Btn_Cambiar_a_Checkbox:hover, .Btn_Cambiar_a_OpMul:hover{
+    background-color: #434864;
+    color: white;
 }
