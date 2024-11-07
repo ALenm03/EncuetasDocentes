@@ -189,6 +189,17 @@
     color: white;
 }
 .Btn_Cambiar_a_Texto:hover, .Btn_Cambiar_a_Checkbox:hover, .Btn_Cambiar_a_OpMul:hover{
-    background-color: #434864;
-    color: white;
+    background-color: #F0F7F4;
+    color: ba;
+}
+
+.Btn_Guardar_Encuesta, .Btn_Agregar_Pregunta{
+    margin: 4px;
+    color: black;
+    background-color: #F0F7F4;
+}
+.Btn_Guardar_Encuesta:hover, .Btn_Agregar_Pregunta:hover{
+    margin: 4px;
+    color: black;
+    background-color: #d5dbd8;
 }
