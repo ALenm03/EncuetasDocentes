@@ -61,17 +61,15 @@ if ($_SESSION['user_role'] == 'user') {
                 <div class="card">
                     <div class="card-header nombre_del_from_bg">
                         <div class="card-title nombre_del_from text-center w-100">
-                            <h1>Preguntas</h1>
+                            <h1>Editar FORMULARIO X</h1>
                         </div>
                     </div>
-                    
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div id="form-preguntas">  </div>
+                    <div class="card-body asd" id="card-body-preguntas">
 
-                            <button type="button" class="btn btn_anadir_pregunta" id="anadir_pregunta">Añadir Pregunta</button>
+                        <div class="Contenedor_Btn_Agregar_Pregunta d-flex">
+                            <button class="btn Btn_Agregar_Pregunta">Agregar Pregunta</button>
+                            <button class="btn Btn_Guardar_Encuesta" id="guardar_formulario">Guardar Encuesta</button>
                             <button type="button" class="btn btn_guardar_form" id="guardar_formulario">Guardar Formulario</button>
-                            <button type="button" class="btn btn_borrar" id="borrar_pregunta">Borrar Última Pregunta</button>
                         </div>
                     </div>
                 </div>
@@ -85,188 +83,202 @@ if ($_SESSION['user_role'] == 'user') {
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>
 
     <script>
-        
-        document.getElementById("txtcaja").value = "formulario";  // Aquí establecemos el valor "formulario" en el input con id "txtcaja"
+        const formContainer = document.getElementById('card-body-preguntas');
 
+        // Contador de preguntas actuales
+        let preguntaCounter = 0;
 
-        const formContainer = document.getElementById('form-preguntas');
-
+        //Funcion que hace jalar los botones para eliminar opciones
+        function Identificar_Btns_Eliminar() {
+            document.querySelectorAll('[id^="eliminar_form-groupP"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const idToDelete = this.id.replace('eliminar_', ''); // Remueve 'eliminar_' para obtener el ID del form-group
+                    const formGroup = document.getElementById(idToDelete);
+                    if (formGroup) {
+                        formGroup.remove(); // Elimina el form-group del DOM
+                    }
+                });
+            });
+        }
+        // Función para actualizar los números de las preguntas en los labels
+        function actualizarNumerosDePreguntas() {
+            const preguntas = document.querySelectorAll('.Pregunta');
+            preguntas.forEach((pregunta, index) => {
+                const label = pregunta.querySelector('.label_pregunta');
+                label.textContent = `Pregunta ${index + 1}`;
+            });
+        }
+         Agregar_Pregunta();
         // Función para agregar una nueva pregunta
-        document.getElementById('anadir_pregunta').addEventListener('click', function () {
+        function Agregar_Pregunta(){
+            document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', function() {
+            if (preguntaCounter < 10) {
+                preguntaCounter++;
+                const newPreguntaId = `P${preguntaCounter}`;
+
+                // Crea el nuevo div de pregunta
+                const newPregunta = document.createElement('div');
+                newPregunta.className = 'form-group Pregunta d-flex';
+                newPregunta.id = newPreguntaId;
+                newPregunta.style = 'margin-bottom: 30px;';
+
+                newPregunta.innerHTML = `
+                    <div class="Boton_Borrar_PreguntaP1 d-flex" id="boton_borrar_${newPreguntaId}" style="flex-wrap: wrap;">
+                        <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar Pregunta ${preguntaCounter}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="Contenido_De_Cada_Pregunta" style="width: 90%;">
+                        <label for="nombre_de_pregunta_${preguntaCounter}" class="label_pregunta">Pregunta ${preguntaCounter}</label>
+                        <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${preguntaCounter}" style="margin-bottom: 30px;" placeholder="Escribe la pregunta">
+                        <div id="contenedor_de_respuestas_${newPreguntaId}">
+                            <div class=" d-flex respuesta" id="form-group${newPreguntaId}_1" style="justify-content: flex-start;">                       
+                                <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_1" disabled>
+                                <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_1">
+                            </div>
+                            <div class=" d-flex respuesta" id="form-group${newPreguntaId}_2" style="justify-content: flex-start;">
+                                <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_2" disabled>
+                                <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_2">
+                            </div>
+                            <div class=" d-flex respuesta" id="form-group${newPreguntaId}_3" style="justify-content: flex-start;">
+                                <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${newPreguntaId}_3" title="Eliminar Opción"></button>
+                                <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_3" disabled>
+                                <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_3">
+                            </div>
+                            <div class=" d-flex respuesta" id="form-group${newPreguntaId}_4" style="justify-content: flex-start;">
+                                <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${newPreguntaId}_4" title="Eliminar Opción"></button>
+                                <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_4" disabled>
+                                <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_4">
+                            </div>
+                        </div>
+                        <div class="d-flex" style="flex-wrap: wrap; justify-content: center">
+                            <button class="btn Btn_Cambiar_a_Texto" id="cambiar_incisos_a_texto_${newPreguntaId}">Cambiar a Texto</button>
+                            <button class="btn Btn_Cambiar_a_Checkbox" id="cambiar_incisos_a_checkbox_${newPreguntaId}">Cambiar a checkbox</button>
+                            <button class="btn Btn_Cambiar_a_OpMul" id="cambiar_incisos_a_1opcion_${newPreguntaId}">Cambiar a Opción Múltiple</button>
+                        </div>
+                    </div>
+                `;
+
+                // Añadir la nueva pregunta al contenedor de la card-body
+                document.querySelector('#card-body-preguntas').insertBefore(newPregunta, document.querySelector('.Contenedor_Btn_Agregar_Pregunta'));
+                Identificar_Btns_Eliminar();
 
 
-            //CONTAR PREGUNTAS NOMAS 10
-            const ContarNumPreguntas = formContainer.querySelectorAll('.form-group').length;
+                // Añadir evento para borrar la nueva pregunta
+                document.getElementById(`boton_borrar_${newPreguntaId}`).addEventListener('click', function() {
+                    document.getElementById(newPreguntaId).remove();
+                    preguntaCounter--;
+                    actualizarNumerosDePreguntas();
+                });
 
-            if (ContarNumPreguntas >= 10) {
-            alert('No puedes añadir más de 10 preguntas.');
-            return; // Salir de la función si ya hay 10 preguntas
-            }            
+                //Eventos a los botones de cambiar opciones
+                document.getElementById(`cambiar_incisos_a_texto_${newPreguntaId}`).addEventListener('click', function() {
+                    cambiarATexto(newPreguntaId)
+                });
+                document.getElementById(`cambiar_incisos_a_checkbox_${newPreguntaId}`).addEventListener('click', function() {
+                    cambiarACheckbox(newPreguntaId); 
+                    Identificar_Btns_Eliminar();                                                                
+                });
+                document.getElementById(`cambiar_incisos_a_1opcion_${newPreguntaId}`).addEventListener('click', function() {
+                    cambiarA1Opcion(newPreguntaId);
+                    Identificar_Btns_Eliminar();
+                });
 
-
-            const questionDiv = document.createElement('div');
-            questionDiv.classList.add('form-group', 'mb-4');
-
-            // Contar cuántas preguntas existen y asignar el número de la nueva pregunta
-            const numPreguntas = formContainer.querySelectorAll('.form-group').length + 1;
-
-            // Crear el label para el número de la pregunta
-            const questionLabel = document.createElement('label');
-            questionLabel.textContent = `Pregunta número ${numPreguntas}`;
-            questionLabel.classList.add('form-label', 'mb-2');
-
-            // Crear el campo para ingresar la pregunta
-            const questionInput = document.createElement('input');
-            questionInput.setAttribute('type', 'text');
-            questionInput.setAttribute('placeholder', 'Escribe la pregunta');
-            questionInput.classList.add('form-control', 'mb-2', 'pregunta');
-
-            // Crear el contenedor para los botones de tipo de respuesta
-            const buttonGroup = document.createElement('div');
-            buttonGroup.classList.add('btn-group', 'mb-2');
-
-            // Variable para almacenar el tipo de respuesta seleccionado
-            let tipoSeleccionado = null;
-
-            // Botón para agregar respuesta tipo párrafo
-            const btnParrafo = document.createElement('button');
-            btnParrafo.classList.add('btn', 'btn-secondary');
-            btnParrafo.textContent = 'Añadir Respuesta Párrafo';
-            btnParrafo.addEventListener('click', function () {
-                if (tipoSeleccionado !== 'parrafo') {
-                    borrarRespuestas(questionDiv);
-                    tipoSeleccionado = 'parrafo';
-                    agregarRespuesta(questionDiv, 'parrafo');
-                }
-            });
-
-            // Botón para agregar respuesta tipo checkbox
-            const btnCheckbox = document.createElement('button');
-            btnCheckbox.classList.add('btn', 'btn-secondary');
-            btnCheckbox.textContent = 'Añadir Respuesta Checkbox';
-            btnCheckbox.addEventListener('click', function () {
-                if (tipoSeleccionado !== 'checkbox') {
-                    borrarRespuestas(questionDiv);
-                    tipoSeleccionado = 'checkbox';
-                }
-                const respuestas = questionDiv.querySelectorAll('.respuesta');
-                if (respuestas.length < 4) {
-                    agregarRespuesta(questionDiv, 'checkbox');
-                }
-            });
-
-            // Botón para agregar respuesta tipo opción múltiple
-            const btnOpcionMultiple = document.createElement('button');
-            btnOpcionMultiple.classList.add('btn', 'btn-secondary');
-            btnOpcionMultiple.textContent = 'Añadir Respuesta Opción Múltiple';
-            btnOpcionMultiple.addEventListener('click', function () {
-                if (tipoSeleccionado !== 'opcion_multiple') {
-                    borrarRespuestas(questionDiv);
-                    tipoSeleccionado = 'opcion_multiple';
-                }
-                const respuestas = questionDiv.querySelectorAll('.respuesta');
-                if (respuestas.length < 4) {
-                    agregarRespuesta(questionDiv, 'opcion_multiple');
-                }
-            });
-
-            // Botón para borrar la última respuesta añadida
-            const btnBorrarAnterior = document.createElement('button');
-            btnBorrarAnterior.classList.add('btn', 'btn-secondary');
-            btnBorrarAnterior.textContent = 'Borrar Última Respuesta';
-            btnBorrarAnterior.addEventListener('click', function () {
-                borrarUltimaRespuesta(questionDiv);
-            });
-
-            // Añadir los botones al grupo de botones
-            buttonGroup.appendChild(btnParrafo);
-            buttonGroup.appendChild(btnCheckbox);
-            buttonGroup.appendChild(btnOpcionMultiple);
-            buttonGroup.appendChild(btnBorrarAnterior);
-
-            // Añadir los elementos al contenedor de la pregunta
-            questionDiv.appendChild(questionLabel);
-            questionDiv.appendChild(questionInput);
-            questionDiv.appendChild(buttonGroup);
-            formContainer.appendChild(questionDiv);
-        });
-
-        // Función para agregar la respuesta según el tipo seleccionado
-        function agregarRespuesta(questionDiv, tipoRespuesta) {
-            let respuestaDiv;
-
-            if (tipoRespuesta === 'parrafo') {
-                respuestaDiv = document.createElement('textarea');
-                respuestaDiv.setAttribute('placeholder', 'Escribe tu respuesta aquí...');
-                respuestaDiv.classList.add('form-control', 'respuesta', 'mb-2', 'parrafo');
-            } else if (tipoRespuesta === 'checkbox') {
-                respuestaDiv = document.createElement('div');
-                respuestaDiv.classList.add('respuesta', 'mb-2');
-
-                const checkbox = document.createElement('input');
-                checkbox.setAttribute('type', 'checkbox');
-                checkbox.classList.add('mr-2');
-
-                const optionInput = document.createElement('input');
-                optionInput.setAttribute('type', 'text');
-                optionInput.setAttribute('placeholder', 'Escribe una opción');
-                optionInput.classList.add('form-control', 'd-inline-block', 'w-50', 'respuesta-input');
-
-                respuestaDiv.appendChild(checkbox);
-                respuestaDiv.appendChild(optionInput);
-            } else if (tipoRespuesta === 'opcion_multiple') {
-                respuestaDiv = document.createElement('div');
-                respuestaDiv.classList.add('respuesta', 'mb-2');
-
-                const radio1 = document.createElement('input');
-                radio1.setAttribute('type', 'radio');
-                radio1.setAttribute('name', 'opcionMultiple');
-                radio1.classList.add('mr-2');
-
-                const optionInput1 = document.createElement('input');
-                optionInput1.setAttribute('type', 'text');
-                optionInput1.setAttribute('placeholder', 'Escribe una opción');
-                optionInput1.classList.add('form-control', 'd-inline-block', 'w-50', 'respuesta-input');
-
-                respuestaDiv.appendChild(radio1);
-                respuestaDiv.appendChild(optionInput1);
-                respuestaDiv.appendChild(document.createElement('br'));
+                actualizarNumerosDePreguntas();
             }
-            questionDiv.appendChild(respuestaDiv);
-        }
-
-        // Función para borrar todas las respuestas de una pregunta
-        function borrarRespuestas(questionDiv) {
-            const respuestas = questionDiv.querySelectorAll('.respuesta');
-            respuestas.forEach(respuesta => respuesta.remove());
-        }
-
-        // Función para borrar la última respuesta añadida
-        function borrarUltimaRespuesta(questionDiv) {
-            const respuestas = questionDiv.querySelectorAll('.respuesta');
-            if (respuestas.length > 0) {
-                const ultimaRespuesta = respuestas[respuestas.length - 1];
-                ultimaRespuesta.remove();
-            }
-        }
-
-        // Función para borrar la última pregunta añadida
-        document.getElementById('borrar_pregunta').addEventListener('click', function () {
-            const preguntas = formContainer.querySelectorAll('.form-group');
-            if (preguntas.length > 0) {
-                const ultimaPregunta = preguntas[preguntas.length - 1];
-                ultimaPregunta.remove();
+            else 
+            {
+                alert('Se ha alcanzado el número máximo de 10 preguntas.');
             }
         });
+        }
+
+        // Funciones para cambiar a campo de texto
+        function cambiarATexto(preguntaId) {
+            const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
+            contenedor.innerHTML = `
+                <div class=" d-flex respuesta" style="justify-content: flex-start;">
+                    <textarea class="Item_Form_Group form-control" id="respuesta${preguntaId}" rows="4" style="max-width: 50%; max-height:100px; min-height:100px;" readonly></textarea>
+                </div>
+            `;
+        }
+
+        //Funcion para cambiar las opciones a Checkbox
+        function cambiarACheckbox(preguntaId) {
+            const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
+            contenedor.innerHTML = '';
+            for (let i = 1; i <= 4; i++) {
+                if (i <= 2){
+                    contenedor.innerHTML += `
+                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
+                    </div>
+                `;
+                }
+                else {
+                    contenedor.innerHTML += `
+                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${preguntaId}_${i}" title="Eliminar Opción"></button>
+                        <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
+                    </div>
+                `;
+                }
+            }
+        }
+
+        //Funcion para cambiar las opciones a Opcion Multiple que solo acepta una respuesta
+        function cambiarA1Opcion(preguntaId) {
+            const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
+            contenedor.innerHTML = '';
+            for (let i = 1; i <= 4; i++) {
+                if (i <= 2){
+                    contenedor.innerHTML += `
+                    <div class=" d-flex respuesta" id="form-groupP1_1" style="justify-content: flex-start;">                       
+                        <input type="radio" class="Item_Form_Group" id="opcionP1_1" disabled="">
+                        <input type="text" class="Item_Form_Group form-control" id="respuestaP1_1">
+                    </div>
+                `;
+                }
+                else {
+                    contenedor.innerHTML += `
+                    <div class=" d-flex respuesta" id="form-groupP1_3" style="justify-content: flex-start;">
+                        <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-groupP1_3" title="Eliminar Opción"></button>
+                        <input type="radio" class="Item_Form_Group" id="opcionP1_3" disabled="">
+                        <input type="text" class="Item_Form_Group form-control" id="respuestaP1_3">
+                    </div>
+                `;
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
         // Función para guardar el formulario usando AJAX
        // Función para guardar el formulario usando AJAX
-document.getElementById('guardar_formulario').addEventListener('click', function () {
+    document.getElementById('guardar_formulario').addEventListener('click', function () {
+
+
     const nombreFormulario = document.getElementById('txtcaja').value;
     const preguntas = formContainer.querySelectorAll('.form-group');
     const datosPreguntas = [];
 
     let formularioValido = true; // Bandera para verificar si el formulario es válido
+
 
     preguntas.forEach((pregunta, index) => {
         const preguntaTexto = pregunta.querySelector('input[type="text"]').value;
@@ -293,11 +305,6 @@ document.getElementById('guardar_formulario').addEventListener('click', function
             if (respuesta.querySelector('textarea')) {
                 // Respuesta tipo párrafo
                 const textoRespuesta = respuesta.querySelector('textarea').value;
-                if (textoRespuesta.trim() === "") {
-                    alert(`La respuesta de la pregunta número ${index + 1} no puede estar vacía.`);
-                    formularioValido = false;
-                    return;
-                }
                 datosRespuestas.push(textoRespuesta);
                 tipoRespuesta = 'parrafo';
             } else if (respuesta.querySelector('input[type="checkbox"]')) {
@@ -329,6 +336,11 @@ document.getElementById('guardar_formulario').addEventListener('click', function
             tipo_respuesta: tipoRespuesta // Guardar el tipo de respuesta
         });
     });
+
+    if (preguntaCounter <= 0) {
+            formularioValido = false;
+            alert('No hay preguntas'); // Muestra la alerta
+        }
 
     // Si el formulario no es válido, no se envía
     if (!formularioValido) {
@@ -366,3 +378,5 @@ document.getElementById('guardar_formulario').addEventListener('click', function
 
 </body>
 </html>
+
+
