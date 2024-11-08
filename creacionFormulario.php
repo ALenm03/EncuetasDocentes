@@ -173,6 +173,7 @@ if ($_SESSION['user_role'] == 'user') {
                         document.getElementById(newPreguntaId).remove();
                         preguntaCounter--;
                         actualizarNumerosDePreguntas();
+                        actualizarIdsPreguntas();
                     });
 
                     //Eventos a los botones de cambiar opciones
@@ -255,14 +256,13 @@ if ($_SESSION['user_role'] == 'user') {
                 }
             }
         }
-
-
         // Función para guardar el formulario usando AJAX
         // Función para guardar el formulario usando AJAX
         document.getElementById('guardar_formulario').addEventListener('click', function () {
 
 
             const nombreFormulario = document.getElementById('txtcaja').value;
+            let ChecarEspacios = nombreFormulario;
             const preguntas = formContainer.querySelectorAll('.form-group');
             const datosPreguntas = [];
 
@@ -331,6 +331,12 @@ if ($_SESSION['user_role'] == 'user') {
                 alert('No hay preguntas'); // Muestra la alerta
             }
 
+            if (nombreFormulario.trim() === "") {
+                formularioValido = false;
+                alert('No hay nombre del formulario'); // Muestra la alerta
+            }
+
+
             // Si el formulario no es válido, no se envía
             if (!formularioValido) {
                 return;
@@ -359,9 +365,80 @@ if ($_SESSION['user_role'] == 'user') {
             });
         });
 
+
         document.getElementById('adm_regresar').addEventListener('click', function () {
             window.location.href = 'admin.php';
         });
+    </script>
+
+
+
+    <script>
+    function actualizarIdsPreguntas() {
+    // Selecciona todos los divs que tienen el formato de id "P(X)"
+    const preguntas = document.querySelectorAll(".Pregunta");
+    const totalPreguntas = preguntas.length;
+
+    // Itera a través de cada div para actualizar sus ids y valores
+    preguntas.forEach((pregunta, index) => {
+        const nuevoIndice = index + 1; // Inicia el contador en 1
+        const nuevoPreguntaId = `P${nuevoIndice}`;
+
+        // Cambia el id del div principal
+        pregunta.id = nuevoPreguntaId;
+
+        // Actualiza los subelementos dentro del div "Pregunta"
+        const botonBorrar = pregunta.querySelector(`[id^="boton_borrar_"]`);
+        if (botonBorrar) {
+            botonBorrar.className = `Boton_Borrar_Pregunta${nuevoPreguntaId} d-flex`;
+            botonBorrar.id = `boton_borrar_${nuevoPreguntaId}`;
+            const btnEliminar = botonBorrar.querySelector(".Btn_Eliminar_Pregunta");
+            if (btnEliminar) {
+                btnEliminar.title = `Eliminar Pregunta ${nuevoIndice}`;
+            }
+        }
+
+        // Actualiza el input de texto de la pregunta
+        const labelPregunta = pregunta.querySelector(".label_pregunta");
+        const inputPregunta = pregunta.querySelector(`[id^="nombre_de_pregunta_"]`);
+        if (labelPregunta && inputPregunta) {
+            labelPregunta.setAttribute("for", `nombre_de_pregunta_${nuevoIndice}`);
+            labelPregunta.textContent = `Pregunta ${nuevoIndice}`;
+            inputPregunta.id = `nombre_de_pregunta_${nuevoIndice}`;
+        }
+
+        // Actualiza el contenedor de respuestas y cada respuesta dentro de él
+        const contenedorRespuestas = pregunta.querySelector(`[id^="contenedor_de_respuestas_"]`);
+        if (contenedorRespuestas) {
+            contenedorRespuestas.id = `contenedor_de_respuestas_${nuevoPreguntaId}`;
+
+            // Actualiza los IDs de cada respuesta
+            const respuestas = contenedorRespuestas.querySelectorAll(".respuesta");
+            respuestas.forEach((respuesta, respuestaIndex) => {
+                const nuevaRespuestaId = `form-group${nuevoPreguntaId}_${respuestaIndex + 1}`;
+                respuesta.id = nuevaRespuestaId;
+
+                // Actualiza los elementos dentro de cada respuesta
+                const opcion = respuesta.querySelector(`[id^="opcion"]`);
+                const inputRespuesta = respuesta.querySelector(`[id^="respuesta"]`);
+                const btnEliminarOpcion = respuesta.querySelector(`[id^="eliminar_form-group"]`);
+
+                if (opcion) opcion.id = `opcion${nuevoPreguntaId}_${respuestaIndex + 1}`;
+                if (inputRespuesta) inputRespuesta.id = `respuesta${nuevoPreguntaId}_${respuestaIndex + 1}`;
+                if (btnEliminarOpcion) btnEliminarOpcion.id = `eliminar_${nuevaRespuestaId}`;
+            });
+        }
+
+        // Actualiza los botones de cambio de tipo de respuesta
+        const cambiarATexto = pregunta.querySelector(`[id^="cambiar_incisos_a_texto_"]`);
+        const cambiarACheckbox = pregunta.querySelector(`[id^="cambiar_incisos_a_checkbox_"]`);
+        const cambiarAOpcionMultiple = pregunta.querySelector(`[id^="cambiar_incisos_a_1opcion_"]`);
+
+        if (cambiarATexto) cambiarATexto.id = `cambiar_incisos_a_texto_${nuevoPreguntaId}`;
+        if (cambiarACheckbox) cambiarACheckbox.id = `cambiar_incisos_a_checkbox_${nuevoPreguntaId}`;
+        if (cambiarAOpcionMultiple) cambiarAOpcionMultiple.id = `cambiar_incisos_a_1opcion_${nuevoPreguntaId}`;
+    });
+}
     </script>
 
 </body>
