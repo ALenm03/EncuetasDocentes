@@ -15,6 +15,7 @@ if ($_SESSION['user_role'] == 'user') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +24,8 @@ if ($_SESSION['user_role'] == 'user') {
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body class="body"  style="padding-top: 150px;">
+
+<body class="body" style="padding-top: 150px;">
 
     <div id="header_pagina">
         <h2>Panel de Administrador</h2>
@@ -45,11 +47,12 @@ if ($_SESSION['user_role'] == 'user') {
                             <h1>Ingresar Nombre del Formulario</h1>
                         </div>
                     </div>
-                    
+
                     <div class="card-body">
                         <div class="form-group">
                             <label for="txtcaja">Ingrese el nombre del Formulario</label>
-                            <input type="text" class="form-control" maxlength="50" placeholder="Nombre del formulario" id="txtcaja"> 
+                            <input type="text" class="form-control" maxlength="50" placeholder="Nombre del formulario"
+                                id="txtcaja">
                         </div>
                     </div>
                 </div>
@@ -69,7 +72,8 @@ if ($_SESSION['user_role'] == 'user') {
                         <div class="Contenedor_Btn_Agregar_Pregunta d-flex">
                             <button class="btn Btn_Agregar_Pregunta">Agregar Pregunta</button>
                             <button class="btn Btn_Guardar_Encuesta" id="guardar_formulario">Guardar Encuesta</button>
-                            <button type="button" class="btn btn_guardar_form" id="guardar_formulario">Guardar Formulario</button>
+                            <button type="button" class="btn btn_guardar_form" id="guardar_formulario">Guardar
+                                Formulario</button>
                         </div>
                     </div>
                 </div>
@@ -91,7 +95,7 @@ if ($_SESSION['user_role'] == 'user') {
         //Funcion que hace jalar los botones para eliminar opciones
         function Identificar_Btns_Eliminar() {
             document.querySelectorAll('[id^="eliminar_form-groupP"]').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const idToDelete = this.id.replace('eliminar_', ''); // Remueve 'eliminar_' para obtener el ID del form-group
                     const formGroup = document.getElementById(idToDelete);
                     if (formGroup) {
@@ -108,21 +112,21 @@ if ($_SESSION['user_role'] == 'user') {
                 label.textContent = `Pregunta ${index + 1}`;
             });
         }
-         Agregar_Pregunta();
+        Agregar_Pregunta();
         // Función para agregar una nueva pregunta
-        function Agregar_Pregunta(){
-            document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', function() {
-            if (preguntaCounter < 10) {
-                preguntaCounter++;
-                const newPreguntaId = `P${preguntaCounter}`;
+        function Agregar_Pregunta() {
+            document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', function () {
+                if (preguntaCounter < 10) {
+                    preguntaCounter++;
+                    const newPreguntaId = `P${preguntaCounter}`;
 
-                // Crea el nuevo div de pregunta
-                const newPregunta = document.createElement('div');
-                newPregunta.className = 'form-group Pregunta d-flex';
-                newPregunta.id = newPreguntaId;
-                newPregunta.style = 'margin-bottom: 30px;';
+                    // Crea el nuevo div de pregunta
+                    const newPregunta = document.createElement('div');
+                    newPregunta.className = 'form-group Pregunta d-flex';
+                    newPregunta.id = newPreguntaId;
+                    newPregunta.style = 'margin-bottom: 30px;';
 
-                newPregunta.innerHTML = `
+                    newPregunta.innerHTML = `
                     <div class="Boton_Borrar_PreguntaP1 d-flex" id="boton_borrar_${newPreguntaId}" style="flex-wrap: wrap;">
                         <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar Pregunta ${preguntaCounter}">
                             <i class="fas fa-trash"></i>
@@ -159,38 +163,37 @@ if ($_SESSION['user_role'] == 'user') {
                     </div>
                 `;
 
-                // Añadir la nueva pregunta al contenedor de la card-body
-                document.querySelector('#card-body-preguntas').insertBefore(newPregunta, document.querySelector('.Contenedor_Btn_Agregar_Pregunta'));
-                Identificar_Btns_Eliminar();
-
-
-                // Añadir evento para borrar la nueva pregunta
-                document.getElementById(`boton_borrar_${newPreguntaId}`).addEventListener('click', function() {
-                    document.getElementById(newPreguntaId).remove();
-                    preguntaCounter--;
-                    actualizarNumerosDePreguntas();
-                });
-
-                //Eventos a los botones de cambiar opciones
-                document.getElementById(`cambiar_incisos_a_texto_${newPreguntaId}`).addEventListener('click', function() {
-                    cambiarATexto(newPreguntaId)
-                });
-                document.getElementById(`cambiar_incisos_a_checkbox_${newPreguntaId}`).addEventListener('click', function() {
-                    cambiarACheckbox(newPreguntaId); 
-                    Identificar_Btns_Eliminar();                                                                
-                });
-                document.getElementById(`cambiar_incisos_a_1opcion_${newPreguntaId}`).addEventListener('click', function() {
-                    cambiarA1Opcion(newPreguntaId);
+                    // Añadir la nueva pregunta al contenedor de la card-body
+                    document.querySelector('#card-body-preguntas').insertBefore(newPregunta, document.querySelector('.Contenedor_Btn_Agregar_Pregunta'));
                     Identificar_Btns_Eliminar();
-                });
 
-                actualizarNumerosDePreguntas();
-            }
-            else 
-            {
-                alert('Se ha alcanzado el número máximo de 10 preguntas.');
-            }
-        });
+
+                    // Añadir evento para borrar la nueva pregunta
+                    document.getElementById(`boton_borrar_${newPreguntaId}`).addEventListener('click', function () {
+                        document.getElementById(newPreguntaId).remove();
+                        preguntaCounter--;
+                        actualizarNumerosDePreguntas();
+                    });
+
+                    //Eventos a los botones de cambiar opciones
+                    document.getElementById(`cambiar_incisos_a_texto_${newPreguntaId}`).addEventListener('click', function () {
+                        cambiarATexto(newPreguntaId)
+                    });
+                    document.getElementById(`cambiar_incisos_a_checkbox_${newPreguntaId}`).addEventListener('click', function () {
+                        cambiarACheckbox(newPreguntaId);
+                        Identificar_Btns_Eliminar();
+                    });
+                    document.getElementById(`cambiar_incisos_a_1opcion_${newPreguntaId}`).addEventListener('click', function () {
+                        cambiarA1Opcion(newPreguntaId);
+                        Identificar_Btns_Eliminar();
+                    });
+
+                    actualizarNumerosDePreguntas();
+                }
+                else {
+                    alert('Se ha alcanzado el número máximo de 10 preguntas.');
+                }
+            });
         }
 
         // Funciones para cambiar a campo de texto
@@ -208,7 +211,7 @@ if ($_SESSION['user_role'] == 'user') {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
-                if (i <= 2){
+                if (i <= 2) {
                     contenedor.innerHTML += `
                     <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
                         <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
@@ -233,7 +236,7 @@ if ($_SESSION['user_role'] == 'user') {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
-                if (i <= 2){
+                if (i <= 2) {
                     contenedor.innerHTML += `
                     <div class=" d-flex respuesta" id="form-groupP1_1" style="justify-content: flex-start;">                       
                         <input type="radio" class="Item_Form_Group" id="opcionP1_1" disabled="">
@@ -254,129 +257,113 @@ if ($_SESSION['user_role'] == 'user') {
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
         // Función para guardar el formulario usando AJAX
-       // Función para guardar el formulario usando AJAX
-    document.getElementById('guardar_formulario').addEventListener('click', function () {
+        // Función para guardar el formulario usando AJAX
+        document.getElementById('guardar_formulario').addEventListener('click', function () {
 
 
-    const nombreFormulario = document.getElementById('txtcaja').value;
-    const preguntas = formContainer.querySelectorAll('.form-group');
-    const datosPreguntas = [];
+            const nombreFormulario = document.getElementById('txtcaja').value;
+            const preguntas = formContainer.querySelectorAll('.form-group');
+            const datosPreguntas = [];
 
-    let formularioValido = true; // Bandera para verificar si el formulario es válido
+            let formularioValido = true; // Bandera para verificar si el formulario es válido
 
 
-    preguntas.forEach((pregunta, index) => {
-        const preguntaTexto = pregunta.querySelector('input[type="text"]').value;
-        const respuestas = pregunta.querySelectorAll('.respuesta');
-        const datosRespuestas = [];
+            preguntas.forEach((pregunta, index) => {
+                const preguntaTexto = pregunta.querySelector('input[type="text"]').value;
+                const respuestas = pregunta.querySelectorAll('.respuesta');
+                const datosRespuestas = [];
 
-        // Validar que la pregunta tenga al menos una respuesta
-        if (respuestas.length === 0) {
-            alert(`La pregunta número ${index + 1} debe tener al menos una respuesta.`);
-            formularioValido = false;
-            return; // Salir del ciclo de esta pregunta
-        }
+                // Validar que la pregunta tenga al menos una respuesta
+                if (respuestas.length === 0) {
+                    alert(`La pregunta número ${index + 1} debe tener al menos una respuesta.`);
+                    formularioValido = false;
+                    return; // Salir del ciclo de esta pregunta
+                }
 
-        // Capturar el tipo de respuesta (por defecto será "parrafo")
-        let tipoRespuesta = 'parrafo'; // Tipo por defecto
+                // Capturar el tipo de respuesta (por defecto será "parrafo")
+                let tipoRespuesta = 'parrafo'; // Tipo por defecto
 
-        if (respuestas.length < 2 && (pregunta.querySelector('input[type="checkbox"]') || pregunta.querySelector('input[type="radio"]'))) {
-            alert(`La pregunta número ${index + 1} debe tener al menos dos respuestas para opción múltiple o checkbox.`);
-            formularioValido = false;
-            return;
-        }
-
-        respuestas.forEach(respuesta => {
-            if (respuesta.querySelector('textarea')) {
-                // Respuesta tipo párrafo
-                const textoRespuesta = respuesta.querySelector('textarea').value;
-                datosRespuestas.push(textoRespuesta);
-                tipoRespuesta = 'parrafo';
-            } else if (respuesta.querySelector('input[type="checkbox"]')) {
-                // Respuesta tipo checkbox
-                const textoOpcion = respuesta.querySelector('input[type="text"]').value;
-                if (textoOpcion.trim() === "") {
-                    alert(`Las opciones de checkbox en la pregunta número ${index + 1} no pueden estar vacías.`);
+                if (respuestas.length < 2 && (pregunta.querySelector('input[type="checkbox"]') || pregunta.querySelector('input[type="radio"]'))) {
+                    alert(`La pregunta número ${index + 1} debe tener al menos dos respuestas para opción múltiple o checkbox.`);
                     formularioValido = false;
                     return;
                 }
-                datosRespuestas.push(textoOpcion);
-                tipoRespuesta = 'checkbox';
-            } else if (respuesta.querySelector('input[type="radio"]')) {
-                // Respuesta tipo opción múltiple
-                const textoOpcion = respuesta.querySelector('input[type="text"]').value;
-                if (textoOpcion.trim() === "") {
-                    alert(`Las opciones de opción múltiple en la pregunta número ${index + 1} no pueden estar vacías.`);
-                    formularioValido = false;
-                    return;
-                }
-                datosRespuestas.push(textoOpcion);
-                tipoRespuesta = 'opcion_multiple';
+
+                respuestas.forEach(respuesta => {
+                    if (respuesta.querySelector('textarea')) {
+                        // Respuesta tipo párrafo
+                        const textoRespuesta = respuesta.querySelector('textarea').value;
+                        datosRespuestas.push(textoRespuesta);
+                        tipoRespuesta = 'parrafo';
+                    } else if (respuesta.querySelector('input[type="checkbox"]')) {
+                        // Respuesta tipo checkbox
+                        const textoOpcion = respuesta.querySelector('input[type="text"]').value;
+                        if (textoOpcion.trim() === "") {
+                            alert(`Las opciones de checkbox en la pregunta número ${index + 1} no pueden estar vacías.`);
+                            formularioValido = false;
+                            return;
+                        }
+                        datosRespuestas.push(textoOpcion);
+                        tipoRespuesta = 'checkbox';
+                    } else if (respuesta.querySelector('input[type="radio"]')) {
+                        // Respuesta tipo opción múltiple
+                        const textoOpcion = respuesta.querySelector('input[type="text"]').value;
+                        if (textoOpcion.trim() === "") {
+                            alert(`Las opciones de opción múltiple en la pregunta número ${index + 1} no pueden estar vacías.`);
+                            formularioValido = false;
+                            return;
+                        }
+                        datosRespuestas.push(textoOpcion);
+                        tipoRespuesta = 'opcion_multiple';
+                    }
+                });
+
+                datosPreguntas.push({
+                    pregunta: preguntaTexto,
+                    respuestas: datosRespuestas,
+                    tipo_respuesta: tipoRespuesta // Guardar el tipo de respuesta
+                });
+            });
+
+            if (preguntaCounter <= 0) {
+                formularioValido = false;
+                alert('No hay preguntas'); // Muestra la alerta
             }
+
+            // Si el formulario no es válido, no se envía
+            if (!formularioValido) {
+                return;
+            }
+
+            // Crear un objeto para enviar
+            const formData = {
+                nombre_formulario: nombreFormulario,
+                preguntas: datosPreguntas
+            };
+
+            // Enviar datos al servidor usando AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'backend/guardar_formulario.php',
+                data: { formData: JSON.stringify(formData) },
+                contentType: 'application/x-www-form-urlencoded',
+                success: function (response) {
+                    alert('Encuesta guardada exitosamente.'); // Muestra la alerta
+                    window.location.href = 'admin.php'; // Redirige a admin.php
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Error al guardar el formulario.');
+                }
+            });
         });
 
-        datosPreguntas.push({
-            pregunta: preguntaTexto,
-            respuestas: datosRespuestas,
-            tipo_respuesta: tipoRespuesta // Guardar el tipo de respuesta
+        document.getElementById('adm_regresar').addEventListener('click', function () {
+            window.location.href = 'admin.php';
         });
-    });
-
-    if (preguntaCounter <= 0) {
-            formularioValido = false;
-            alert('No hay preguntas'); // Muestra la alerta
-        }
-
-    // Si el formulario no es válido, no se envía
-    if (!formularioValido) {
-        return;
-    }
-
-    // Crear un objeto para enviar
-    const formData = {
-        nombre_formulario: nombreFormulario,
-        preguntas: datosPreguntas
-    };
-
-    // Enviar datos al servidor usando AJAX
-    $.ajax({
-        type: 'POST',
-        url: 'backend/guardar_formulario.php',
-        data: { formData: JSON.stringify(formData) }, 
-        contentType: 'application/x-www-form-urlencoded',
-        success: function (response) {
-            alert('Encuesta guardada exitosamente.'); // Muestra la alerta
-            window.location.href = 'admin.php'; // Redirige a admin.php
-        },
-        error: function (xhr, status, error) {
-            console.error('Error:', error);
-            alert('Error al guardar el formulario.');
-        }
-    });
-});
-
-
-        document.getElementById('adm_regresar').addEventListener('click', function() {
-        window.location.href = 'admin.php'; 
-    });
     </script>
 
 </body>
+
 </html>
-
-
