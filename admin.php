@@ -13,10 +13,10 @@ if ($_SESSION['user_role'] == 'user') {
 }
 
 // Conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bdform";
+$servername = "localhost"; 
+$username = "naco";        
+$password = "nacox2";           
+$dbname = "bdform";  
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
