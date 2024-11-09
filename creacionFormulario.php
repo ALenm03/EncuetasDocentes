@@ -70,10 +70,8 @@ if ($_SESSION['user_role'] == 'user') {
                     <div class="card-body asd" id="card-body-preguntas">
 
                         <div class="Contenedor_Btn_Agregar_Pregunta d-flex">
-                            <button class="btn Btn_Agregar_Pregunta">Agregar Pregunta</button>
-                            <button class="btn Btn_Guardar_Encuesta" id="guardar_formulario">Guardar Encuesta</button>
-                            <button type="button" class="btn btn_guardar_form" id="guardar_formulario">Guardar
-                                Formulario</button>
+                            <button type="button" class="btn Btn_Agregar_Pregunta" >Agregar Pregunta</button>
+                            <button type="button" class="btn Btn_Guardar_Encuesta" id="guardar_formulario">Guardar Encuesta</button>
                         </div>
                     </div>
                 </div>
@@ -128,7 +126,7 @@ if ($_SESSION['user_role'] == 'user') {
 
                     newPregunta.innerHTML = `
                     <div class="Boton_Borrar_PreguntaP1 d-flex" id="boton_borrar_${newPreguntaId}" style="flex-wrap: wrap;">
-                        <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar Pregunta ${preguntaCounter}">
+                        <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar Pregunta">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -136,23 +134,8 @@ if ($_SESSION['user_role'] == 'user') {
                         <label for="nombre_de_pregunta_${preguntaCounter}" class="label_pregunta">Pregunta ${preguntaCounter}</label>
                         <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${preguntaCounter}" style="margin-bottom: 30px;" placeholder="Escribe la pregunta">
                         <div id="contenedor_de_respuestas_${newPreguntaId}">
-                            <div class=" d-flex respuesta" id="form-group${newPreguntaId}_1" style="justify-content: flex-start;">                       
-                                <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_1" disabled>
-                                <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_1">
-                            </div>
-                            <div class=" d-flex respuesta" id="form-group${newPreguntaId}_2" style="justify-content: flex-start;">
-                                <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_2" disabled>
-                                <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_2">
-                            </div>
-                            <div class=" d-flex respuesta" id="form-group${newPreguntaId}_3" style="justify-content: flex-start;">
-                                <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${newPreguntaId}_3" title="Eliminar Opción"></button>
-                                <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_3" disabled>
-                                <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_3">
-                            </div>
-                            <div class=" d-flex respuesta" id="form-group${newPreguntaId}_4" style="justify-content: flex-start;">
-                                <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${newPreguntaId}_4" title="Eliminar Opción"></button>
-                                <input type="radio" class="Item_Form_Group" id="opcion${newPreguntaId}_4" disabled>
-                                <input type="text" class="Item_Form_Group form-control" id="respuesta${newPreguntaId}_4">
+                            <div class=" d-flex respuesta" style="justify-content: flex-start;">
+                                <textarea class="Item_Form_Group form-control" id="respuesta${newPreguntaId}" rows="4" style="max-width: 50%; max-height:100px; min-height:100px;" readonly></textarea>
                             </div>
                         </div>
                         <div class="d-flex" style="flex-wrap: wrap; justify-content: center">
@@ -173,7 +156,6 @@ if ($_SESSION['user_role'] == 'user') {
                         document.getElementById(newPreguntaId).remove();
                         preguntaCounter--;
                         actualizarNumerosDePreguntas();
-                        actualizarIdsPreguntas();
                     });
 
                     //Eventos a los botones de cambiar opciones
@@ -196,7 +178,6 @@ if ($_SESSION['user_role'] == 'user') {
                 }
             });
         }
-
         // Funciones para cambiar a campo de texto
         function cambiarATexto(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
@@ -206,116 +187,95 @@ if ($_SESSION['user_role'] == 'user') {
                 </div>
             `;
         }
-
         //Funcion para cambiar las opciones a Checkbox
         function cambiarACheckbox(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
-                if (i <= 2) {
                     contenedor.innerHTML += `
                     <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
                         <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
                         <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
                     </div>
                 `;
-                }
-                else {
-                    contenedor.innerHTML += `
-                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
-                        <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-group${preguntaId}_${i}" title="Eliminar Opción"></button>
-                        <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
-                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
-                    </div>
-                `;
-                }
             }
         }
-
         //Funcion para cambiar las opciones a Opcion Multiple que solo acepta una respuesta
         function cambiarA1Opcion(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
-                if (i <= 2) {
                     contenedor.innerHTML += `
                     <div class=" d-flex respuesta" id="form-groupP1_1" style="justify-content: flex-start;">                       
                         <input type="radio" class="Item_Form_Group" id="opcionP1_1" disabled="">
                         <input type="text" class="Item_Form_Group form-control" id="respuestaP1_1">
                     </div>
                 `;
-                }
-                else {
-                    contenedor.innerHTML += `
-                    <div class=" d-flex respuesta" id="form-groupP1_3" style="justify-content: flex-start;">
-                        <button class="btn btn-danger fas fa-times Item_Form_Group" id="eliminar_form-groupP1_3" title="Eliminar Opción"></button>
-                        <input type="radio" class="Item_Form_Group" id="opcionP1_3" disabled="">
-                        <input type="text" class="Item_Form_Group form-control" id="respuestaP1_3">
-                    </div>
-                `;
-                }
             }
         }
+        
         // Función para guardar el formulario usando AJAX
         // Función para guardar el formulario usando AJAX
         document.getElementById('guardar_formulario').addEventListener('click', function () {
-
-
             const nombreFormulario = document.getElementById('txtcaja').value;
             let ChecarEspacios = nombreFormulario;
             const preguntas = formContainer.querySelectorAll('.form-group');
             const datosPreguntas = [];
 
+
             let formularioValido = true; // Bandera para verificar si el formulario es válido
 
-
+            
             preguntas.forEach((pregunta, index) => {
                 const preguntaTexto = pregunta.querySelector('input[type="text"]').value;
                 const respuestas = pregunta.querySelectorAll('.respuesta');
                 const datosRespuestas = [];
-
-                // Validar que la pregunta tenga al menos una respuesta
-                if (respuestas.length === 0) {
-                    alert(`La pregunta número ${index + 1} debe tener al menos una respuesta.`);
+                let tipoRespuesta = 'parrafo';
+                let OpSinRespuesta = 0; //Cada pregunta inicia con un contador de respuestas vacias en 0
+                
+                if (preguntaTexto.trim() === "") {
                     formularioValido = false;
-                    return; // Salir del ciclo de esta pregunta
+                    alert('No puede haber preguntas sin Nombre'); // Muestra la alerta
                 }
-
-                // Capturar el tipo de respuesta (por defecto será "parrafo")
-                let tipoRespuesta = 'parrafo'; // Tipo por defecto
-
-                if (respuestas.length < 2 && (pregunta.querySelector('input[type="checkbox"]') || pregunta.querySelector('input[type="radio"]'))) {
-                    alert(`La pregunta número ${index + 1} debe tener al menos dos respuestas para opción múltiple o checkbox.`);
-                    formularioValido = false;
-                    return;
-                }
-
                 respuestas.forEach(respuesta => {
+                    //TEXTO
                     if (respuesta.querySelector('textarea')) {
-                        // Respuesta tipo párrafo
-                        const textoRespuesta = respuesta.querySelector('textarea').value;
-                        datosRespuestas.push(textoRespuesta);
+                        datosRespuestas.push(null);
                         tipoRespuesta = 'parrafo';
-                    } else if (respuesta.querySelector('input[type="checkbox"]')) {
-                        // Respuesta tipo checkbox
+                    } //CHECKBOX
+                    else if (respuesta.querySelector('input[type="checkbox"]')) {
                         const textoOpcion = respuesta.querySelector('input[type="text"]').value;
+                        //Si la opcion esta vacia
                         if (textoOpcion.trim() === "") {
-                            alert(`Las opciones de checkbox en la pregunta número ${index + 1} no pueden estar vacías.`);
-                            formularioValido = false;
+                            tipoRespuesta = 'checkbox'; //cambia el tipo de respuesta
+                            OpSinRespuesta++; //suma 1 a la cant de opciones vacias
+                            if (OpSinRespuesta == 3) { //Si llega a contar 3 opciones vacias hace el formulario invalido
+                                alert(`Debe de haber almenos 2 opciones escritas en la Pregunta ${index + 1}.`);
+                                formularioValido = false;
+                                return;
+                            }
                             return;
                         }
-                        datosRespuestas.push(textoOpcion);
-                        tipoRespuesta = 'checkbox';
-                    } else if (respuesta.querySelector('input[type="radio"]')) {
-                        // Respuesta tipo opción múltiple
+                        else //Si no esta vacia guarda la respuesta
+                        {
+                            datosRespuestas.push(textoOpcion);
+                            tipoRespuesta = 'checkbox';
+                        }
+                    } //OpMULT lo mismo pero con OpMultiple
+                    else if (respuesta.querySelector('input[type="radio"]')) {
                         const textoOpcion = respuesta.querySelector('input[type="text"]').value;
                         if (textoOpcion.trim() === "") {
-                            alert(`Las opciones de opción múltiple en la pregunta número ${index + 1} no pueden estar vacías.`);
-                            formularioValido = false;
-                            return;
+                            tipoRespuesta = 'opcion_multiple';
+                            OpSinRespuesta++;
+                            if (OpSinRespuesta == 3){
+                                alert(`Debe de haber almenos 2 opciones escritas en la Pregunta ${index + 1}.`);
+                                formularioValido = false;
+                                return;
+                            }
+                        }else {
+                            datosRespuestas.push(textoOpcion);
+                            tipoRespuesta = 'opcion_multiple';
                         }
-                        datosRespuestas.push(textoOpcion);
-                        tipoRespuesta = 'opcion_multiple';
                     }
                 });
 
@@ -325,23 +285,20 @@ if ($_SESSION['user_role'] == 'user') {
                     tipo_respuesta: tipoRespuesta // Guardar el tipo de respuesta
                 });
             });
-
+            //Si no hay preguntas no se guarda
             if (preguntaCounter <= 0) {
                 formularioValido = false;
-                alert('No hay preguntas'); // Muestra la alerta
+                alert('No hay preguntas');
             }
-
+            //Si no hay nombre de formulario no se guarda
             if (nombreFormulario.trim() === "") {
                 formularioValido = false;
-                alert('No hay nombre del formulario'); // Muestra la alerta
+                alert('No hay nombre del formulario');
             }
-
-
             // Si el formulario no es válido, no se envía
             if (!formularioValido) {
                 return;
             }
-
             // Crear un objeto para enviar
             const formData = {
                 nombre_formulario: nombreFormulario,
@@ -373,73 +330,7 @@ if ($_SESSION['user_role'] == 'user') {
 
 
 
-    <script>
-    function actualizarIdsPreguntas() {
-    // Selecciona todos los divs que tienen el formato de id "P(X)"
-    const preguntas = document.querySelectorAll(".Pregunta");
-    const totalPreguntas = preguntas.length;
-
-    // Itera a través de cada div para actualizar sus ids y valores
-    preguntas.forEach((pregunta, index) => {
-        const nuevoIndice = index + 1; // Inicia el contador en 1
-        const nuevoPreguntaId = `P${nuevoIndice}`;
-
-        // Cambia el id del div principal
-        pregunta.id = nuevoPreguntaId;
-
-        // Actualiza los subelementos dentro del div "Pregunta"
-        const botonBorrar = pregunta.querySelector(`[id^="boton_borrar_"]`);
-        if (botonBorrar) {
-            botonBorrar.className = `Boton_Borrar_Pregunta${nuevoPreguntaId} d-flex`;
-            botonBorrar.id = `boton_borrar_${nuevoPreguntaId}`;
-            const btnEliminar = botonBorrar.querySelector(".Btn_Eliminar_Pregunta");
-            if (btnEliminar) {
-                btnEliminar.title = `Eliminar Pregunta ${nuevoIndice}`;
-            }
-        }
-
-        // Actualiza el input de texto de la pregunta
-        const labelPregunta = pregunta.querySelector(".label_pregunta");
-        const inputPregunta = pregunta.querySelector(`[id^="nombre_de_pregunta_"]`);
-        if (labelPregunta && inputPregunta) {
-            labelPregunta.setAttribute("for", `nombre_de_pregunta_${nuevoIndice}`);
-            labelPregunta.textContent = `Pregunta ${nuevoIndice}`;
-            inputPregunta.id = `nombre_de_pregunta_${nuevoIndice}`;
-        }
-
-        // Actualiza el contenedor de respuestas y cada respuesta dentro de él
-        const contenedorRespuestas = pregunta.querySelector(`[id^="contenedor_de_respuestas_"]`);
-        if (contenedorRespuestas) {
-            contenedorRespuestas.id = `contenedor_de_respuestas_${nuevoPreguntaId}`;
-
-            // Actualiza los IDs de cada respuesta
-            const respuestas = contenedorRespuestas.querySelectorAll(".respuesta");
-            respuestas.forEach((respuesta, respuestaIndex) => {
-                const nuevaRespuestaId = `form-group${nuevoPreguntaId}_${respuestaIndex + 1}`;
-                respuesta.id = nuevaRespuestaId;
-
-                // Actualiza los elementos dentro de cada respuesta
-                const opcion = respuesta.querySelector(`[id^="opcion"]`);
-                const inputRespuesta = respuesta.querySelector(`[id^="respuesta"]`);
-                const btnEliminarOpcion = respuesta.querySelector(`[id^="eliminar_form-group"]`);
-
-                if (opcion) opcion.id = `opcion${nuevoPreguntaId}_${respuestaIndex + 1}`;
-                if (inputRespuesta) inputRespuesta.id = `respuesta${nuevoPreguntaId}_${respuestaIndex + 1}`;
-                if (btnEliminarOpcion) btnEliminarOpcion.id = `eliminar_${nuevaRespuestaId}`;
-            });
-        }
-
-        // Actualiza los botones de cambio de tipo de respuesta
-        const cambiarATexto = pregunta.querySelector(`[id^="cambiar_incisos_a_texto_"]`);
-        const cambiarACheckbox = pregunta.querySelector(`[id^="cambiar_incisos_a_checkbox_"]`);
-        const cambiarAOpcionMultiple = pregunta.querySelector(`[id^="cambiar_incisos_a_1opcion_"]`);
-
-        if (cambiarATexto) cambiarATexto.id = `cambiar_incisos_a_texto_${nuevoPreguntaId}`;
-        if (cambiarACheckbox) cambiarACheckbox.id = `cambiar_incisos_a_checkbox_${nuevoPreguntaId}`;
-        if (cambiarAOpcionMultiple) cambiarAOpcionMultiple.id = `cambiar_incisos_a_1opcion_${nuevoPreguntaId}`;
-    });
-}
-    </script>
+    
 
 </body>
 
