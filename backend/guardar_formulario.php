@@ -1,7 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "root";       
-$password = "";            
+$servername = "localhost"; 
+$username = "naco";        
+$password = "nacox2";           
 $dbname = "bdform";  
 
 // Crear conexión
