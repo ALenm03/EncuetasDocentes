@@ -89,19 +89,8 @@ if ($_SESSION['user_role'] == 'user') {
 
         // Contador de preguntas actuales
         let preguntaCounter = 0;
+        let PreguntaX = 0;
 
-        //Funcion que hace jalar los botones para eliminar opciones
-        function Identificar_Btns_Eliminar() {
-            document.querySelectorAll('[id^="eliminar_form-groupP"]').forEach(button => {
-                button.addEventListener('click', function () {
-                    const idToDelete = this.id.replace('eliminar_', ''); // Remueve 'eliminar_' para obtener el ID del form-group
-                    const formGroup = document.getElementById(idToDelete);
-                    if (formGroup) {
-                        formGroup.remove(); // Elimina el form-group del DOM
-                    }
-                });
-            });
-        }
         // Función para actualizar los números de las preguntas en los labels
         function actualizarNumerosDePreguntas() {
             const preguntas = document.querySelectorAll('.Pregunta');
@@ -116,14 +105,14 @@ if ($_SESSION['user_role'] == 'user') {
             document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', function () {
                 if (preguntaCounter < 10) {
                     preguntaCounter++;
-                    const newPreguntaId = `P${preguntaCounter}`;
+                    PreguntaX++;
+                    const newPreguntaId = `P${PreguntaX}`;
 
                     // Crea el nuevo div de pregunta
                     const newPregunta = document.createElement('div');
                     newPregunta.className = 'form-group Pregunta d-flex';
                     newPregunta.id = newPreguntaId;
                     newPregunta.style = 'margin-bottom: 30px;';
-
                     newPregunta.innerHTML = `
                     <div class="Boton_Borrar_PreguntaP1 d-flex" id="boton_borrar_${newPreguntaId}" style="flex-wrap: wrap;">
                         <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar Pregunta">
@@ -131,8 +120,8 @@ if ($_SESSION['user_role'] == 'user') {
                         </button>
                     </div>
                     <div class="Contenido_De_Cada_Pregunta" style="width: 90%;">
-                        <label for="nombre_de_pregunta_${preguntaCounter}" class="label_pregunta">Pregunta ${preguntaCounter}</label>
-                        <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${preguntaCounter}" style="margin-bottom: 30px;" placeholder="Escribe la pregunta">
+                        <label for="nombre_de_pregunta_${PreguntaX}" class="label_pregunta">Pregunta ${PreguntaX}</label>
+                        <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${PreguntaX}" style="margin-bottom: 30px;" placeholder="Escribe la pregunta">
                         <div id="contenedor_de_respuestas_${newPreguntaId}">
                             <div class=" d-flex respuesta" style="justify-content: flex-start;">
                                 <textarea class="Item_Form_Group form-control" id="respuesta${newPreguntaId}" rows="4" style="max-width: 50%; max-height:100px; min-height:100px;" readonly></textarea>
@@ -148,7 +137,6 @@ if ($_SESSION['user_role'] == 'user') {
 
                     // Añadir la nueva pregunta al contenedor de la card-body
                     document.querySelector('#card-body-preguntas').insertBefore(newPregunta, document.querySelector('.Contenedor_Btn_Agregar_Pregunta'));
-                    Identificar_Btns_Eliminar();
 
 
                     // Añadir evento para borrar la nueva pregunta
@@ -157,18 +145,15 @@ if ($_SESSION['user_role'] == 'user') {
                         preguntaCounter--;
                         actualizarNumerosDePreguntas();
                     });
-
                     //Eventos a los botones de cambiar opciones
                     document.getElementById(`cambiar_incisos_a_texto_${newPreguntaId}`).addEventListener('click', function () {
                         cambiarATexto(newPreguntaId)
                     });
                     document.getElementById(`cambiar_incisos_a_checkbox_${newPreguntaId}`).addEventListener('click', function () {
                         cambiarACheckbox(newPreguntaId);
-                        Identificar_Btns_Eliminar();
                     });
                     document.getElementById(`cambiar_incisos_a_1opcion_${newPreguntaId}`).addEventListener('click', function () {
                         cambiarA1Opcion(newPreguntaId);
-                        Identificar_Btns_Eliminar();
                     });
 
                     actualizarNumerosDePreguntas();
