@@ -1,9 +1,9 @@
 <?php
 // Configuración de conexión a la base de datos
 $servername = "localhost"; 
-$username = "naco";        
-$password = "nacox2";           
-$dbname = "bdform";     
+$username = "NACO";        
+$password = "NACOX2";           
+$dbname = "bdform";    
 
 // Crear la conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
