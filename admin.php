@@ -88,7 +88,7 @@ $result = $stmt->get_result();
                                 echo "<tr>";
                                 echo "<td>{$count}</td>";
                                 echo "<td>{$row['nombre_formulario']}</td>";
-                                echo "<td><button class='btn_ver'>Ver</button></td>";
+                                echo "<td><a href='verFormulario.php?nombre_formulario={$row['nombre_formulario']}' class='btn_ver'>Ver</a></td>";
                                 echo "<td><button class='btn_editar'>Editar</button></td>";
                                 echo "<td><button class='btn_eliminar_encuesta' data-id='{$row['id']}' data-nombre='{$row['nombre_formulario']}'>Eliminar</button></td>";
                                 echo "</tr>";
