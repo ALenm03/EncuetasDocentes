@@ -81,7 +81,7 @@
 
 
 
-        /* ESTILOS PARA LA PAGINA DE ADMIN*/
+/* ESTILOS PARA LA PAGINA DE ADMIN*/
 
 .adm_CabezaTabla{
     background-color:  #372549;
@@ -164,7 +164,7 @@
     border-radius: 5px;
 }
 .btn_eliminar_encuesta:hover {
-    background-color: #1A1423;
+    background-color: #5c6181;
 }
 
 

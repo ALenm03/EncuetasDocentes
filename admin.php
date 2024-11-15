@@ -69,7 +69,7 @@ $result = $stmt->get_result();
                         <button type="button" id="crear_nueva_encuesta">Nueva Encuesta</button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" >
                     <table class="table table-bordered table-striped table-hover text-nowrap table-head-fixed" id="Tablita">
                         <thead>
                             <tr>
@@ -88,9 +88,9 @@ $result = $stmt->get_result();
                                 echo "<tr>";
                                 echo "<td>{$count}</td>";
                                 echo "<td>{$row['nombre_formulario']}</td>";
-                                echo "<td><a href='verFormulario.php?nombre_formulario={$row['nombre_formulario']}' class='btn_ver'> Ver </a></td>";
-                                echo "<td><a href='EditarEncuesta.php?nombre_formulario={$row['nombre_formulario']}' class='btn_editar'>Editar</a></td>";
-                                echo "<td><button class='btn_eliminar_encuesta' data-id='{$row['id']}' data-nombre='{$row['nombre_formulario']}'>Eliminar</button></td>";
+                                echo "<td><a href='verFormulario.php?nombre_formulario={$row['nombre_formulario']}' class='btn_ver' style='padding:3px; color:white;'> Ver </a></td>";
+                                echo "<td><a href='EditarEncuesta.php?nombre_formulario={$row['nombre_formulario']}' class='btn_editar' style='padding:3px; color:white;'>Editar</a></td>";
+                                echo "<td><a class='btn_eliminar_encuesta' data-id='{$row['id']}' data-nombre='{$row['nombre_formulario']}' style='padding:3px; color:white;'>Eliminar</a></td>";
                                 echo "</tr>";
                                 $count++;
                             }

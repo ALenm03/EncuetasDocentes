@@ -312,11 +312,5 @@ if ($_SESSION['user_role'] == 'user') {
             window.location.href = 'admin.php';
         });
     </script>
-
-
-
-    
-
 </body>
-
 </html>
