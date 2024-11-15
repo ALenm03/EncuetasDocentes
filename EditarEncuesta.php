@@ -117,19 +117,35 @@ $result = $stmt->get_result();
                                                 break;
 
                                             case 'opcion_multiple':
+                                                for ($i = 1; $i <= 4; $i++) {
+                                                    $respuesta = $row["respuesta_$i"];
+                                                    if ($respuesta) {
+                                                        echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
+                                                        echo "<input type='radio' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
+                                                        echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' value='" . htmlspecialchars($respuesta) . "' class='form-control mb-2'>";
+                                                        echo"</div>";
+                                                    }
+                                                    else {
+                                                        echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
+                                                        echo "<input type='radio' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
+                                                        echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' class='form-control mb-2'>";
+                                                        echo"</div>";
+                                                    }
+                                                }
+                                                break;
                                             case 'checkbox':
                                                 for ($i = 1; $i <= 4; $i++) {
                                                     $respuesta = $row["respuesta_$i"];
                                                     if ($respuesta) {
                                                         echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
-                                                        echo "<input type='checkbox' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
-                                                        echo "<input type='text' name='respuesta_{$row['pregunta_num']}_$i' value='" . htmlspecialchars($respuesta) . "' class='form-control mb-2'>";
+                                                        echo "<input type='checkbox' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
+                                                        echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' value='" . htmlspecialchars($respuesta) . "' class='form-control mb-2'>";
                                                         echo"</div>";
                                                     }
                                                     else {
                                                         echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
-                                                        echo "<input type='checkbox' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
-                                                        echo "<input type='text' name='respuesta_{$row['pregunta_num']}_$i' class='form-control mb-2'>";
+                                                        echo "<input type='checkbox' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
+                                                        echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' class='form-control mb-2'>";
                                                         echo"</div>";
                                                     }
                                                 }
@@ -281,7 +297,7 @@ $result = $stmt->get_result();
             for (let i = 1; i <= 4; i++) {
                     contenedor.innerHTML += `
                     <div class=" d-flex respuesta" id="form-groupP1_1" style="justify-content: flex-start;">                       
-                        <input type="radio" class="Item_Form_Group" id="opcionP1_1" disabled="">
+                        <input type="radio" class="Item_Form_Group" id="opcionP1_1" disabled>
                         <input type="text" class="Item_Form_Group form-control" id="respuestaP1_1">
                     </div>
                 `;
@@ -293,7 +309,7 @@ $result = $stmt->get_result();
         document.getElementById('guardar_formulario').addEventListener('click', function () {
             const nombreFormulario = document.getElementById('txtcaja').value;
             let ChecarEspacios = nombreFormulario;
-            const preguntas = formContainer.querySelectorAll('.form-group');
+            const preguntas = formContainer.querySelectorAll('.Pregunta');
             const datosPreguntas = [];
 
 
