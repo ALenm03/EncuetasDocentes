@@ -67,14 +67,14 @@ $result = $stmt->get_result();
                 <div class="card">
                     <div class="card-header nombre_del_from_bg">
                         <div class="card-title nombre_del_from text-center w-100">
-                            <h1>Ingresar Nombre del Formulario</h1>
+                            <h1>Editar nombre del Formulario: <?php echo htmlspecialchars($nombreFormulario);?></h1>
                         </div>
                     </div>
 
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="txtcaja">Ingrese el nombre del Formulario</label>
-                            <input type="text" class="form-control" maxlength="50" placeholder="Nombre del formulario"
+                            <label for="txtcaja">Edite el nombre</label>
+                            <input type="text" class="form-control" maxlength="50" placeholder="Nuevo nombre del formulario"
                                 id="txtcaja">
                         </div>
                     </div>
@@ -87,7 +87,7 @@ $result = $stmt->get_result();
                 <div class="card">
                     <div class="card-header nombre_del_from_bg">
                         <div class="card-title nombre_del_from text-center w-100">
-                            <h1>Editar FORMULARIO X</h1>
+                            <h1>Preguntas de <?php echo htmlspecialchars($nombreFormulario); ?></h1>
                         </div>
                     </div>
                     <div class="card-body asd" id="card-body-preguntas">
@@ -102,7 +102,7 @@ $result = $stmt->get_result();
                                 echo"</div>";
 
                                 echo "<div class='Contenido_De_Cada_Pregunta' style='width: 90%;'> ";
-                                    echo "<label>Pregunta " . htmlspecialchars($row['pregunta_num']) . "</label>";
+                                    echo "<label class='label_pregunta'>Pregunta " . htmlspecialchars($row['pregunta_num']) . "</label>";
                                     echo "<input type='text' name='pregunta_{$row['pregunta_num']}' value='".htmlspecialchars($row['pregunta'])."' class='form-control' id='nombre_de_pregunta_". htmlspecialchars($row['pregunta_num']) ."' style='margin-bottom: 30px'>";
 
 
@@ -174,7 +174,7 @@ $result = $stmt->get_result();
                                 }?>
                         <div class="Contenedor_Btn_Agregar_Pregunta d-flex">
                             <button type="button" class="btn Btn_Agregar_Pregunta" >Agregar Pregunta</button>
-                            <button type="button" class="btn Btn_Guardar_Encuesta" id="guardar_formulario">Guardar Encuesta</button>
+                            <button type="button" class="btn Btn_Guardar_Encuesta" id="guardar_formulario">Actualizar Encuesta</button>
                         </div>
                     </div>
                 </div>
@@ -186,7 +186,6 @@ $result = $stmt->get_result();
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>
-
     <script>
         const formContainer = document.getElementById('card-body-preguntas');
 
@@ -194,8 +193,53 @@ $result = $stmt->get_result();
         let preguntaCounter = 0;
         let PreguntaX = 0;
 
+        //Cada vez que se cargue completamente el formulario se ejecutara la funcion para contar las preguntas y agregar las fuinciones a los botones
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalPreguntas = document.getElementsByClassName('Pregunta').length;
+            console.log('Total de preguntas:', totalPreguntas);
+            preguntaCounter = totalPreguntas;
+            console.log('Total de preguntaCounter:', preguntaCounter);
+            PreguntaX = totalPreguntas;
+            console.log('Total de PreguntaX:', PreguntaX);
+
+
+            const BotonesDeEliminarDelFormularioCargado = document.querySelectorAll('.Btn_Eliminar_Pregunta');
+            BotonesDeEliminarDelFormularioCargado.forEach(button => {
+                button.addEventListener('click', function() {
+                    const preguntaId = this.id.replace('boton_borrar_', '');
+                    document.getElementById(preguntaId).remove();
+                    preguntaCounter--;
+                    actualizarLabels();
+                });
+            });
+
+            const cambiarTextoButtons = document.querySelectorAll('.Btn_Cambiar_a_Texto');
+            cambiarTextoButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const preguntaId = this.id.replace('cambiar_incisos_a_texto_', '');
+                    cambiarATexto(preguntaId);
+                });
+            });
+
+            const cambiarCheckboxButtons = document.querySelectorAll('.Btn_Cambiar_a_Checkbox');
+            cambiarCheckboxButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const preguntaId = this.id.replace('cambiar_incisos_a_checkbox_', '');
+                    cambiarACheckbox(preguntaId);
+                });
+            });
+
+            const cambiarOpMulButtons = document.querySelectorAll('.Btn_Cambiar_a_OpMul');
+            cambiarOpMulButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const preguntaId = this.id.replace('cambiar_incisos_a_1opcion_', '');
+                    cambiarA1Opcion(preguntaId);
+                });
+            });
+        });
+
         // Función para actualizar los números de las preguntas en los labels
-        function actualizarNumerosDePreguntas() {
+        function actualizarLabels() {
             const preguntas = document.querySelectorAll('.Pregunta');
             preguntas.forEach((pregunta, index) => {
                 const label = pregunta.querySelector('.label_pregunta');
@@ -248,7 +292,7 @@ $result = $stmt->get_result();
                     document.getElementById(`boton_borrar_${newPreguntaId}`).addEventListener('click', function () {
                         document.getElementById(newPreguntaId).remove();
                         preguntaCounter--;
-                        actualizarNumerosDePreguntas();
+                        actualizarLabels();
                     });
                     //Eventos a los botones de cambiar opciones
                     document.getElementById(`cambiar_incisos_a_texto_${newPreguntaId}`).addEventListener('click', function () {
@@ -261,7 +305,7 @@ $result = $stmt->get_result();
                         cambiarA1Opcion(newPreguntaId);
                     });
 
-                    actualizarNumerosDePreguntas();
+                    actualizarLabels();
                 }
                 else {
                     alert('Se ha alcanzado el número máximo de 10 preguntas.');
@@ -280,32 +324,41 @@ $result = $stmt->get_result();
         //Funcion para cambiar las opciones a Checkbox
         function cambiarACheckbox(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
+            const respuestasExistentes = contenedor.querySelectorAll('.respuesta input[type="text"]');
+            const respuestasValores = Array.from(respuestasExistentes).map(input => input.value);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
-                    contenedor.innerHTML += `
-                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
-                        <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
-                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
-                    </div>
+                const valor = respuestasValores[i - 1] || '';
+                contenedor.innerHTML += `
+                <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                    <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                    <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" value="${valor}">
+                </div>
                 `;
             }
         }
+
         //Funcion para cambiar las opciones a Opcion Multiple que solo acepta una respuesta
         function cambiarA1Opcion(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
+            const respuestasExistentes = contenedor.querySelectorAll('.respuesta input[type="text"]');
+            const respuestasValores = Array.from(respuestasExistentes).map(input => input.value);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
-                    contenedor.innerHTML += `
-                    <div class=" d-flex respuesta" id="form-groupP1_1" style="justify-content: flex-start;">                       
-                        <input type="radio" class="Item_Form_Group" id="opcionP1_1" disabled>
-                        <input type="text" class="Item_Form_Group form-control" id="respuestaP1_1">
-                    </div>
+                const valor = respuestasValores[i - 1] || '';
+                contenedor.innerHTML += `
+                <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                    <input type="radio" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                    <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" value="${valor}">
+                </div>
                 `;
             }
         }
-        
-        // Función para guardar el formulario usando AJAX
-        // Función para guardar el formulario usando AJAX
+        //Regrear a la pagina de admin
+        document.getElementById('adm_regresar').addEventListener('click', function () {
+            window.location.href = 'admin.php';
+        });
+        //Guardar Formulario
         document.getElementById('guardar_formulario').addEventListener('click', function () {
             const nombreFormulario = document.getElementById('txtcaja').value;
             let ChecarEspacios = nombreFormulario;
@@ -410,11 +463,6 @@ $result = $stmt->get_result();
                     alert('Error al guardar el formulario.');
                 }
             });
-        });
-
-
-        document.getElementById('adm_regresar').addEventListener('click', function () {
-            window.location.href = 'admin.php';
         });
     </script>
 </body>
