@@ -74,8 +74,7 @@ $result = $stmt->get_result();
                     <div class="card-body">
                         <div class="form-group">
                             <label for="txtcaja">Edite el nombre</label>
-                            <input type="text" class="form-control" maxlength="50" placeholder="Nuevo nombre del formulario"
-                                id="txtcaja">
+                            <input type="text" class="form-control" maxlength="50" placeholder="Nuevo nombre del formulario" id="txtcaja" value="<?php echo htmlspecialchars($nombreFormulario);?>">
                         </div>
                     </div>
                 </div>
