@@ -91,86 +91,81 @@ $result = $stmt->get_result();
                     </div>
                     <div class="card-body asd" id="card-body-preguntas">
                         <?php
-                            // Iterar sobre las preguntas y mostrar campos editables para preguntas y respuestas
+                            // Iterar sobre las preguntas y mostrar campos editables para preguntas y respuestas osea Cargar Preguntas
                             while ($row = $result->fetch_assoc()) {
-                            echo "<div class='form-group Pregunta d-flex' id='P". htmlspecialchars($row['pregunta_num']) ."' style = 'margin-bottom: 30px;'>";
-                                echo "<div class='Boton_Borrar_PreguntaP1 d-flex' style='flex-wrap: wrap;'>" ;
-                                    echo "<button class='btn btn-danger Btn_Eliminar_Pregunta' id='boton_borrar_P". htmlspecialchars($row['pregunta_num']) ."' title='Eliminar Pregunta'>";
-                                        echo "<i class='fas fa-trash'></i>";
-                                    echo "</button>";
-                                echo"</div>";
+                                echo "<div class='form-group Pregunta d-flex' id='P". htmlspecialchars($row['pregunta_num']) ."' style = 'margin-bottom: 30px;'>";
+                                    echo "<div class='Boton_Borrar_PreguntaP1 d-flex' style='flex-wrap: wrap;'>" ;
+                                        echo "<button class='btn btn-danger Btn_Eliminar_Pregunta' id='boton_borrar_P". htmlspecialchars($row['pregunta_num']) ."' title='Eliminar Pregunta'>";
+                                            echo "<i class='fas fa-trash'></i>";
+                                        echo "</button>";
+                                    echo"</div>";
 
-                                echo "<div class='Contenido_De_Cada_Pregunta' style='width: 90%;'> ";
-                                    echo "<label class='label_pregunta'>Pregunta " . htmlspecialchars($row['pregunta_num']) . "</label>";
-                                    echo "<input type='text' name='Pregunta' value='".htmlspecialchars($row['pregunta'])."' class='form-control' id='nombre_de_pregunta_". htmlspecialchars($row['pregunta_num']) ."' style='margin-bottom: 30px'>";
+                                    echo "<div class='Contenido_De_Cada_Pregunta' style='width: 90%;'> ";
+                                        echo "<label class='label_pregunta'>Pregunta " . htmlspecialchars($row['pregunta_num']) . "</label>";
+                                        echo "<input type='text' name='Pregunta' value='".htmlspecialchars($row['pregunta'])."' class='form-control' id='nombre_de_pregunta_". htmlspecialchars($row['pregunta_num']) ."' style='margin-bottom: 30px'>";
 
 
-                                echo "<div id='contenedor_de_respuestas_P".htmlspecialchars($row['pregunta'])."'>";
+                                    echo "<div id='contenedor_de_respuestas_P".htmlspecialchars($row['pregunta'])."'>";
 
-                                        switch ($row['tipo_respuesta']) {
-                                            
-                                            case 'parrafo':
-                                                echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_1' style='justify-content: flex-start;'>";
-                                                    echo "<textarea name='respuesta_{$row['pregunta_num']}_1' class='form-control' rows='3' disabled>" . htmlspecialchars($row['respuesta_1']) . "</textarea>";
-                                                echo"</div>";
-                                                break;
+                                            switch ($row['tipo_respuesta']) {
+                                                
+                                                case 'parrafo':
+                                                    echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_1' style='justify-content: flex-start;'>";
+                                                        echo "<textarea name='respuesta_{$row['pregunta_num']}_1' class='form-control' rows='3' disabled>" . htmlspecialchars($row['respuesta_1']) . "</textarea>";
+                                                    echo"</div>";
+                                                    break;
 
-                                            case 'opcion_multiple':
-                                                for ($i = 1; $i <= 4; $i++) {
-                                                    $respuesta = $row["respuesta_$i"];
-                                                    if ($respuesta) {
-                                                        echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
-                                                        echo "<input type='radio' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
-                                                        echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' value='" . htmlspecialchars($respuesta) . "' class='form-control mb-2'>";
-                                                        echo"</div>";
+                                                case 'opcion_multiple':
+                                                    for ($i = 1; $i <= 4; $i++) {
+                                                        $respuesta = $row["respuesta_$i"];
+                                                        if ($respuesta) {
+                                                            echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
+                                                            echo "<input type='radio' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
+                                                            echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' value='" . htmlspecialchars($respuesta) . "' class='form-control mb-2'>";
+                                                            echo"</div>";
+                                                        }
+                                                        else {
+                                                            echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
+                                                            echo "<input type='radio' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
+                                                            echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' class='form-control mb-2'>";
+                                                            echo"</div>";
+                                                        }
                                                     }
-                                                    else {
-                                                        echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
-                                                        echo "<input type='radio' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
-                                                        echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' class='form-control mb-2'>";
-                                                        echo"</div>";
+                                                    break;
+                                                case 'checkbox':
+                                                    for ($i = 1; $i <= 4; $i++) {
+                                                        $respuesta = $row["respuesta_$i"];
+                                                        if ($respuesta) {
+                                                            echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
+                                                            echo "<input type='checkbox' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
+                                                            echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' value='" . htmlspecialchars($respuesta) . "' class='form-control mb-2'>";
+                                                            echo"</div>";
+                                                        }
+                                                        else {
+                                                            echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
+                                                            echo "<input type='checkbox' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
+                                                            echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' class='form-control mb-2'>";
+                                                            echo"</div>";
+                                                        }
                                                     }
-                                                }
-                                                break;
-                                            case 'checkbox':
-                                                for ($i = 1; $i <= 4; $i++) {
-                                                    $respuesta = $row["respuesta_$i"];
-                                                    if ($respuesta) {
-                                                        echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
-                                                        echo "<input type='checkbox' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
-                                                        echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' value='" . htmlspecialchars($respuesta) . "' class='form-control mb-2'>";
-                                                        echo"</div>";
-                                                    }
-                                                    else {
-                                                        echo"<div class=' d-flex respuesta' id='P{$row['pregunta_num']}_$i' style='justify-content: flex-start;'>";
-                                                        echo "<input type='checkbox' class='Item_Form_Group' name='respuesta_P{$row['pregunta_num']}_$i' disabled>";
-                                                        echo "<input type='text' class='Item_Form_Group form-control' name='respuesta_{$row['pregunta_num']}_$i' class='form-control mb-2'>";
-                                                        echo"</div>";
-                                                    }
-                                                }
-                                                break;
+                                                    break;
 
-                                            default:
-                                                echo "<p>Tipo de respuesta no definido.</p>";
-                                                break;
-                                        }
-                                echo"</div>";
-        
-                                echo"<div class='d-flex' style='flex-wrap: wrap; justify-content: center'>";
-                                    echo "<button class='btn Btn_Cambiar_a_Texto' id='cambiar_incisos_a_texto_P".htmlspecialchars($row['pregunta'])."'>Cambiar a Texto</button>";
-                                    echo "<button class='btn Btn_Cambiar_a_Checkbox' id='cambiar_incisos_a_checkbox_P".htmlspecialchars($row['pregunta'])."'>Cambiar a checkbox</button>";
-                                    echo "<button class='btn Btn_Cambiar_a_OpMul' id='cambiar_incisos_a_1opcion_P".htmlspecialchars($row['pregunta'])."'>Cambiar a Opción Múltiple</button>";
-                                echo"</div>";
+                                                default:
+                                                    echo "<p>Tipo de respuesta no definido.</p>";
+                                                    break;
+                                            }
+                                    echo"</div>";
+            
+                                    echo"<div class='d-flex' style='flex-wrap: wrap; justify-content: center'>";
+                                        echo "<button class='btn Btn_Cambiar_a_Texto' id='cambiar_incisos_a_texto_P".htmlspecialchars($row['pregunta'])."'>Cambiar a Texto</button>";
+                                        echo "<button class='btn Btn_Cambiar_a_Checkbox' id='cambiar_incisos_a_checkbox_P".htmlspecialchars($row['pregunta'])."'>Cambiar a checkbox</button>";
+                                        echo "<button class='btn Btn_Cambiar_a_OpMul' id='cambiar_incisos_a_1opcion_P".htmlspecialchars($row['pregunta'])."'>Cambiar a Opción Múltiple</button>";
+                                    echo"</div>";
 
 
-                                echo "</div>";
-                            echo "</div>"; 
-
-                                    /*
-                                    echo "<input type='text' name='pregunta_{$row['pregunta_num']}' value='" . htmlspecialchars($row['pregunta']) . "' class='form-control'>";
-                                    
-                                    */
-                                }?>
+                                    echo "</div>";
+                                echo "</div>"; 
+                            }?>
                         <div class="Contenedor_Btn_Agregar_Pregunta d-flex">
                             <button type="button" class="btn Btn_Agregar_Pregunta" >Agregar Pregunta</button>
                             <button type="button" class="btn Btn_Guardar_Encuesta" id="guardar_formulario">Actualizar Encuesta</button>
@@ -245,8 +240,8 @@ $result = $stmt->get_result();
                 label.textContent = `Pregunta ${index + 1}`;
             });
         }
-        Agregar_Pregunta();
         // Función para agregar una nueva pregunta
+        Agregar_Pregunta();
         function Agregar_Pregunta() {
             document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', function () {
                 if (preguntaCounter < 10) {
