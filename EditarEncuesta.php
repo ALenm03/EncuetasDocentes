@@ -102,7 +102,7 @@ $result = $stmt->get_result();
 
                                 echo "<div class='Contenido_De_Cada_Pregunta' style='width: 90%;'> ";
                                     echo "<label class='label_pregunta'>Pregunta " . htmlspecialchars($row['pregunta_num']) . "</label>";
-                                    echo "<input type='text' name='pregunta_{$row['pregunta_num']}' value='".htmlspecialchars($row['pregunta'])."' class='form-control' id='nombre_de_pregunta_". htmlspecialchars($row['pregunta_num']) ."' style='margin-bottom: 30px'>";
+                                    echo "<input type='text' name='Pregunta' value='".htmlspecialchars($row['pregunta'])."' class='form-control' id='nombre_de_pregunta_". htmlspecialchars($row['pregunta_num']) ."' style='margin-bottom: 30px'>";
 
 
                                 echo "<div id='contenedor_de_respuestas_P".htmlspecialchars($row['pregunta'])."'>";
