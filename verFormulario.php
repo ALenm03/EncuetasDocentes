@@ -44,61 +44,64 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/stylesVerEncuesta.css">
 </head>
 <body class="hold-transition login-page">
     <div class="container mt-5">
         <div class="card">
-            <div class="card-header bg-primary text-white text-center">
+            <div class="card-header text-white text-center" style="background-color: #777DA7;">
                 <h1>Formulario: <?php echo htmlspecialchars($nombreFormulario); ?></h1>
             </div>
             <div class="card-body">
                 <form action="backend/guardar_respuestas.php" method="POST">
                     <input type="hidden" name="nombre_formulario" value="<?php echo htmlspecialchars($nombreFormulario); ?>">
-                    <?php
-                    // Iterar sobre las preguntas y mostrar el tipo de input correspondiente
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<div class='form-group'>";
-                        echo "<label>" . htmlspecialchars($row['pregunta']) . "</label>";
-
-                        switch ($row['tipo_respuesta']) {
-                            case 'parrafo':
-                                echo "<textarea name='respuesta_{$row['pregunta_num']}' class='form-control' rows='3'></textarea>";
-                                break;
-
-                            case 'opcion_multiple':
-                                for ($i = 1; $i <= 4; $i++) {
-                                    $respuesta = $row["respuesta_$i"];
-                                    if ($respuesta) {
-                                        echo "<div class='form-check'>";
-                                        echo "<input type='radio' name='respuesta_{$row['pregunta_num']}' value='" . htmlspecialchars($respuesta) . "' class='form-check-input'>";
-                                        echo "<label class='form-check-label'>" . htmlspecialchars($respuesta) . "</label>";
-                                        echo "</div>";
-                                    }
+                <?php
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<div class='form-group'>";
+                            echo "<label class='label_pregunta' style='font-size: small; color: gray; margin-bottom: 1px;'>Pregunta " . htmlspecialchars($row['pregunta_num']) . "</label><br>";
+                            echo "<label style='margin-bottom: 10px; font-size: larger; font-weight:600;'>" . htmlspecialchars($row['pregunta']) . "</label>";
+                            
+                            echo "<div id='contenedor_de_respuestas_P".htmlspecialchars($row['pregunta'])."' style='margin-bottom: 30px;'>";
+                                switch ($row['tipo_respuesta']) {
+                                    case 'parrafo':
+                                        echo "<textarea name='respuesta_{$row['pregunta_num']}' class='form-control' rows='3' style='max-height:390px;'></textarea>";
+                                        break;
+        
+                                    case 'opcion_multiple':
+                                        for ($i = 1; $i <= 4; $i++) {
+                                            $respuesta = $row["respuesta_$i"];
+                                            if ($respuesta) {
+                                                echo "<div class='form-check' style='margin-bottom: 10px;'>";
+                                                echo "<input type='radio' name='respuesta_{$row['pregunta_num']}' value='" . htmlspecialchars($respuesta) . "' class='form-check-input'>";
+                                                echo "<label class='form-check-label'>" . htmlspecialchars($respuesta) . "</label>";
+                                                echo "</div>";
+                                            }
+                                        }
+                                        break;
+        
+                                    case 'checkbox':
+                                        for ($i = 1; $i <= 4; $i++) {
+                                            $respuesta = $row["respuesta_$i"];
+                                            if ($respuesta) {
+                                                echo "<div class='form-check' style='margin-bottom: 10px;'>";
+                                                echo "<input type='checkbox' name='respuesta_{$row['pregunta_num']}[]' value='" . htmlspecialchars($respuesta) . "' class='form-check-input'>";
+                                                echo "<label class='form-check-label'>" . htmlspecialchars($respuesta) . "</label>";
+                                                echo "</div>";
+                                            }
+                                        }
+                                        break;
+        
+                                    default:
+                                        echo "<p>Tipo de respuesta no definido.</p>";
+                                        break;
                                 }
-                                break;
-
-                            case 'checkbox':
-                                for ($i = 1; $i <= 4; $i++) {
-                                    $respuesta = $row["respuesta_$i"];
-                                    if ($respuesta) {
-                                        echo "<div class='form-check'>";
-                                        echo "<input type='checkbox' name='respuesta_{$row['pregunta_num']}[]' value='" . htmlspecialchars($respuesta) . "' class='form-check-input'>";
-                                        echo "<label class='form-check-label'>" . htmlspecialchars($respuesta) . "</label>";
-                                        echo "</div>";
-                                    }
-                                }
-                                break;
-
-                            default:
-                                echo "<p>Tipo de respuesta no definido.</p>";
-                                break;
-                        }
-
+        
+                                echo "</div>";
+                            } 
                         echo "</div>";
-                    }
                     ?>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary mt-3">Enviar respuestas</button>
+                        <button type="submit" class="btn mt-3" id="btn_EnviarRespuesta">Enviar respuestas</button>
                     </div>
                 </form>
             </div>
