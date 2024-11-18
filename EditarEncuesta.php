@@ -48,18 +48,21 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 
-<body class="body" style="padding-top: 150px;">
-
-    <div id="header_pagina">
-        <h2>Panel de Administrador</h2>
-        <div class="header-buttons">
-            <button id="adm_regresar">Regresar</button>
-            <form action="backend/logout.php" method="POST">
-                <button type="submit" id="adm_logout">Cerrar sesión</button>
-            </form>
+<body class="body" style="padding-top: 120px;">
+    <header class="p-3 fixed-top" style="background-color: #372549;">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="mb-2 mb-md-0">
+                <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
+            </div>
+            
+            <div class="d-flex">
+                <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
+                <form action="backend/logout.php" method="POST">
+                    <button type="submit" id="adm_logout">Cerrar sesión</button>
+                </form>
+            </div>
         </div>
-
-    </div>
+    </header>
 
     <div class="container">
         <div class="row justify-content-center">

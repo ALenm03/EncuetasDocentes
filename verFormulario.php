@@ -37,6 +37,7 @@ $result = $stmt->get_result();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,16 +47,36 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="assets/styles.css">
     <link rel="stylesheet" href="assets/stylesVerEncuesta.css">
 </head>
-<body class="hold-transition login-page">
-    <div class="container mt-5">
+
+<body class="hold-transition login-page" style="padding-top: 120px;">
+
+    <header class="p-3 fixed-top" style="background-color: #372549;">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="mb-2 mb-md-0">
+                <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
+            </div>
+
+            <div class="d-flex">
+                <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
+                <form action="backend/logout.php" method="POST">
+                    <button type="submit" id="adm_logout">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
         <div class="card">
             <div class="card-header text-white text-center" style="background-color: #777DA7;">
-                <h1>Formulario: <?php echo htmlspecialchars($nombreFormulario); ?></h1>
+                <h3>Formulario:
+                    <?php echo htmlspecialchars($nombreFormulario); ?>
+                </h3>
             </div>
             <div class="card-body">
                 <form action="backend/guardar_respuestas.php" method="POST">
-                    <input type="hidden" name="nombre_formulario" value="<?php echo htmlspecialchars($nombreFormulario); ?>">
-                <?php
+                    <input type="hidden" name="nombre_formulario"
+                        value="<?php echo htmlspecialchars($nombreFormulario); ?>">
+                    <?php
                         while ($row = $result->fetch_assoc()) {
                             echo "<div class='form-group'>";
                             echo "<label class='label_pregunta' style='font-size: small; color: gray; margin-bottom: 1px;'>Pregunta " . htmlspecialchars($row['pregunta_num']) . "</label><br>";
@@ -112,7 +133,15 @@ $result = $stmt->get_result();
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
+
+    <script>
+        //Para regreasr al panel de admin
+        document.getElementById('adm_regresar').addEventListener('click', function () {
+            window.location.href = 'admin.php';
+        });
+    </script>
 </body>
+
 </html>
 
 <?php

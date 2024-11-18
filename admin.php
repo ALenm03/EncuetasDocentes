@@ -51,52 +51,59 @@ $result = $stmt->get_result();
 <body id="adm_body">
 
     <!-- Header fijo con el botón de Cerrar Sesión -->
-    <div id="header_pagina">
-        <h2>Panel de Administrador</h2>
-        <div class="header-buttons">
-            <form action="backend/logout.php" method="POST">
-                <button type="submit" id="adm_logout">Cerrar sesión</button>
-            </form>
+    <header class="p-3 fixed-top" style="background-color: #372549;">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="mb-2 mb-md-0">
+                <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
+            </div>
+            
+            <div class="d-flex">
+                <form action="backend/logout.php" method="POST">
+                    <button type="submit" id="adm_logout">Cerrar sesión</button>
+                </form>
+            </div>
         </div>
-    </div>
+    </header>
 
     <div class="container mt-5">
         <div class="row">
-            <div class="card col-md-12">
-                <div class="card-header adm_CabezaTabla">
-                    <div class="card-title">
-                        <h1>Encuestas</h1>
-                        <button type="button" id="crear_nueva_encuesta">Nueva Encuesta</button>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header adm_CabezaTabla">
+                        <div class="card-title">
+                            <h1>Encuestas</h1>
+                            <button type="button" id="crear_nueva_encuesta">Nueva Encuesta</button>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body" >
-                    <table class="table table-bordered table-striped table-hover text-nowrap table-head-fixed" id="Tablita">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Encuesta</th>
-                                <th>Ver Encuesta</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // Mostrar las encuestas en la tabla
-                            $count = 1;
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>{$count}</td>";
-                                echo "<td>{$row['nombre_formulario']}</td>";
-                                echo "<td><a href='verFormulario.php?nombre_formulario={$row['nombre_formulario']}' class='btn_ver' style='padding:3px; color:white;'> Ver </a></td>";
-                                echo "<td><a href='EditarEncuesta.php?nombre_formulario={$row['nombre_formulario']}' class='btn_editar' style='padding:3px; color:white;'>Editar</a></td>";
-                                echo "<td><a class='btn_eliminar_encuesta' data-id='{$row['id']}' data-nombre='{$row['nombre_formulario']}' style='padding:3px; color:white;'>Eliminar</a></td>";
-                                echo "</tr>";
-                                $count++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                    <div class="card-body" >
+                        <table class="table table-responsive-md table-head-fixed table-striped" id="Tablita">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Encuesta</th>
+                                    <th>Ver Encuesta</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Mostrar las encuestas en la tabla
+                                $count = 1;
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>{$count}</td>";
+                                    echo "<td>{$row['nombre_formulario']}</td>";
+                                    echo "<td><a href='verFormulario.php?nombre_formulario={$row['nombre_formulario']}' class='btn_ver' style='padding:3px; color:white;'> Ver </a></td>";
+                                    echo "<td><a href='EditarEncuesta.php?nombre_formulario={$row['nombre_formulario']}' class='btn_editar' style='padding:3px; color:white;'>Editar</a></td>";
+                                    echo "<td><a class='btn_eliminar_encuesta' data-id='{$row['id']}' data-nombre='{$row['nombre_formulario']}' style='padding:3px; color:white;'>Eliminar</a></td>";
+                                    echo "</tr>";
+                                    $count++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
