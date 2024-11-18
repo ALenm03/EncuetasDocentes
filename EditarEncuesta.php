@@ -180,6 +180,8 @@ $result = $stmt->get_result();
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+
     <script>
         const formContainer = document.getElementById('card-body-preguntas');
 
@@ -350,7 +352,21 @@ $result = $stmt->get_result();
         }
         //Regrear a la pagina de admin
         document.getElementById('adm_regresar').addEventListener('click', function () {
-            window.location.href = 'admin.php';
+            //Alerta con sweetalert para guardar el formulario antes de salir
+            Swal.fire({
+                title: '¿Estás seguro de que deseas salir?',
+                text: "No se guardará el formulario",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#777DA7',
+                confirmButtonText: 'Salir',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'admin.php';
+                }
+            });
         });
         //Guardar Formulario
         document.getElementById('guardar_formulario').addEventListener('click', function () {

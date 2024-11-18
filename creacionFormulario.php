@@ -28,14 +28,13 @@ if ($_SESSION['user_role'] == 'user') {
 <body class="body" style="padding-top: 150px;">
 
     <div id="header_pagina">
-        <h2>Panel de Administrador</h2>
+        <h3>Panel de Administrador</h3>
         <div class="header-buttons">
             <button id="adm_regresar">Regresar</button>
             <form action="backend/logout.php" method="POST">
                 <button type="submit" id="adm_logout">Cerrar sesión</button>
             </form>
         </div>
-
     </div>
 
     <div class="container">
@@ -44,15 +43,14 @@ if ($_SESSION['user_role'] == 'user') {
                 <div class="card">
                     <div class="card-header nombre_del_from_bg">
                         <div class="card-title nombre_del_from text-center w-100">
-                            <h1>Ingresar Nombre del Formulario</h1>
+                            <h3>Ingresar Nombre del Formulario</h3>
                         </div>
                     </div>
 
                     <div class="card-body">
                         <div class="form-group">
                             <label for="txtcaja">Ingrese el nombre del Formulario</label>
-                            <input type="text" class="form-control" maxlength="50" placeholder="Nombre del formulario"
-                                id="txtcaja">
+                            <input type="text" class="form-control" maxlength="50" placeholder="Escribe aqui el nombre del formulario" id="txtcaja">
                         </div>
                     </div>
                 </div>
@@ -64,11 +62,10 @@ if ($_SESSION['user_role'] == 'user') {
                 <div class="card">
                     <div class="card-header nombre_del_from_bg">
                         <div class="card-title nombre_del_from text-center w-100">
-                            <h1>Editar FORMULARIO X</h1>
+                            <h3>Editar FORMULARIO X</h3>
                         </div>
                     </div>
                     <div class="card-body asd" id="card-body-preguntas">
-
                         <div class="Contenedor_Btn_Agregar_Pregunta d-flex">
                             <button type="button" class="btn Btn_Agregar_Pregunta" >Agregar Pregunta</button>
                             <button type="button" class="btn Btn_Guardar_Encuesta" id="guardar_formulario">Guardar Encuesta</button>
@@ -83,9 +80,20 @@ if ($_SESSION['user_role'] == 'user') {
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
         const formContainer = document.getElementById('card-body-preguntas');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', Agregar_Pregunta);
+
+            Agregar_Pregunta();
+            Agregar_Pregunta();
+            cambiarACheckbox('P2');
+            Agregar_Pregunta();
+            cambiarA1Opcion('P3');
+        });
 
         // Contador de preguntas actuales
         let preguntaCounter = 0;
@@ -99,70 +107,69 @@ if ($_SESSION['user_role'] == 'user') {
                 label.textContent = `Pregunta ${index + 1}`;
             });
         }
-        Agregar_Pregunta();
+
         // Función para agregar una nueva pregunta
         function Agregar_Pregunta() {
-            document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', function () {
-                if (preguntaCounter < 10) {
-                    preguntaCounter++;
-                    PreguntaX++;
-                    const newPreguntaId = `P${PreguntaX}`;
+            if (preguntaCounter < 10) {
+                preguntaCounter++;
+                PreguntaX++;
+                const newPreguntaId = `P${PreguntaX}`;
 
-                    // Crea el nuevo div de pregunta
-                    const newPregunta = document.createElement('div');
-                    newPregunta.className = 'form-group Pregunta d-flex';
-                    newPregunta.id = newPreguntaId;
-                    newPregunta.style = 'margin-bottom: 30px;';
-                    newPregunta.innerHTML = `
-                    <div class="Boton_Borrar_PreguntaP1 d-flex" id="boton_borrar_${newPreguntaId}" style="flex-wrap: wrap;">
-                        <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar Pregunta">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                    <div class="Contenido_De_Cada_Pregunta" style="width: 90%;">
-                        <label for="nombre_de_pregunta_${PreguntaX}" class="label_pregunta">Pregunta ${PreguntaX}</label>
-                        <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${PreguntaX}" style="margin-bottom: 30px;" placeholder="Escribe la pregunta">
-                        <div id="contenedor_de_respuestas_${newPreguntaId}">
-                            <div class=" d-flex respuesta" style="justify-content: flex-start;">
-                                <textarea class="Item_Form_Group form-control" id="respuesta${newPreguntaId}" rows="4" style="max-width: 50%; max-height:100px; min-height:100px;" readonly></textarea>
-                            </div>
-                        </div>
-                        <div class="d-flex" style="flex-wrap: wrap; justify-content: center">
-                            <button class="btn Btn_Cambiar_a_Texto" id="cambiar_incisos_a_texto_${newPreguntaId}">Cambiar a Texto</button>
-                            <button class="btn Btn_Cambiar_a_Checkbox" id="cambiar_incisos_a_checkbox_${newPreguntaId}">Cambiar a checkbox</button>
-                            <button class="btn Btn_Cambiar_a_OpMul" id="cambiar_incisos_a_1opcion_${newPreguntaId}">Cambiar a Opción Múltiple</button>
+                // Crea el nuevo div de pregunta
+                const newPregunta = document.createElement('div');
+                newPregunta.className = 'form-group Pregunta d-flex';
+                newPregunta.id = newPreguntaId;
+                newPregunta.style = 'margin-bottom: 30px;';
+                newPregunta.innerHTML = `
+                <div class="Boton_Borrar_PreguntaP1 d-flex" id="boton_borrar_${newPreguntaId}" style="flex-wrap: wrap;">
+                    <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar Pregunta">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="Contenido_De_Cada_Pregunta" style="width: 90%;">
+                    <label for="nombre_de_pregunta_${PreguntaX}" class="label_pregunta">Pregunta ${PreguntaX}</label>
+                    <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${PreguntaX}" style="margin-bottom: 30px;" placeholder="Escribe la pregunta" Value="Escribe tu pregunta en este campo">
+                    <div id="contenedor_de_respuestas_${newPreguntaId}">
+                        <div class=" d-flex respuesta" style="justify-content: flex-start;">
+                            <textarea class="Item_Form_Group form-control" id="respuesta${newPreguntaId}" rows="4" style="max-width: 50%; max-height:100px; min-height:100px;" readonly></textarea>
                         </div>
                     </div>
-                `;
+                    <div class="d-flex" style="flex-wrap: wrap; justify-content: center">
+                        <button class="btn Btn_Cambiar_a_Texto" id="cambiar_incisos_a_texto_${newPreguntaId}">Cambiar a Texto</button>
+                        <button class="btn Btn_Cambiar_a_Checkbox" id="cambiar_incisos_a_checkbox_${newPreguntaId}">Cambiar a checkbox</button>
+                        <button class="btn Btn_Cambiar_a_OpMul" id="cambiar_incisos_a_1opcion_${newPreguntaId}">Cambiar a Opción Múltiple</button>
+                    </div>
+                </div>
+            `;
 
-                    // Añadir la nueva pregunta al contenedor de la card-body
-                    document.querySelector('#card-body-preguntas').insertBefore(newPregunta, document.querySelector('.Contenedor_Btn_Agregar_Pregunta'));
+                // Añadir la nueva pregunta al contenedor de la card-body
+                document.querySelector('#card-body-preguntas').insertBefore(newPregunta, document.querySelector('.Contenedor_Btn_Agregar_Pregunta'));
 
 
-                    // Añadir evento para borrar la nueva pregunta
-                    document.getElementById(`boton_borrar_${newPreguntaId}`).addEventListener('click', function () {
-                        document.getElementById(newPreguntaId).remove();
-                        preguntaCounter--;
-                        actualizarNumerosDePreguntas();
-                    });
-                    //Eventos a los botones de cambiar opciones
-                    document.getElementById(`cambiar_incisos_a_texto_${newPreguntaId}`).addEventListener('click', function () {
-                        cambiarATexto(newPreguntaId)
-                    });
-                    document.getElementById(`cambiar_incisos_a_checkbox_${newPreguntaId}`).addEventListener('click', function () {
-                        cambiarACheckbox(newPreguntaId);
-                    });
-                    document.getElementById(`cambiar_incisos_a_1opcion_${newPreguntaId}`).addEventListener('click', function () {
-                        cambiarA1Opcion(newPreguntaId);
-                    });
-
+                // Añadir evento para borrar la nueva pregunta
+                document.getElementById(`boton_borrar_${newPreguntaId}`).addEventListener('click', function () {
+                    document.getElementById(newPreguntaId).remove();
+                    preguntaCounter--;
                     actualizarNumerosDePreguntas();
-                }
-                else {
-                    alert('Se ha alcanzado el número máximo de 10 preguntas.');
-                }
-            });
+                });
+                //Eventos a los botones de cambiar opciones
+                document.getElementById(`cambiar_incisos_a_texto_${newPreguntaId}`).addEventListener('click', function () {
+                    cambiarATexto(newPreguntaId)
+                });
+                document.getElementById(`cambiar_incisos_a_checkbox_${newPreguntaId}`).addEventListener('click', function () {
+                    cambiarACheckbox(newPreguntaId);
+                });
+                document.getElementById(`cambiar_incisos_a_1opcion_${newPreguntaId}`).addEventListener('click', function () {
+                    cambiarA1Opcion(newPreguntaId);
+                });
+
+                actualizarNumerosDePreguntas();
+            }
+            else {
+                alert('Se ha alcanzado el número máximo de 10 preguntas.');
+            }
         }
+
         // Funciones para cambiar a campo de texto
         function cambiarATexto(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
@@ -175,27 +182,67 @@ if ($_SESSION['user_role'] == 'user') {
         //Funcion para cambiar las opciones a Checkbox
         function cambiarACheckbox(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
+            const respuestasExistentes = contenedor.querySelectorAll('.respuesta input[type="text"]');
+            const respuestasValores = Array.from(respuestasExistentes).map(input => input.value);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
+                const valor = respuestasValores[i - 1] || '';
+                if (valor === '' && i < 3) {
                     contenedor.innerHTML += `
                     <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
                         <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
-                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" value="Opcion${i}">
                     </div>
-                `;
+                    `;
+                } else if (valor) {
+                    contenedor.innerHTML += `
+                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" value="${valor}">
+                    </div>
+                    `;
+                }
+                else{
+                    contenedor.innerHTML += `
+                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" >
+                    </div>
+                    `;
+                }
             }
         }
         //Funcion para cambiar las opciones a Opcion Multiple que solo acepta una respuesta
         function cambiarA1Opcion(preguntaId) {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
+            const respuestasExistentes = contenedor.querySelectorAll('.respuesta input[type="text"]');
+            const respuestasValores = Array.from(respuestasExistentes).map(input => input.value);
             contenedor.innerHTML = '';
             for (let i = 1; i <= 4; i++) {
+                const valor = respuestasValores[i - 1] || '';
+                if (valor === '' && i < 3) {
                     contenedor.innerHTML += `
-                    <div class=" d-flex respuesta" id="form-groupP1_1" style="justify-content: flex-start;">                       
-                        <input type="radio" class="Item_Form_Group" id="opcionP1_1" disabled="">
-                        <input type="text" class="Item_Form_Group form-control" id="respuestaP1_1">
+                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <input type="radio" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" value="Opcion${i}">
                     </div>
-                `;
+                    `;
+                } else if (valor) {
+                    contenedor.innerHTML += `
+                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <input type="radio" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" value="${valor}">
+                    </div>
+                    `;
+                }
+                else {
+                    contenedor.innerHTML += `
+                    <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
+                        <input type="radio" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}">
+                    </div>
+                    `;
+                }
             }
         }
         
@@ -221,6 +268,7 @@ if ($_SESSION['user_role'] == 'user') {
                 if (preguntaTexto.trim() === "") {
                     formularioValido = false;
                     alert('No puede haber preguntas sin Nombre'); // Muestra la alerta
+                    return;
                 }
                 respuestas.forEach(respuesta => {
                     //TEXTO
@@ -309,7 +357,21 @@ if ($_SESSION['user_role'] == 'user') {
 
 
         document.getElementById('adm_regresar').addEventListener('click', function () {
-            window.location.href = 'admin.php';
+            //Alerta con sweetalert para guardar el formulario antes de salir
+            Swal.fire({
+                title: '¿Estás seguro de que deseas salir?',
+                text: "No se guardará el formulario",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#777DA7',
+                confirmButtonText: 'Salir',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'admin.php';
+                }
+            });
         });
     </script>
 </body>
