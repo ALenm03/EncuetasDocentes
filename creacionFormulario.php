@@ -349,8 +349,9 @@ if ($_SESSION['user_role'] == 'user') {
                 data: { formData: JSON.stringify(formData) },
                 contentType: 'application/x-www-form-urlencoded',
                 success: function (response) {
-                    alert('Encuesta guardada exitosamente.'); // Muestra la alerta
-                    window.location.href = 'admin.php'; // Redirige a admin.php
+                    Swal.fire('Encuesta guardada exitosamente.', '', 'success').then(() => {
+                        window.location.href = 'admin.php';
+                    });
                 },
                 error: function (xhr, status, error) {
                     console.error('Error:', error);
