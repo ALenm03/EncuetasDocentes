@@ -46,7 +46,7 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/stylesAdmin.css">
 </head>
 <body id="adm_body">
 

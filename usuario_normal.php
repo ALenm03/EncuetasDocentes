@@ -25,20 +25,25 @@ if ($_SESSION['user_role'] == 'admin') {
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/stylesUsr.css">
     <title>Usuario Normal</title>
 </head>
 <body id="adm_body">
 
     <!-- Header fijo con el botón de Cerrar Sesión -->
-    <div id="header_pagina">
-        <h2>Panel de Usuario</h2>
-        <div class="header-buttons">
-            <form action="backend/logout.php" method="POST">
-                <button type="submit" id="adm_logout">Cerrar sesión</button>
-            </form>
+    <header class="p-3 fixed-top">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="mb-2 mb-md-0">
+                <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
+            </div>
+            
+            <div class="d-flex">
+                <form action="backend/logout.php" method="POST">
+                    <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
+                </form>
+            </div>
         </div>
-    </div>
+    </header>
 
     
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>

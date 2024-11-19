@@ -22,7 +22,7 @@ if ($_SESSION['user_role'] == 'user') {
     <title>Formulario Dinámico</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/stylesCrearForm.css">
 </head>
 
 <body class="body" style="padding-top: 120px;">
@@ -35,7 +35,7 @@ if ($_SESSION['user_role'] == 'user') {
             <div class="d-flex">
                 <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
                 <form action="backend/logout.php" method="POST">
-                    <button type="submit" id="adm_logout">Cerrar sesión</button>
+                    <button type="submit" class="btn btn-primary" id="adm_logout">Cerrar sesión</button>
                 </form>
             </div>
         </div>
@@ -125,7 +125,7 @@ if ($_SESSION['user_role'] == 'user') {
                 newPregunta.id = newPreguntaId;
                 newPregunta.style = 'margin-bottom: 30px;';
                 newPregunta.innerHTML = `
-                <div class="Boton_Borrar_PreguntaP1 d-flex" id="boton_borrar_${newPreguntaId}" style="flex-wrap: wrap;">
+                <div class="Boton_Borrar_Pregunta d-flex" id="boton_borrar_${newPreguntaId}" style="flex-wrap: wrap;">
                     <button class="btn btn-danger Btn_Eliminar_Pregunta" title="Eliminar Pregunta">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -135,7 +135,7 @@ if ($_SESSION['user_role'] == 'user') {
                     <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${PreguntaX}" style="margin-bottom: 30px;" placeholder="Escribe la pregunta" Value="Escribe tu pregunta en este campo">
                     <div id="contenedor_de_respuestas_${newPreguntaId}">
                         <div class=" d-flex respuesta" style="justify-content: flex-start;">
-                            <textarea class="Item_Form_Group form-control" id="respuesta${newPreguntaId}" rows="4" style="max-width: 50%; max-height:100px; min-height:100px;" readonly></textarea>
+                            <textarea class="Item_Form_Group form-control" id="respuesta${newPreguntaId}" rows="4" style="max-width: 100%; max-height:100px; min-height:100px;" readonly></textarea>
                         </div>
                     </div>
                     <div class="d-flex" style="flex-wrap: wrap; justify-content: center">
@@ -179,7 +179,7 @@ if ($_SESSION['user_role'] == 'user') {
             const contenedor = document.getElementById(`contenedor_de_respuestas_${preguntaId}`);
             contenedor.innerHTML = `
                 <div class=" d-flex respuesta" style="justify-content: flex-start;">
-                    <textarea class="Item_Form_Group form-control" id="respuesta${preguntaId}" rows="4" style="max-width: 50%; max-height:100px; min-height:100px;" readonly></textarea>
+                    <textarea class="Item_Form_Group form-control" id="respuesta${preguntaId}" rows="4" style="max-width: 100%; max-height:100px; min-height:100px;" readonly></textarea>
                 </div>
             `;
         }

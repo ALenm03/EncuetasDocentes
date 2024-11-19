@@ -45,11 +45,11 @@ $result = $stmt->get_result();
     <title>Formulario Dinámico</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/stylesEditar.css">
 </head>
 
 <body class="body" style="padding-top: 120px;">
-    <header class="p-3 fixed-top" style="background-color: #372549;">
+    <header class="p-3 fixed-top">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div class="mb-2 mb-md-0">
                 <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
@@ -58,7 +58,7 @@ $result = $stmt->get_result();
             <div class="d-flex">
                 <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
                 <form action="backend/logout.php" method="POST">
-                    <button type="submit" id="adm_logout">Cerrar sesión</button>
+                    <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
                 </form>
             </div>
         </div>

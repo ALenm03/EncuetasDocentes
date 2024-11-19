@@ -1,0 +1,75 @@
+/*Botones de Header*/
+#adm_logout{
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_logout:hover {
+    background-color: red;
+}
+#adm_regresar {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_regresar:hover {
+    background-color: #366a86;
+}
+header{
+    background-color: #1A1423;
+    color: white;
+}
+
+/*Cards*/
+.nombre_del_from_bg {
+    background-color: #777DA7;
+}
+.nombre_del_from {
+    color: #FFFFFF;
+}
+.btn_anadir_pregunta {
+    color: #FFFFFF;
+    background-color: #777DA7;
+}
+.btn_anadir_pregunta:hover {
+    color: #FFFFFF;
+    background-color: #5f6690;
+}
+
+
+/*Preguntas*/
+.Btn_Eliminar_Pregunta {
+    margin: 5px;
+}
+.Item_Form_Group{
+    margin: 5px;
+}
+.Editar_Boton_Borrar_Pregunta{
+    margin-right: 20px;
+}
+.Btn_Cambiar_a_Texto, .Btn_Cambiar_a_Checkbox, .Btn_Cambiar_a_OpMul {
+    margin: 5px;
+    background-color: #5f6690;
+    color: white;
+}
+.Btn_Cambiar_a_Texto:hover, .Btn_Cambiar_a_Checkbox:hover, .Btn_Cambiar_a_OpMul:hover{
+    background-color: #4a5070;
+    color: white;
+}
+
+
+/*Botones de Guardar y Agregar Pregunta*/
+.Btn_Guardar_Encuesta, .Btn_Agregar_Pregunta{
+    margin: 4px;
+    color: black;
+    background-color: #F0F7F4;
+}
+.Btn_Guardar_Encuesta:hover, .Btn_Agregar_Pregunta:hover{
+    margin: 4px;
+    color: black;
+    background-color: #d5dbd8;
+}

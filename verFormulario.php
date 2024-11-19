@@ -44,8 +44,7 @@ $result = $stmt->get_result();
     <title>Ver Formulario</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="assets/styles.css">
-    <link rel="stylesheet" href="assets/stylesVerEncuesta.css">
+    <link rel="stylesheet" href="assets/styles.css"> <!-- Por alguna razon no agarraba otra hoja de estilos, asi que se quedo con la default pq ahi si le jalan -->
 </head>
 
 <body class="hold-transition login-page" style="padding-top: 120px;">
@@ -59,7 +58,7 @@ $result = $stmt->get_result();
             <div class="d-flex">
                 <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
                 <form action="backend/logout.php" method="POST">
-                    <button type="submit" id="adm_logout">Cerrar sesión</button>
+                    <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
                 </form>
             </div>
         </div>
