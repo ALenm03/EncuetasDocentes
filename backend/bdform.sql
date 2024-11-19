@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-11-2024 a las 03:47:51
+-- Tiempo de generación: 19-11-2024 a las 21:24:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bdform`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `formulario`
+--
+
+CREATE TABLE `formulario` (
+  `id` int(11) NOT NULL,
+  `nombre_formulario` varchar(255) NOT NULL,
+  `id_usuario` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `formulario`
+--
+
+INSERT INTO `formulario` (`id`, `nombre_formulario`, `id_usuario`) VALUES
+(1, 'formulario3', 2);
 
 -- --------------------------------------------------------
 
@@ -50,8 +69,17 @@ INSERT INTO `formularios` (`id`, `nombre_formulario`, `pregunta_num`, `pregunta`
 (3, 'Goma', 1, 'wqweq', 'wqe', 'wqe', NULL, NULL, 'checkbox', NULL),
 (27, 'formulario', 1, 'adios', NULL, NULL, NULL, NULL, 'parrafo', 6),
 (28, 'formulario', 2, 'hola', NULL, NULL, NULL, NULL, 'parrafo', 6),
-(32, 'formulario', 1, 'g fcg', '-- DROP TABLE', 'fgn d', NULL, NULL, 'checkbox', 2),
-(33, 'formulario', 2, 'dvd', NULL, NULL, NULL, NULL, 'parrafo', 2);
+(32, 'Gato', 1, 'Te gustan los tacos?', 'si', 'super si', NULL, NULL, 'checkbox', 2),
+(33, 'Gato', 2, 'verga jajajajaja?', '', NULL, NULL, NULL, 'parrafo', 2),
+(34, 'formulario3', 1, 'sabes?', NULL, NULL, NULL, NULL, 'parrafo', 2),
+(35, 'formulario3', 2, 'LA anterior', 'Si', 'no ', 'ni idea', NULL, 'opcion_multiple', 2),
+(39, 'formulari117', 1, 'sabes?2w', NULL, NULL, NULL, NULL, 'parrafo', 2),
+(49, 'formulario4', 1, 'sabes?', NULL, NULL, NULL, NULL, 'parrafo', 2),
+(50, 'formulario4', 2, 'LA anterior', 'Si', 'no ', 'ni idea', NULL, 'opcion_multiple', 2),
+(51, 'formulari45', 1, 'sabes?2', NULL, NULL, NULL, NULL, 'parrafo', 2),
+(52, 'formulario45', 1, 'sabes?', NULL, NULL, NULL, NULL, 'parrafo', 2),
+(53, 'formulari117', 2, 'ewrtyhj', NULL, NULL, NULL, NULL, 'parrafo', 2),
+(54, 'formulari117', 3, 'werty', NULL, NULL, NULL, NULL, 'parrafo', 2);
 
 -- --------------------------------------------------------
 
@@ -71,6 +99,30 @@ CREATE TABLE `preguntas` (
   `tipo_pregunta` enum('multiple','unica') DEFAULT 'multiple',
   `activo` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas`
+--
+
+CREATE TABLE `respuestas` (
+  `id` int(11) NOT NULL,
+  `formulario` varchar(100) NOT NULL,
+  `pregunta` text NOT NULL,
+  `respuesta` text NOT NULL,
+  `id_usuario` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `respuestas`
+--
+
+INSERT INTO `respuestas` (`id`, `formulario`, `pregunta`, `respuesta`, `id_usuario`) VALUES
+(1, 'formulario', '1', '-- DROP TABLE', 2),
+(2, 'formulario', '2', 'xd', 2),
+(3, 'Gato', '1', 'si, super si', 2),
+(4, 'Gato', '2', 'comes', 2);
 
 -- --------------------------------------------------------
 
@@ -102,7 +154,8 @@ INSERT INTO `usuario` (`id`, `name`, `password`, `rol`, `estatus`, `correo`) VAL
 (8, 'Paolo', '$2y$10$3ij3BSsl6poWUeeMBMJD0e3p4Xfv8USRG6dVb2BtMhnzfXhjDfXFe', 'user', 0, 'Paolo@gmail.com'),
 (10, 'Paolo2', '$2y$10$9GzDb5m6bYMQDpfo1z97KuofiLwTzQtXnjUySRiRJd2T5o6mMYKeq', 'user', 0, 'Paolo2@gmail.com'),
 (12, 'Paolo3', '$2y$10$1IlLr.dgz7BJ8jUWuSO6mOKeyUX54VYsPy.8VUeSORcuKJCa92BjK', 'user', 0, 'Paolo3@gmail.com'),
-(14, 'Irving', '$2y$10$SPJ1QGcFldUVJEye20Qh9.4gBWSJOym.8XSNkkUcmsOqo8CHNP/3y', 'user', 1, 'iafs@gmail.com');
+(14, 'Irving', '$2y$10$SPJ1QGcFldUVJEye20Qh9.4gBWSJOym.8XSNkkUcmsOqo8CHNP/3y', 'user', 1, 'iafs@gmail.com'),
+(16, 'lolo', '$2y$10$/IZ0k1K9a26P199ItP5tgun8NiyIABh2paUz80jaCyM3SRrGOJsy.', 'user', 0, 'lolo@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -121,6 +174,13 @@ CREATE TABLE `usuario_formulario` (
 --
 
 --
+-- Indices de la tabla `formulario`
+--
+ALTER TABLE `formulario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
 -- Indices de la tabla `formularios`
 --
 ALTER TABLE `formularios`
@@ -134,11 +194,19 @@ ALTER TABLE `preguntas`
   ADD PRIMARY KEY (`id_pregunta`);
 
 --
+-- Indices de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `correo` (`correo`);
+  ADD UNIQUE KEY `correo` (`correo`),
+  ADD UNIQUE KEY `unique_name` (`name`);
 
 --
 -- Indices de la tabla `usuario_formulario`
@@ -153,10 +221,16 @@ ALTER TABLE `usuario_formulario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `formulario`
+--
+ALTER TABLE `formulario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `formularios`
 --
 ALTER TABLE `formularios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -165,10 +239,16 @@ ALTER TABLE `preguntas`
   MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_formulario`
@@ -181,10 +261,22 @@ ALTER TABLE `usuario_formulario`
 --
 
 --
+-- Filtros para la tabla `formulario`
+--
+ALTER TABLE `formulario`
+  ADD CONSTRAINT `formulario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
+
+--
 -- Filtros para la tabla `formularios`
 --
 ALTER TABLE `formularios`
   ADD CONSTRAINT `fk_usuario_formulario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
+
+--
+-- Filtros para la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario_formulario`
