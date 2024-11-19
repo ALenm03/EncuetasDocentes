@@ -457,25 +457,33 @@ $result = $stmt->get_result();
             }
             // Crear un objeto para enviar
             const formData = {
+                nombre_original: "<?php echo htmlspecialchars($nombreFormulario); ?>",
                 nombre_formulario: nombreFormulario,
                 preguntas: datosPreguntas
             };
 
             // Enviar datos al servidor usando AJAX
             $.ajax({
-                type: 'POST',
-                url: 'backend/guardar_formulario.php',
-                data: { formData: JSON.stringify(formData) },
-                contentType: 'application/x-www-form-urlencoded',
-                success: function (response) {
-                    alert('Encuesta guardada exitosamente.'); // Muestra la alerta
-                    window.location.href = 'admin.php'; // Redirige a admin.php
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', error);
-                    alert('Error al guardar el formulario.');
-                }
+    type: 'POST',
+    url: 'backend/guardar_edicion.php',
+    data: { formData: JSON.stringify(formData) },
+    contentType: 'application/x-www-form-urlencoded',
+    success: function (response) {
+        const result = JSON.parse(response);
+        if (result.status === 'success') {
+            Swal.fire('Guardado', result.message, 'success').then(() => {
+                window.location.href = 'admin.php';
             });
+        } else {
+            Swal.fire('Error', result.message, 'error');
+        }
+    },
+    error: function (xhr, status, error) {
+        console.error('Error:', error);
+        Swal.fire('Error', 'No se pudo guardar el formulario.', 'error');
+    }
+});
+
         });
     </script>
 </body>
