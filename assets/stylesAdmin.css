@@ -1,8 +1,45 @@
+/*Body*/
+#adm_body {
+    padding-top: 70px;
+    transition: 0.5s ease;
+
+}
+
+
+/*Estilos de Header*/
+#adm_logout {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s ease;
+
+}
+#adm_logout:hover {
+    background-color: #c82333;
+    transition: 0.5s ease;
+
+}
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    transition: 0.5s ease;
+
+
+}
+
+
+
+/*Estilos de Tabla*/
 .adm_CabezaTabla{
     background-color:  #372549;
     color: white;
-    margin-top: 0.5%;
+    margin: 0.5%;
     border-radius: 5px;
+    transition: 0.5s ease;
+
 }
 
 #header_pagina {
@@ -18,21 +55,8 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+    transition: 0.5s ease;
 
-#adm_body {
-    padding-top: 70px; /* Ajusta el desplazamiento del contenido */
-}
-#adm_logout {
-    background-color: #1A1423;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-#adm_logout:hover {
-    background-color: #c82333;
 }
 #crear_nueva_encuesta{
     background-color: #F0F7F4;
@@ -41,26 +65,26 @@
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
+    transition: 0.5s ease;
+
 }
 #crear_nueva_encuesta:hover {
     background-color: #d4dbd8;
-}
-
-.header-buttons {
-    display: flex;
-    gap: 10px;
+    transition: 0.5s ease;
 
 }
-
 .btn_ver {
     background-color: #777DA7;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    transition: 0.5s ease;
+
 }
 .btn_ver:hover {
-    background-color: #1A1423;
+    background-color: #5c6181;
+    transition: 0.5s ease;
 }
 .btn_editar {
     background-color: #777DA7;
@@ -68,9 +92,13 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    transition: 0.5s ease;
+
 }
 .btn_editar:hover {
-    background-color: #1A1423;
+    background-color: #5c6181;
+    transition: 0.5s ease;
+
 }
 .btn_eliminar_encuesta {
     background-color: #777DA7;
@@ -78,7 +106,65 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    transition: 0.5s ease;
+
 }
 .btn_eliminar_encuesta:hover {
     background-color: #5c6181;
+    transition: 0.5s ease;
+
+}
+
+
+
+/* Clase para el modo oscuro */
+.dark-mode {
+    background-color: #212121;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+/* Ajustar colores específicos si es necesario */
+.dark-mode .card {
+    background-color: #333333;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+.dark-mode .adm_CabezaTabla {
+    background-color: #777DA7;
+    color: white;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+.dark-mode button {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+.dark-mode button:hover {
+    background-color: #666666;
+}
+.dark-mode #toggle-dark-mode {
+    color: #FFD700;
+}
+.dark-mode #toggle-dark-mode:hover {
+    color: white;
+}
+
+#toggle-dark-mode {
+    font-size: 24px; /* Tamaño del ícono */
+    cursor: pointer;
+    color: white;
+    display: flex; /* Asegura que el ícono se comporte como un elemento en línea */
+    align-items: center; /* Alineación vertical */
+    justify-content: center; /* Centrado en el espacio del ícono */
+    height: 40px; /* Altura del contenedor para igualar al botón */
+    width: 40px; /* Ancho del contenedor para igualar al botón */
+    border-radius: 50%; /* Da forma circular al fondo del ícono */
+}
+
+#toggle-dark-mode:hover {
+    transition: color 0.5s ease;
+    color: #FFD700; 
 }
