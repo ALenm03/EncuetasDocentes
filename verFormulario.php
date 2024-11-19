@@ -56,9 +56,9 @@ $result = $stmt->get_result();
             </div>
 
             <div class="d-flex">
-                <button class="btn btn-primary mr-2" id="adm_regresar" style="background-color: #1A1423; border: none;">Regresar</button>
+                <button class="btn btn-primary mr-2" id="adm_regresar" >Regresar</button>
                 <form action="backend/logout.php" method="POST">
-                    <button class="btn btn-primary" type="submit" id="adm_logout" style="background-color: #1A1423; border: none;">Cerrar sesión</button>
+                    <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
                 </form>
             </div>
         </div>
@@ -121,7 +121,7 @@ $result = $stmt->get_result();
                         echo "</div>";
                     ?>
                     <div class="text-center">
-                        <button type="submit" class="btn mt-3" id="btn_EnviarRespuesta" style=" background-color: #777DA7; color: white;">Enviar respuestas</button>
+                        <button type="submit" class="btn mt-3" id="btn_EnviarRespuesta">Enviar respuestas</button>
                     </div>
                 </form>
             </div>
