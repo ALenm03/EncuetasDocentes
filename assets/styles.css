@@ -28,3 +28,24 @@
     color: black;
     background-color: #d5dbd8;
 }
+
+#adm_logout{
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_logout:hover {
+    background-color: red;
+}
+#adm_regresar {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_regresar:hover {
+    background-color: #366a86;
+}
