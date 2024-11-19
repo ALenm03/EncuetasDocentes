@@ -159,9 +159,8 @@
     display: flex; /* Asegura que el ícono se comporte como un elemento en línea */
     align-items: center; /* Alineación vertical */
     justify-content: center; /* Centrado en el espacio del ícono */
-    height: 40px; /* Altura del contenedor para igualar al botón */
-    width: 40px; /* Ancho del contenedor para igualar al botón */
-    border-radius: 50%; /* Da forma circular al fondo del ícono */
+    height: 45px; 
+    width: 45px; 
 }
 
 #toggle-dark-mode:hover {
