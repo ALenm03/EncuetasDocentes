@@ -1,9 +1,8 @@
 <?php
-// Iniciar la sesión
+// Iniciar sesión
 session_start();
 
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'user') {
     header("Location: index.html");
     exit();
 }
@@ -14,62 +13,45 @@ $username = "root";
 $password = "";
 $dbname = "bdform";
 
-// Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar la conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
 // Obtener datos del formulario
-$nombreFormulario = $_POST['nombre_formulario'];
-$userId = $_SESSION['user_id'];
+$id_evento = $_POST['id_evento'];
+$id_usuario = $_SESSION['user_id'];
 
-// Preparar consultas para insertar o actualizar respuestas
-$selectSql = "SELECT id FROM respuestas WHERE formulario = ? AND pregunta = ? AND id_usuario = ?";
-$insertSql = "INSERT INTO respuestas (formulario, pregunta, respuesta, id_usuario) VALUES (?, ?, ?, ?)";
-$updateSql = "UPDATE respuestas SET respuesta = ? WHERE id = ?";
+// Validar si el usuario ya respondió esta encuesta
+$sql_verificar = "SELECT 1 FROM respuestas WHERE id_evento = ? AND id_usuario = ?";
+$stmt_verificar = $conn->prepare($sql_verificar);
+$stmt_verificar->bind_param("ii", $id_evento, $id_usuario);
+$stmt_verificar->execute();
+if ($stmt_verificar->get_result()->num_rows > 0) {
+    echo "Ya has respondido esta encuesta.";
+    exit();
+}
 
-$selectStmt = $conn->prepare($selectSql);
-$insertStmt = $conn->prepare($insertSql);
-$updateStmt = $conn->prepare($updateSql);
-
-// Recorrer las respuestas del formulario
-foreach ($_POST as $key => $respuesta) {
+// Guardar respuestas
+foreach ($_POST as $key => $value) {
     if (strpos($key, 'respuesta_') === 0) {
-        $preguntaNum = str_replace('respuesta_', '', $key);
+        $pregunta_num = str_replace('respuesta_', '', $key);
+        $respuesta = is_array($value) ? implode(", ", $value) : $value;
 
-        // Si la respuesta es un array (checkbox), convierte en cadena
-        if (is_array($respuesta)) {
-            $respuesta = implode(", ", $respuesta);
-        }
-
-        // Comprobar si ya existe una respuesta para esta pregunta y usuario
-        $selectStmt->bind_param("ssi", $nombreFormulario, $preguntaNum, $userId);
-        $selectStmt->execute();
-        $selectResult = $selectStmt->get_result();
-
-        if ($selectResult->num_rows > 0) {
-            // Si ya existe, actualizar la respuesta
-            $row = $selectResult->fetch_assoc();
-            $respuestaId = $row['id'];
-            $updateStmt->bind_param("si", $respuesta, $respuestaId);
-            $updateStmt->execute();
-        } else {
-            // Si no existe, insertar una nueva respuesta
-            $insertStmt->bind_param("sssi", $nombreFormulario, $preguntaNum, $respuesta, $userId);
-            $insertStmt->execute();
-        }
+        $sql_insert = "INSERT INTO respuestas (id_evento, id_usuario, pregunta_num, respuesta) VALUES (?, ?, ?, ?)";
+        $stmt_insert = $conn->prepare($sql_insert);
+        $stmt_insert->bind_param("iiis", $id_evento, $id_usuario, $pregunta_num, $respuesta);
+        $stmt_insert->execute();
     }
 }
 
-// Cerrar conexiones y redirigir al usuario
-$selectStmt->close();
-$insertStmt->close();
-$updateStmt->close();
-$conn->close();
+// Actualizar el número de participantes
+$sql_update = "UPDATE eventos SET participantes_actuales = participantes_actuales + 1 WHERE id = ?";
+$stmt_update = $conn->prepare($sql_update);
+$stmt_update->bind_param("i", $id_evento);
+$stmt_update->execute();
 
-header("Location: /EncuetasDocentes/admin.php");
+header("Location: /EncuetasDocentes/usuario_normal.php");
 exit();
 ?>
