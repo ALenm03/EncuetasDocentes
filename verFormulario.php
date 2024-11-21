@@ -56,7 +56,7 @@ $result = $stmt->get_result();
             </div>
 
             <div class="d-flex">
-                <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
+                <button class="btn btn-primary mr-2" id="adm_regresar" >Regresar</button>
                 <form action="backend/logout.php" method="POST">
                     <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
                 </form>

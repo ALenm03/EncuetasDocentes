@@ -9,12 +9,12 @@
 .Editar_Boton_Borrar_Pregunta{
     margin-right: 20px;
 }
-.Btn_Cambiar_a_Texto, .Btn_Cambiar_a_Checkbox, .Btn_Cambiar_a_OpMul {
+.Btn_Cambiar_a_Texto, .Btn_Cambiar_a_Checkbox, .Btn_Cambiar_a_OpMul, #btn_EnviarRespuesta {
     margin: 5px;
     background-color: #5f6690;
     color: white;
 }
-.Btn_Cambiar_a_Texto:hover, .Btn_Cambiar_a_Checkbox:hover, .Btn_Cambiar_a_OpMul:hover{
+.Btn_Cambiar_a_Texto:hover, .Btn_Cambiar_a_Checkbox:hover, .Btn_Cambiar_a_OpMul:hover, #btn_EnviarRespuesta:hover{
     background-color: #4a5070;
     color: white;
 }
@@ -27,4 +27,25 @@
     margin: 4px;
     color: black;
     background-color: #d5dbd8;
+}
+
+#adm_logout{
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_logout:hover {
+    background-color: red;
+}
+#adm_regresar {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_regresar:hover {
+    background-color: #366a86;
 }

@@ -49,7 +49,7 @@ $result = $stmt->get_result();
 </head>
 
 <body class="body" style="padding-top: 120px;">
-    <header class="p-3 fixed-top">
+    <header class="p-3 fixed-top" style="background-color: #372549;">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div class="mb-2 mb-md-0">
                 <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
