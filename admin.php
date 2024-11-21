@@ -28,9 +28,8 @@ if ($conn->connect_error) {
 
 // Obtener encuestas relacionadas al usuario logueado sin repeticiones
 $sql = "SELECT f.id, f.nombre_formulario 
-        FROM formularios f 
-        WHERE f.id_usuario = ? 
-        GROUP BY f.nombre_formulario";
+        FROM formulario f 
+        WHERE f.id_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $_SESSION['user_id']);
 $stmt->execute();
@@ -75,6 +74,8 @@ $result = $stmt->get_result();
                         <div class="card-title">
                             <h1>Encuestas</h1>
                             <button type="button" id="crear_nueva_encuesta">Nueva Encuesta</button>
+                            <button type="button" id="crear_evento">Crear Evento</button>
+                            <button type="button" id="ver_eventos">Ver eventos</button>
                         </div>
                     </div>
                     <div class="card-body" >
@@ -170,6 +171,14 @@ $result = $stmt->get_result();
         // Redirigir para crear nueva encuesta
         document.getElementById('crear_nueva_encuesta').addEventListener('click', function() {
             window.location.href = 'creacionFormulario.php'; 
+        });
+        // Redirigir para crear un nuevo evento
+        document.getElementById('crear_evento').addEventListener('click', function() {
+            window.location.href = 'crearevento.php';
+        });
+        // Redirigir para crear un nuevo evento
+        document.getElementById('ver_eventos').addEventListener('click', function() {
+            window.location.href = 'vereventos.php';
         });
     </script>
     <script>

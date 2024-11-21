@@ -58,8 +58,9 @@
     transition: 0.5s ease;
 
 }
+
 #crear_nueva_encuesta{
-    background-color: #F0F7F4;
+    background-color: #f7f0f6;
     color: black;
     border: none;
     padding: 10px 20px;
@@ -70,6 +71,26 @@
 }
 #crear_nueva_encuesta:hover {
     background-color: #d4dbd8;
+    transition: 0.5s ease;
+
+}
+#crear_evento{
+    background-color: #F0F7F4;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s ease;
+
+}
+#ver_eventos{
+    background-color: #F0F7F4;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
     transition: 0.5s ease;
 
 }

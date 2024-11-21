@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "root";       
-$password = "";            
-$dbname = "bdform";  
+$username = "root";
+$password = "";
+$dbname = "bdform";
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -31,7 +31,7 @@ if (!isset($_SESSION['user_id'])) {
 $id_usuario = $_SESSION['user_id'];
 
 // Verificar si el nombre del formulario ya existe para el usuario
-$stmtCheck = $conn->prepare("SELECT COUNT(*) FROM formularios WHERE nombre_formulario = ? AND id_usuario = ?");
+$stmtCheck = $conn->prepare("SELECT COUNT(*) FROM formulario WHERE nombre_formulario = ? AND id_usuario = ?");
 $stmtCheck->bind_param("si", $nombre_formulario, $id_usuario);
 $stmtCheck->execute();
 $stmtCheck->bind_result($count);
@@ -42,41 +42,49 @@ if ($count > 0) {
     die("Error: Ya existe un formulario con el nombre '$nombre_formulario' para este usuario.");
 }
 
-// Preparar la consulta para insertar los datos
-$stmt = $conn->prepare("INSERT INTO formularios (nombre_formulario, pregunta_num, pregunta, respuesta_1, respuesta_2, respuesta_3, respuesta_4, tipo_respuesta, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sissssssi", $nombre_formulario, $pregunta_num, $pregunta, $respuesta_1, $respuesta_2, $respuesta_3, $respuesta_4, $tipo_respuesta, $id_usuario);
+// Iniciar una transacción
+$conn->begin_transaction();
 
-// Insertar cada pregunta y sus respuestas
-foreach ($preguntas as $index => $preguntaData) {
-    $pregunta_num = $index + 1; // Número de la pregunta
-    $pregunta = $preguntaData['pregunta'] ?? ''; 
-    
-    // Manejar respuestas
-    $respuesta_1 = $respuesta_2 = $respuesta_3 = $respuesta_4 = null;
-    
-    if (isset($preguntaData['respuestas'])) {
-        foreach ($preguntaData['respuestas'] as $i => $respuesta) {
-            if ($i == 0) $respuesta_1 = $respuesta;
-            elseif ($i == 1) $respuesta_2 = $respuesta;
-            elseif ($i == 2) $respuesta_3 = $respuesta;
-            elseif ($i == 3) $respuesta_4 = $respuesta;
-        }
+try {
+    // Insertar el formulario en la tabla `formulario`
+    $stmtFormulario = $conn->prepare("INSERT INTO formulario (nombre_formulario, id_usuario) VALUES (?, ?)");
+    $stmtFormulario->bind_param("si", $nombre_formulario, $id_usuario);
+    $stmtFormulario->execute();
+    $formulario_id = $conn->insert_id; // Obtener el ID del formulario recién creado
+    $stmtFormulario->close();
+
+    // Preparar la consulta para insertar las preguntas en la tabla `formularios`
+    $stmtPreguntas = $conn->prepare("INSERT INTO formularios (id_formulario, pregunta_num, pregunta, respuesta_1, respuesta_2, respuesta_3, respuesta_4, tipo_respuesta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+    foreach ($preguntas as $index => $preguntaData) {
+        $pregunta_num = $index + 1; // Número de la pregunta
+        $pregunta = $preguntaData['pregunta'] ?? '';
+
+        // Manejar respuestas
+        $respuesta_1 = $preguntaData['respuestas'][0] ?? null;
+        $respuesta_2 = $preguntaData['respuestas'][1] ?? null;
+        $respuesta_3 = $preguntaData['respuestas'][2] ?? null;
+        $respuesta_4 = $preguntaData['respuestas'][3] ?? null;
+
+        // Tipo de respuesta
+        $tipo_respuesta = $preguntaData['tipo_respuesta'] ?? '';
+
+        // Insertar la pregunta en la tabla `formularios`
+        $stmtPreguntas->bind_param("iissssss", $formulario_id, $pregunta_num, $pregunta, $respuesta_1, $respuesta_2, $respuesta_3, $respuesta_4, $tipo_respuesta);
+        $stmtPreguntas->execute();
     }
 
-    // Tipo de respuesta
-    $tipo_respuesta = $preguntaData['tipo_respuesta'] ?? '';
+    $stmtPreguntas->close();
 
-    // Ejecutar la inserción
-    if (!$stmt->execute()) {
-        echo "Error al guardar la pregunta: " . $stmt->error; // Para depuración
-        exit;
-    }
+    // Confirmar la transacción
+    $conn->commit();
+    echo "Formulario guardado con éxito.";
+} catch (Exception $e) {
+    // Revertir la transacción en caso de error
+    $conn->rollback();
+    die("Error: No se pudo guardar el formulario. " . $e->getMessage());
 }
 
-// Cerrar la declaración y la conexión
-$stmt->close();
+// Cerrar la conexión
 $conn->close();
-
-// Enviar un mensaje de éxito
-echo "Formulario guardado con éxito.";
 ?>

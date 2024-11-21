@@ -1,47 +1,57 @@
 <?php
-ini_set('display_errors', 0); // Desactiva la visualización de errores
-error_reporting(0); // No reportar errores
+// Iniciar sesión
 session_start();
 
-require 'db2.php'; // Asegúrate de que esta ruta sea correcta
-
-// Verificar si el usuario ha iniciado sesión
+// Verificar si el usuario está logueado
 if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['success' => false, 'message' => 'Usuario no autenticado']);
+    echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit();
 }
 
-// Obtener datos de la solicitud
-$data = json_decode(file_get_contents("php://input"), true);
-$nombreFormulario = $data['nombreFormulario'] ?? '';
-$idUsuario = $_SESSION['user_id'];
+// Conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "bdform";
 
-if (empty($nombreFormulario)) {
-    echo json_encode(['success' => false, 'message' => 'No se recibió el nombre del formulario']);
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    echo json_encode(['success' => false, 'message' => 'Error en la conexión']);
     exit();
 }
 
-// Preparar la consulta para eliminar
-$sql = "DELETE FROM formularios WHERE nombre_formulario = ? AND id_usuario = ?";
-$stmt = $conn->prepare($sql);
+// Obtener datos enviados por POST
+$data = json_decode(file_get_contents('php://input'), true);
+$nombreFormulario = $data['nombreFormulario'] ?? null;
 
-if ($stmt === false) {
-    echo json_encode(['success' => false, 'message' => 'Error en la preparación de la consulta: ' . $conn->error]);
-    exit();
-}
+if ($nombreFormulario) {
+    // Obtener el ID del formulario basado en su nombre
+    $stmt = $conn->prepare("SELECT id FROM formulario WHERE nombre_formulario = ? AND id_usuario = ?");
+    $stmt->bind_param("si", $nombreFormulario, $_SESSION['user_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-$stmt->bind_param("si", $nombreFormulario, $idUsuario);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $formularioId = $row['id'];
 
-if ($stmt->execute()) {
-    if ($stmt->affected_rows > 0) {
-        echo json_encode(['success' => true, 'message' => 'Encuesta eliminada con éxito']);
+        // Eliminar preguntas asociadas al formulario
+        $stmt = $conn->prepare("DELETE FROM formularios WHERE id_formulario = ?");
+        $stmt->bind_param("i", $formularioId);
+        $stmt->execute();
+
+        // Eliminar el formulario
+        $stmt = $conn->prepare("DELETE FROM formulario WHERE id = ?");
+        $stmt->bind_param("i", $formularioId);
+        $stmt->execute();
+
+        echo json_encode(['success' => true]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'No se encontró ninguna encuesta para eliminar']);
+        echo json_encode(['success' => false, 'message' => 'Formulario no encontrado']);
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Error al ejecutar la consulta: ' . $stmt->error]);
+    echo json_encode(['success' => false, 'message' => 'Datos inválidos']);
 }
 
-$stmt->close();
 $conn->close();
-?>

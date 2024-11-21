@@ -1,35 +1,28 @@
 <?php
-// Iniciar la sesión
 session_start();
 
-// Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.html");
     exit();
 }
 
-// Conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "bdform";
 
-// Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar la conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Obtener el nombre del formulario de la URL y habilitar el modo de edición
 $nombreFormulario = $_GET['nombre_formulario'];
-$editar = isset($_GET['editar']) ? true : false;
 
-// Consultar las preguntas y respuestas relacionadas al formulario y usuario logueado
 $sql = "SELECT pregunta_num, pregunta, respuesta_1, respuesta_2, respuesta_3, respuesta_4, tipo_respuesta 
-        FROM formularios 
-        WHERE nombre_formulario = ? AND id_usuario = ?";
+        FROM formularios f
+        INNER JOIN formulario fo ON f.id_formulario = fo.id
+        WHERE fo.nombre_formulario = ? AND fo.id_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("si", $nombreFormulario, $_SESSION['user_id']);
 $stmt->execute();
