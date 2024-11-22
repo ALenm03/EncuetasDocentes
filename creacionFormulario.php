@@ -26,7 +26,7 @@ if ($_SESSION['user_role'] == 'user') {
 </head>
 
 <body class="body" style="padding-top: 120px;" id="body">
-    <header class="p-3 fixed-top" style="background-color: #372549;">
+<header class="p-3 fixed-top" style="background-color: #372549;">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div class="mb-2 mb-md-0">
                 <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
@@ -36,7 +36,7 @@ if ($_SESSION['user_role'] == 'user') {
                 <i id="toggle-dark-mode" class="fas fa-moon"></i>
                 <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
                 <form action="backend/logout.php" method="POST" style="margin: 0;">
-                    <button type="submit"  class="btn btn-primary" id="adm_logout">Cerrar sesión</button>
+                    <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
                 </form>
             </div>
 

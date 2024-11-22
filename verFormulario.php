@@ -45,24 +45,28 @@ $result = $stmt->get_result();
     <title>Ver Formulario</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/stylesVer.css">
 </head>
 
-<body class="hold-transition login-page" style="padding-top: 120px;">
+<body class="hold-transition login-page" style="padding-top: 120px;" id="body">
+
     <header class="p-3 fixed-top" style="background-color: #372549;">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div class="mb-2 mb-md-0">
                 <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
             </div>
-
-            <div class="d-flex">
+            
+            <div class="d-flex header-buttons">
+                <i id="toggle-dark-mode" class="fas fa-moon"></i>
                 <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
-                <form action="backend/logout.php" method="POST">
+                <form action="backend/logout.php" method="POST" style="margin: 0;">
                     <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
                 </form>
             </div>
+
         </div>
     </header>
+
 
     <div class="container">
         <div class="card">
@@ -80,7 +84,7 @@ $result = $stmt->get_result();
                         echo "<div id='contenedor_de_respuestas_P" . htmlspecialchars($row['pregunta']) . "' style='margin-bottom: 30px;'>";
                         switch ($row['tipo_respuesta']) {
                             case 'parrafo':
-                                echo "<textarea class='form-control' rows='3' style='max-height:390px;' disabled></textarea>";
+                                echo "<textarea class='form-control' rows='3' style='height:100px; min-height:100px; max-height:100px;' disabled></textarea>";
                                 break;
 
                             case 'opcion_multiple':
@@ -124,13 +128,40 @@ $result = $stmt->get_result();
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
+    <script>
+        // Selecciona el ícono y el cuerpo
+        const toggleDarkModeIcon = document.getElementById('toggle-dark-mode');
+        const bodyElement = document.getElementById('body');
 
+        // Función para aplicar el modo oscuro
+        function applyDarkMode(isDarkMode) {
+            if (isDarkMode) {
+                bodyElement.classList.add('dark-mode');
+            } else {
+                bodyElement.classList.remove('dark-mode');
+            }
+        }
+
+        // Leer el estado del modo oscuro desde LocalStorage al cargar la página
+        const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+        applyDarkMode(isDarkMode);
+
+        // Agregar evento al ícono
+        toggleDarkModeIcon.addEventListener('click', function () {
+            // Alternar el modo oscuro
+            const darkModeActive = bodyElement.classList.toggle('dark-mode');
+
+            // Guardar el estado en LocalStorage
+            localStorage.setItem('dark-mode', darkModeActive);
+        });
+    </script>
     <script>
         // Para regresar al panel de admin
         document.getElementById('adm_regresar').addEventListener('click', function () {
             window.location.href = 'admin.php';
         });
     </script>
+
 </body>
 
 </html>

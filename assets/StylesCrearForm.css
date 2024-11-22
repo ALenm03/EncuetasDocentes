@@ -1,3 +1,31 @@
+/*Estilos del header*/
+#adm_logout{
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 100%;
+}
+#adm_logout:hover {
+    background-color: red;
+}
+#adm_regresar {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_regresar:hover {
+    background-color: #366a86;
+}
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    transition: 0.5s ease;
+}
+
 /*Cards*/
 .nombre_del_from_bg {
     background-color: #777DA7;
@@ -31,29 +59,6 @@
     background-color: #404560;
     color: white;
 }
-
-/*Botones de Header*/
-#adm_logout{
-    background-color: #1A1423;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-#adm_logout:hover {
-    background-color: red;
-}
-#adm_regresar {
-    background-color: #1A1423;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-#adm_regresar:hover {
-    background-color: #366a86;
-}
-
 
 /*Botnes Agregar y Guardar*/
 .Btn_Guardar_Encuesta, .Btn_Agregar_Pregunta{
