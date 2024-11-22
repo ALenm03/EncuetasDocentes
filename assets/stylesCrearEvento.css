@@ -5,10 +5,12 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    height: 100%;
 }
 #adm_logout:hover {
     background-color: red;
 }
+
 #adm_regresar {
     background-color: #1A1423;
     color: white;
@@ -22,6 +24,11 @@
 header{
     background-color: #1A1423;
     color: white;
+}
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    transition: 0.5s ease;
 }
 
 /*Estilos del BODY*/

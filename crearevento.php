@@ -42,9 +42,9 @@ while ($row = $result->fetch_assoc()) {
     <title>Crear Evento</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="assets/stylesAdmin.css">
-    <link rel="stylesheet" href="assets/stylesCrearEvento.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="assets/stylesCrearEvento.css">
+
 </head>
 <body id="body">
     <header class="p-3 fixed-top" style="background-color: #372549;">
@@ -57,7 +57,7 @@ while ($row = $result->fetch_assoc()) {
                 <i id="toggle-dark-mode" class="fas fa-moon"></i>
                 <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
                 <form action="backend/logout.php" method="POST" style="margin: 0;">
-                    <button type="submit" id="adm_logout">Cerrar sesión</button>
+                    <button type="submit" class="btn btn-primary" id="adm_logout">Cerrar sesión</button>
                 </form>
             </div>
 
