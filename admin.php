@@ -45,7 +45,6 @@ $stmt2->bind_param("i", $_SESSION['user_id']);
 $stmt2->execute();
 $result2 = $stmt2->get_result();
 ?>
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -228,10 +227,7 @@ $result2 = $stmt2->get_result();
         document.getElementById('crear_evento').addEventListener('click', function() {
             window.location.href = 'crearevento.php';
         });
-        // Redirigir para crear un nuevo evento
-        document.getElementById('ver_eventos').addEventListener('click', function() {
-            window.location.href = 'vereventos.php';
-        });
+
     </script>
     <script>
         // Selecciona el ícono y el cuerpo

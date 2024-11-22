@@ -38,7 +38,7 @@ $result = $stmt->get_result();
     <title>Formulario Dinámico</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="assets/stylesEditar.css">
+    <link rel="stylesheet" href="assets/stylesEditarEncuesta.css">
 </head>
 
 <body class="body" style="padding-top: 120px;" id="body">
