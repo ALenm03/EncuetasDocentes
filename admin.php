@@ -34,6 +34,17 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $_SESSION['user_id']);
 $stmt->execute();
 $result = $stmt->get_result();
+
+
+// Obtener eventos relacionados al usuario logueado
+$sql2 = "SELECT nombre_evento, fecha_inicio, fecha_final, participantes_actuales, participantes_totales, link 
+        FROM eventos 
+        WHERE id_usuario = ?";
+$stmt2 = $conn->prepare($sql2);
+$stmt2->bind_param("i", $_SESSION['user_id']);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+?>
 ?>
 
 <!DOCTYPE html>
@@ -74,8 +85,6 @@ $result = $stmt->get_result();
                         <div class="card-title">
                             <h1>Encuestas</h1>
                             <button type="button" id="crear_nueva_encuesta">Nueva Encuesta</button>
-                            <button type="button" id="crear_evento">Crear Evento</button>
-                            <button type="button" id="ver_eventos">Ver eventos</button>
                         </div>
                     </div>
                     <div class="card-body" >
@@ -104,6 +113,49 @@ $result = $stmt->get_result();
                                     $count++;
                                 }
                                 ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header adm_CabezaTabla">
+                        <div class="card-title">
+                            <h1>Mis UwU Eventos</h1>
+                            <button type="button" id="crear_evento">Crear Evento</button>
+                        </div>
+                    </div>
+                    <div class="card-body" >
+                        <table class="table table-responsive-md table-head-fixed table-striped" id="Tablita2">
+                            <thead>
+                                <tr>
+                                    <th>Evento</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Final</th>
+                                    <th>Participantes</th>
+                                    <th>Link</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row2 = $result2->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row2['nombre_evento']) ?></td>
+                                        <td><?= htmlspecialchars($row2['fecha_inicio']) ?></td>
+                                        <td><?= htmlspecialchars($row2['fecha_final']) ?></td>
+                                        <td><?= htmlspecialchars($row2['participantes_actuales']) ?>/<?= htmlspecialchars($row2['participantes_totales']) ?></td>
+                                        <td>
+                                            <a href="<?= htmlspecialchars($row2['link']) ?>" target="_blank"><?= htmlspecialchars($row2['link']) ?></a>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary btn-copy-link" data-link="<?= htmlspecialchars($row2['link']) ?>">Copiar Link</button>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>

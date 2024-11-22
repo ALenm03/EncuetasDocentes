@@ -25,19 +25,21 @@ if ($_SESSION['user_role'] == 'user') {
     <link rel="stylesheet" href="assets/stylesCrearForm.css">
 </head>
 
-<body class="body" style="padding-top: 120px;">
+<body class="body" style="padding-top: 120px;" id="body">
     <header class="p-3 fixed-top" style="background-color: #372549;">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div class="mb-2 mb-md-0">
                 <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
             </div>
             
-            <div class="d-flex">
+            <div class="d-flex header-buttons">
+                <i id="toggle-dark-mode" class="fas fa-moon"></i>
                 <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
-                <form action="backend/logout.php" method="POST">
-                    <button type="submit" class="btn btn-primary" id="adm_logout">Cerrar sesión</button>
+                <form action="backend/logout.php" method="POST" style="margin: 0;">
+                    <button type="submit"  class="btn btn-primary" id="adm_logout">Cerrar sesión</button>
                 </form>
             </div>
+
         </div>
     </header>
 
@@ -377,6 +379,35 @@ if ($_SESSION['user_role'] == 'user') {
                     window.location.href = 'admin.php';
                 }
             });
+        });
+    </script>
+
+    <!-- Bye bye derechos -->
+        <script>
+        // Selecciona el ícono y el cuerpo
+        const toggleDarkModeIcon = document.getElementById('toggle-dark-mode');
+        const bodyElement = document.getElementById('body');
+
+        // Función para aplicar el modo oscuro
+        function applyDarkMode(isDarkMode) {
+            if (isDarkMode) {
+                bodyElement.classList.add('dark-mode');
+            } else {
+                bodyElement.classList.remove('dark-mode');
+            }
+        }
+
+        // Leer el estado del modo oscuro desde LocalStorage al cargar la página
+        const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+        applyDarkMode(isDarkMode);
+
+        // Agregar evento al ícono
+        toggleDarkModeIcon.addEventListener('click', function () {
+            // Alternar el modo oscuro
+            const darkModeActive = bodyElement.classList.toggle('dark-mode');
+
+            // Guardar el estado en LocalStorage
+            localStorage.setItem('dark-mode', darkModeActive);
         });
     </script>
 </body>

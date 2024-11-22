@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="assets/stylesIndex.css">
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" id="body">
     <div class="d-flex align-items-center justify-content-center vh-100 w-100">
         <div class="col col-sm-12 col-md-8 col-lg-4 col-xl-4">
             <div class="card" id="formulario_de_login">
@@ -144,7 +144,34 @@
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
-
+        <!-- Bye bye derechos -->
+        <script>
+            // Selecciona el ícono y el cuerpo
+            const toggleDarkModeIcon = document.getElementById('toggle-dark-mode');
+            const bodyElement = document.getElementById('body');
+    
+            // Función para aplicar el modo oscuro
+            function applyDarkMode(isDarkMode) {
+                if (isDarkMode) {
+                    bodyElement.classList.add('dark-mode');
+                } else {
+                    bodyElement.classList.remove('dark-mode');
+                }
+            }
+    
+            // Leer el estado del modo oscuro desde LocalStorage al cargar la página
+            const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+            applyDarkMode(isDarkMode);
+    
+            // Agregar evento al ícono
+            toggleDarkModeIcon.addEventListener('click', function () {
+                // Alternar el modo oscuro
+                const darkModeActive = bodyElement.classList.toggle('dark-mode');
+    
+                // Guardar el estado en LocalStorage
+                localStorage.setItem('dark-mode', darkModeActive);
+            });
+        </script>
     <!--Login de usr-->
     <script>
         $(document).ready(function () {

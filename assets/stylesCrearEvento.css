@@ -1,38 +1,4 @@
-/*Cards*/
-.nombre_del_from_bg {
-    background-color: #777DA7;
-}
-.nombre_del_from {
-    color: #FFFFFF;
-}
-.btn_anadir_pregunta {
-    color: #FFFFFF;
-    background-color: #777DA7;
-}
-.btn_anadir_pregunta:hover {
-    color: #FFFFFF;
-    background-color: #5f6690;
-}
-
-
-/*Estilo de Preguntas*/
-.Boton_Borrar_Pregunta{ 
-    margin: 5px;
-}
-.Item_Form_Group{
-    margin: 3px;
-}
-.Btn_Cambiar_a_Texto, .Btn_Cambiar_a_Checkbox, .Btn_Cambiar_a_OpMul {
-    margin: 5px;
-    background-color: #5f6690;
-    color: white;
-}
-.Btn_Cambiar_a_Texto:hover, .Btn_Cambiar_a_Checkbox:hover, .Btn_Cambiar_a_OpMul:hover{
-    background-color: #404560;
-    color: white;
-}
-
-/*Botones de Header*/
+/*Estilos del Header*/
 #adm_logout{
     background-color: #1A1423;
     color: white;
@@ -53,18 +19,37 @@
 #adm_regresar:hover {
     background-color: #366a86;
 }
-
-
-/*Botnes Agregar y Guardar*/
-.Btn_Guardar_Encuesta, .Btn_Agregar_Pregunta{
-    margin: 4px;
-    color: black;
-    background-color: #e4e8e5;
+header{
+    background-color: #1A1423;
+    color: white;
 }
-.Btn_Guardar_Encuesta:hover, .Btn_Agregar_Pregunta:hover{
-    margin: 4px;
-    color: black;
-    background-color: #d3d8d5;
+
+/*Estilos del BODY*/
+.container {
+    margin-top: 120px;
+}
+#body{ /*pa que no sea brusco el cambio*/
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/*Estilos de la Card*/
+.card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Añade una sombra suave */
+
+}
+.card-header{
+    background-color: #777DA7;
+    color: white;
+}
+
+#btn_crear_evento {
+    background-color: #777DA7;
+    color: white;
+    border: none;
+   cursor: pointer;
+}
+#btn_crear_evento:hover {
+    background-color: #5f6690;
 }
 
 

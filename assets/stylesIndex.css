@@ -26,3 +26,40 @@
 #texto_registrase:hover{
     cursor: pointer;
 }
+
+
+
+/*MODO OSCURO*/
+.dark-mode {
+    background-color: #212121;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+.dark-mode .card {
+    background-color: #333333;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+.dark-mode #toggle-dark-mode {
+    color: #FFD700;
+}
+.dark-mode #toggle-dark-mode:hover {
+    color: white;
+}
+
+#toggle-dark-mode {
+    font-size: 24px; 
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px; 
+}
+
+#toggle-dark-mode:hover {
+    transition: color 0.5s ease;
+    color: #FFD700; 
+}
