@@ -95,10 +95,6 @@ if ($_SESSION['user_role'] == 'user') {
             document.querySelector('.Btn_Agregar_Pregunta').addEventListener('click', Agregar_Pregunta);
 
             Agregar_Pregunta();
-            Agregar_Pregunta();
-            cambiarACheckbox('P2');
-            Agregar_Pregunta();
-            cambiarA1Opcion('P3');
         });
 
         // Contador de preguntas actuales
@@ -134,7 +130,7 @@ if ($_SESSION['user_role'] == 'user') {
                 </div>
                 <div class="Contenido_De_Cada_Pregunta" style="width: 90%;">
                     <label for="nombre_de_pregunta_${PreguntaX}" class="label_pregunta">Pregunta ${PreguntaX}</label>
-                    <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${PreguntaX}" style="margin-bottom: 30px;" placeholder="Escribe la pregunta" Value="Escribe tu pregunta en este campo">
+                    <input type="text" class="form-control" name="Pregunta" id="nombre_de_pregunta_${PreguntaX}" style="margin-bottom: 30px;" placeholder="Escribe tu pregunta en este campo">
                     <div id="contenedor_de_respuestas_${newPreguntaId}">
                         <div class=" d-flex respuesta" style="justify-content: flex-start;">
                             <textarea class="Item_Form_Group form-control" id="respuesta${newPreguntaId}" rows="4" style="max-width: 100%; max-height:100px; min-height:100px;" readonly></textarea>
@@ -197,7 +193,7 @@ if ($_SESSION['user_role'] == 'user') {
                     contenedor.innerHTML += `
                     <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
                         <input type="checkbox" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
-                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" value="Opcion${i}">
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" placeholder="Opcion${i}">
                     </div>
                     `;
                 } else if (valor) {
@@ -230,7 +226,7 @@ if ($_SESSION['user_role'] == 'user') {
                     contenedor.innerHTML += `
                     <div class=" d-flex respuesta" id="form-group${preguntaId}_${i}" style="justify-content: flex-start;">
                         <input type="radio" class="Item_Form_Group" id="opcion${preguntaId}_${i}" disabled>
-                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" value="Opcion${i}">
+                        <input type="text" class="Item_Form_Group form-control" id="respuesta${preguntaId}_${i}" placeholder="Opcion${i}">
                     </div>
                     `;
                 } else if (valor) {
