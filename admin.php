@@ -124,7 +124,7 @@ $result2 = $stmt2->get_result();
                 <div class="card">
                     <div class="card-header adm_CabezaTabla">
                         <div class="card-title">
-                            <h1>Mis UwU Eventos</h1>
+                            <h1>Mis Eventos</h1>
                             <button type="button" id="crear_evento">Crear Evento</button>
                         </div>
                     </div>
@@ -167,7 +167,19 @@ $result2 = $stmt2->get_result();
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
-
+    <script>
+        // Agregar funcionalidad para copiar el link al portapapeles
+        document.querySelectorAll('.btn-copy-link').forEach(button => {
+            button.addEventListener('click', function () {
+                const link = this.getAttribute('data-link');
+                navigator.clipboard.writeText("localhost/EncuetasDocentes/" + link).then(() => {
+                    Swal.fire('Link copiado', 'El link se ha copiado al portapapeles.', 'success');
+                }).catch(err => {
+                    Swal.fire('Error', 'No se pudo copiar el link.', 'error');
+                });
+            });
+        });
+    </script>
     <script>
         // Agregar eventos a los botones de eliminar
         document.querySelectorAll('.btn_eliminar_encuesta').forEach(button => {
