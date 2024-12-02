@@ -71,7 +71,7 @@ $result = $stmt->get_result();
     <div class="container">
         <div class="card">
             <div class="card-header text-white text-center" style="background-color: #777DA7;">
-                <h3>Formulario: <?php echo htmlspecialchars($nombreFormulario); ?></h3>
+                <h3><?php echo htmlspecialchars($nombreFormulario); ?></h3>
             </div>
             <div class="card-body">
                 <div>

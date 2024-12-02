@@ -81,14 +81,32 @@ while ($row = $result_preguntas_respuestas->fetch_assoc()) {
     <title>Respuestas de Encuesta</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="assets/stylesUsr.css">
+
 </head>
-<body>
-    <div class="container mt-5">
+<body id="adm_body">
+    <header class="p-3 fixed-top" style="background-color: #372549;">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="mb-2 mb-md-0">
+                <h1 class="h5 m-0" style="color:white;">Encuesta Respondida</h1>
+            </div>
+            <div class="d-flex">
+                <i id="toggle-dark-mode" class="fas fa-moon"></i>
+                <button class="btn btn-primary mr-2" id="usr_regresar">Regresar</button>
+                <form action="backend/logout.php" method="POST">
+                    <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container" style=" margin-top: 120px;">
         <h1 class="text-center"><?= htmlspecialchars($evento['nombre_formulario']) ?></h1>
         <div class="mt-4">
             <?php foreach ($preguntas as $index => $pregunta): ?>
                 <div class="card mb-3">
-                    <div class="card-header">
+                    <div class="card-header Pregunta_Respondida">
                         <strong><?= $index + 1 ?>. <?= htmlspecialchars($pregunta['pregunta']) ?></strong>
                     </div>
                     <div class="card-body">
@@ -123,7 +141,44 @@ while ($row = $result_preguntas_respuestas->fetch_assoc()) {
                 </div>
             <?php endforeach; ?>
         </div>
-        <a href="usuario_normal.php" class="btn btn-primary">Volver</a>
+        <a href="usuario_normal.php" class="btn btn-primary" id="btn_volver">Volver</a>
     </div>
+
+
+
+
+    <script>
+        // Selecciona el ícono y el cuerpo
+        const toggleDarkModeIcon = document.getElementById('toggle-dark-mode');
+        const bodyElement = document.getElementById('adm_body');
+
+        // Función para aplicar el modo oscuro
+        function applyDarkMode(isDarkMode) {
+            if (isDarkMode) {
+                bodyElement.classList.add('dark-mode');
+            } else {
+                bodyElement.classList.remove('dark-mode');
+            }
+        }
+
+        // Leer el estado del modo oscuro desde LocalStorage al cargar la página
+        const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+        applyDarkMode(isDarkMode);
+
+        // Agregar evento al ícono
+        toggleDarkModeIcon.addEventListener('click', function () {
+            // Alternar el modo oscuro
+            const darkModeActive = bodyElement.classList.toggle('dark-mode');
+
+            // Guardar el estado en LocalStorage
+            localStorage.setItem('dark-mode', darkModeActive);
+        });
+    </script>
+
+    <script>
+        document.getElementById('usr_regresar').addEventListener('click', function () {
+            window.location.href = 'usuario_normal.php';
+        });
+    </script>
 </body>
 </html>

@@ -3,13 +3,140 @@ header{
     background-color:  #372549;
 
 }
-#adm_logout{
+#adm_logout {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s ease;
+
+}
+#adm_logout:hover {
+    background-color: #c82333;
+    transition: 0.5s ease;
+
+}
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    transition: 0.5s ease;
+}
+#toggle-dark-mode {
+    font-size: 24px; /* Tamaño del ícono */
+    cursor: pointer;
+    color: white;
+    display: flex; /* Asegura que el ícono se comporte como un elemento en línea */
+    align-items: center; /* Alineación vertical */
+    justify-content: center; /* Centrado en el espacio del ícono */
+    height: 45px; 
+    width: 45px; 
+}
+
+#toggle-dark-mode:hover {
+    transition: color 0.5s ease;
+    color: #FFD700; 
+}
+
+/*body*/
+body{
+    transition: 0.5s ease;
+}
+
+/*Estilos de Tabla*/
+.adm_CabezaTabla{
+    background-color:  #372549;
+    color: white;
+    margin: 0.5%;
+    border-radius: 5px;
+    transition: 0.5s ease;
+
+}
+#btn_ver {
+    background-color: #777DA7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s ease;
+
+}
+#btn_ver:hover {
+    background-color: #5c6181;
+    transition: 0.5s ease;
+}
+
+
+
+
+
+/* Clase para el modo oscuro */
+.dark-mode {
+    background-color: #212121;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+/* Ajustar colores específicos si es necesario */
+.dark-mode .card {
+    background-color: #333333;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+.dark-mode .adm_CabezaTabla {
+    background-color: #777DA7;
+    color: white;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+.dark-mode #toggle-dark-mode {
+    color: #FFD700;
+}
+.dark-mode #toggle-dark-mode:hover {
+    color: white;
+}
+
+
+/*------------------------Pagina de ver formulario------------------------*/
+
+
+
+
+/*Header*/
+#usr_regresar {
     background-color: #1A1423;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
 }
-#adm_logout:hover {
-    background-color: red;
+#usr_regresar:hover {
+    background-color: #366a86;
+}
+
+
+/*Btn volver*/
+#btn_volver {
+    background-color: #777DA7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s ease;
+
+}
+#btn_volver:hover {
+    background-color: #5c6181;
+    transition: 0.5s ease;
+}
+
+/*cards*/
+
+.card, #btn_volver{
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Añade una sombra suave */
+}
+.Pregunta_Respondida{
+    background-color: #777DA7;
+    color: white;
 }

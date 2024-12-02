@@ -42,7 +42,6 @@ header{
 /*Estilos de la Card*/
 .card {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Añade una sombra suave */
-
 }
 .card-header{
     background-color: #777DA7;
