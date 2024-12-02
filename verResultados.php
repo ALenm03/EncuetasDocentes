@@ -42,6 +42,21 @@ $result = $stmt->get_result();
     <title>Respuestas del Evento</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .respuesta-seleccionada {
+            background-color: #d4edda;
+            font-weight: bold;
+        }
+    </style>
+    <style>
+    .respuesta-seleccionada {
+            background-color: #d4edda;
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -58,7 +73,6 @@ $result = $stmt->get_result();
                     <tr>
                         <td><?= htmlspecialchars($row['nombre_usuario']) ?></td>
                         <td>
-                            <!-- Botón para abrir el modal y ver respuestas -->
                             <button 
                                 class="btn btn-primary btn-ver-respuestas" 
                                 data-user-id="<?= htmlspecialchars($row['id']) ?>"
@@ -79,11 +93,10 @@ $result = $stmt->get_result();
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="respuestasModalLabel">Respuestas del Usuario</h5>
+                    <h5 class="modal-title" id="respuestasModalLabel">Respuestas</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Aquí se cargarán las respuestas con AJAX -->
                     <div id="modalRespuestasContent">
                         <p>Cargando respuestas...</p>
                     </div>
@@ -95,24 +108,20 @@ $result = $stmt->get_result();
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Evento para cargar respuestas en el modal
             $('.btn-ver-respuestas').on('click', function () {
                 const userId = $(this).data('user-id');
                 const eventId = $(this).data('event-id');
 
-                // Hacer una solicitud AJAX para obtener las respuestas
                 $('#modalRespuestasContent').html('<p>Cargando respuestas...</p>');
                 $.ajax({
                     url: 'backend/get_respuestas.php',
                     method: 'GET',
                     data: { user_id: userId, event_id: eventId },
                     success: function (response) {
-                        // Mostrar las respuestas en el modal
                         $('#modalRespuestasContent').html(response);
                     },
                     error: function () {
