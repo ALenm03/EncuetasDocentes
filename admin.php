@@ -37,7 +37,7 @@ $result = $stmt->get_result();
 
 
 // Obtener eventos relacionados al usuario logueado
-$sql2 = "SELECT nombre_evento, fecha_inicio, fecha_final, participantes_actuales, participantes_totales, link 
+$sql2 = "SELECT id, nombre_evento, fecha_inicio, fecha_final, participantes_actuales, participantes_totales, link 
         FROM eventos 
         WHERE id_usuario = ?";
 $stmt2 = $conn->prepare($sql2);
@@ -152,6 +152,7 @@ $result2 = $stmt2->get_result();
                                         </td>
                                         <td>
                                             <button class="btn btn-primary btn-copy-link" data-link="<?= htmlspecialchars($row2['link']) ?>">Copiar Link</button>
+                                            <button class="btn btn-secondary btn-view-responses" data-event-id="<?= htmlspecialchars($row2['id']) ?>">Ver Respuestas</button>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
@@ -278,6 +279,12 @@ $result2 = $stmt2->get_result();
 
             // Guardar el estado en LocalStorage
             localStorage.setItem('dark-mode', darkModeActive);
+        });
+        document.querySelectorAll('.btn-view-responses').forEach(button => {
+            button.addEventListener('click', function () {
+                const eventId = this.getAttribute('data-event-id');
+                window.location.href = `verResultados.php?id_evento=${eventId}`;
+            });
         });
     </script>
 
