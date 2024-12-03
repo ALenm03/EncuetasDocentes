@@ -20,8 +20,13 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Obtener el ID del evento
-$eventId = $_GET['id_evento'] ?? 0;
+// Obtener el ID del evento desde la URL o usar 0 si no está presente
+$eventId = isset($_GET['id_evento']) ? $_GET['id_evento'] : 0;
+
+// Verificar si el ID del evento es válido
+if ($eventId == 0) {
+    die("Evento no válido.");
+}
 
 // Consultar los usuarios que respondieron
 $sql = "SELECT DISTINCT u.id, u.name AS nombre_usuario
@@ -29,32 +34,35 @@ $sql = "SELECT DISTINCT u.id, u.name AS nombre_usuario
         JOIN usuario u ON r.id_usuario = u.id
         WHERE r.id_evento = ?";
 $stmt = $conn->prepare($sql);
+
+// Verificar si la preparación de la consulta fue exitosa
+if (!$stmt) {
+    die("Error en la consulta SQL: " . $conn->error);
+}
+
 $stmt->bind_param("i", $eventId);
 $stmt->execute();
+
+// Verificar si la ejecución fue exitosa
 $result = $stmt->get_result();
+if (!$result) {
+    die("Error al ejecutar la consulta: " . $stmt->error);
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Respuestas del Evento</title>
-    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <style>
-        .respuesta-seleccionada {
-            background-color: #d4edda;
-            font-weight: bold;
-        }
-    </style>
-    <style>
-    .respuesta-seleccionada {
-            background-color: #d4edda;
-            font-weight: bold;
-            padding: 2px 5px;
-            border-radius: 4px;
-            display: inline-block;
+        #graficaBarra {
+            display: block;
+            width: 100%;
+            height: 400px; /* Ajusta el tamaño según sea necesario */
         }
     </style>
 </head>
@@ -100,9 +108,12 @@ $result = $stmt->get_result();
                     <div id="modalRespuestasContent">
                         <p>Cargando respuestas...</p>
                     </div>
+                    <!-- Canvas para la gráfica -->
+                    <canvas id="graficaBarra"></canvas>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success btn-ver-grafica" data-user-id="" data-event-id="">Ver Gráfica</button>
                 </div>
             </div>
         </div>
@@ -110,13 +121,16 @@ $result = $stmt->get_result();
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         $(document).ready(function () {
+            // Ver respuestas y cargar la información
             $('.btn-ver-respuestas').on('click', function () {
                 const userId = $(this).data('user-id');
                 const eventId = $(this).data('event-id');
 
                 $('#modalRespuestasContent').html('<p>Cargando respuestas...</p>');
+
                 $.ajax({
                     url: 'backend/get_respuestas.php',
                     method: 'GET',
@@ -129,6 +143,64 @@ $result = $stmt->get_result();
                     }
                 });
             });
+
+            // Ver gráfica
+            // Ver gráfica
+            $('.btn-ver-grafica').on('click', function () {
+                    const userId = $(this).data('user-id');
+                    const eventId = $(this).data('event-id');
+
+                    $.ajax({
+                        url: 'backend/get_respuestas_grafica.php',  // Asegúrate de que esta URL sea correcta
+                        method: 'GET',
+                        data: { user_id: userId, event_id: eventId },
+                        success: function (response) {
+                            const data = JSON.parse(response); // Los datos de las respuestas contadas
+
+                            // Verifica si las respuestas están presentes
+                            if (data.respuesta_1 !== undefined && data.respuesta_2 !== undefined && data.respuesta_3 !== undefined && data.respuesta_4 !== undefined) {
+                                const ctx = document.getElementById('graficaBarra').getContext('2d');
+
+                                // Destruir cualquier gráfico existente
+                                if (window.myChart) {
+                                    window.myChart.destroy();
+                                }
+
+                                // Crear la gráfica
+                                setTimeout(function() {
+                                    window.myChart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: ['Respuesta 1', 'Respuesta 2', 'Respuesta 3', 'Respuesta 4'],
+                                            datasets: [{
+                                                label: 'Cantidad de Selecciones',
+                                                data: [data.respuesta_1, data.respuesta_2, data.respuesta_3, data.respuesta_4],
+                                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+                                }, 300); // Esperar 300 ms para asegurar que el modal esté completamente visible
+
+                                // Mostrar el modal con la gráfica
+                                $('#respuestasModal').modal('show');
+                            } else {
+                                alert('No se recibieron los datos correctamente');
+                            }
+                        },
+                        error: function () {
+                            alert('Error al cargar la gráfica.');
+                        }
+                    });
+                });
         });
     </script>
 </body>
