@@ -95,3 +95,30 @@ header{
     transition: color 0.5s ease;
     color: #FFD700; 
 }
+
+
+
+
+
+/* Eliminar estilos de autocompletado en Chrome/Edge */
+input:-webkit-autofill {
+    background-color: transparent !important; /* Fondo transparente */
+    color: inherit !important; /* Hereda el color del texto */
+    font-size: inherit; /* Hereda el tamaño de fuente */
+    -webkit-text-fill-color: #000000 !important; /* Color del texto autocompletado (en modo oscuro o claro) */
+    box-shadow: 0 0 0px 1000px #ffffff inset; /* Fondo blanco para modo claro */
+    transition: background-color 5000s ease-in-out 0s; /* Previene cambios de fondo */
+}
+
+/* Ajustar en modo oscuro */
+.dark-mode input:-webkit-autofill {
+    background-color: transparent !important; /* Fondo transparente */
+    -webkit-text-fill-color: #ffffff !important; /* Texto blanco */
+    box-shadow: 0 0 0px 1000px #333333 inset; /* Fondo oscuro */
+}
+
+/* Firefox */
+input:autofill {
+    background-color: transparent !important;
+    color: inherit !important;
+}
