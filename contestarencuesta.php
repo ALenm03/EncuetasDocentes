@@ -133,40 +133,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="sttylesheet" href="assets/stylesContestarEncuesta.css">
 </head>
 
 <body>
     <div class="container mt-5">
-        <h1 class="text-center"><?= htmlspecialchars($evento['nombre_formulario']) ?></h1>
-        <form method="POST" action="">
-            <?php foreach ($preguntas as $index => $pregunta): ?>
-                <div class="form-group">
-                    <label><strong><?= $index + 1 ?>. <?= htmlspecialchars($pregunta['pregunta']) ?></strong></label>
-                    <?php if ($pregunta['tipo_respuesta'] === 'parrafo'): ?>
-                        <textarea name="respuesta[<?= $pregunta['pregunta_num'] ?>]" class="form-control" rows="4" required></textarea>
-                    <?php elseif ($pregunta['tipo_respuesta'] === 'opcion_multiple'): ?>
-                        <?php for ($i = 1; $i <= 4; $i++): ?>
-                            <?php if (!empty($pregunta["respuesta_$i"])): ?>
-                                <div class="form-check">
-                                    <input type="radio" name="respuesta[<?= $pregunta['pregunta_num'] ?>]" value="<?= htmlspecialchars($pregunta["respuesta_$i"]) ?>" class="form-check-input" required>
-                                    <label class="form-check-label"><?= htmlspecialchars($pregunta["respuesta_$i"]) ?></label>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="card-header CabezaTabla">
+                    <h1 class="text-center"><?= htmlspecialchars($evento['nombre_formulario']) ?></h1>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="POST" action="">
+                            <?php foreach ($preguntas as $index => $pregunta): ?>
+                                <div class="form-group">
+                                    <label><strong><?= $index + 1 ?>. <?= htmlspecialchars($pregunta['pregunta']) ?></strong></label>
+                                    <?php if ($pregunta['tipo_respuesta'] === 'parrafo'): ?>
+                                        <textarea name="respuesta[<?= $pregunta['pregunta_num'] ?>]" class="form-control" rows="4" required></textarea>
+                                    <?php elseif ($pregunta['tipo_respuesta'] === 'opcion_multiple'): ?>
+                                        <?php for ($i = 1; $i <= 4; $i++): ?>
+                                            <?php if (!empty($pregunta["respuesta_$i"])): ?>
+                                                <div class="form-check">
+                                                    <input type="radio" name="respuesta[<?= $pregunta['pregunta_num'] ?>]" value="<?= htmlspecialchars($pregunta["respuesta_$i"]) ?>" class="form-check-input" required>
+                                                    <label class="form-check-label"><?= htmlspecialchars($pregunta["respuesta_$i"]) ?></label>
+                                                </div>
+                                            <?php endif; ?>
+                                        <?php endfor; ?>
+                                    <?php elseif ($pregunta['tipo_respuesta'] === 'checkbox'): ?>
+                                        <?php for ($i = 1; $i <= 4; $i++): ?>
+                                            <?php if (!empty($pregunta["respuesta_$i"])): ?>
+                                                <div class="form-check">
+                                                    <input type="checkbox" name="respuesta[<?= $pregunta['pregunta_num'] ?>][]" value="<?= htmlspecialchars($pregunta["respuesta_$i"]) ?>" class="form-check-input">
+                                                    <label class="form-check-label"><?= htmlspecialchars($pregunta["respuesta_$i"]) ?></label>
+                                                </div>
+                                            <?php endif; ?>
+                                        <?php endfor; ?>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
-                        <?php endfor; ?>
-                    <?php elseif ($pregunta['tipo_respuesta'] === 'checkbox'): ?>
-                        <?php for ($i = 1; $i <= 4; $i++): ?>
-                            <?php if (!empty($pregunta["respuesta_$i"])): ?>
-                                <div class="form-check">
-                                    <input type="checkbox" name="respuesta[<?= $pregunta['pregunta_num'] ?>][]" value="<?= htmlspecialchars($pregunta["respuesta_$i"]) ?>" class="form-check-input">
-                                    <label class="form-check-label"><?= htmlspecialchars($pregunta["respuesta_$i"]) ?></label>
-                                </div>
-                            <?php endif; ?>
-                        <?php endfor; ?>
-                    <?php endif; ?>
+                            <?php endforeach; ?>
+                            <button type="submit" class="btn btn-primary btn-block">Enviar Respuestas</button>
+                        </form>
+                    </div>
                 </div>
-            <?php endforeach; ?>
-            <button type="submit" class="btn btn-primary btn-block">Enviar Respuestas</button>
-        </form>
+            </div>
+        </div>
+        
+
     </div>
 
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
