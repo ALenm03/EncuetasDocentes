@@ -104,6 +104,7 @@ $result = $stmt->get_result();
     </div>
 
     <!-- Modal para mostrar las respuestas -->
+    <!-- Modal para mostrar las respuestas -->
     <div class="modal fade" id="respuestasModal" tabindex="-1" aria-labelledby="respuestasModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -114,13 +115,17 @@ $result = $stmt->get_result();
                     <div id="modalRespuestasContent">
                         <p>Cargando respuestas...</p>
                     </div>
+                    <!-- Contenedor para el gráfico -->
+                    <canvas id="graficoRespuestas" style="display: none; max-width: 100%;"></canvas>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button id="generarGrafico" class="btn btn-primary">Generar Gráfico</button>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
     <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
@@ -183,5 +188,95 @@ $result = $stmt->get_result();
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    $(document).ready(function () {
+        let conteoRespuestas = { respuesta1: 0, respuesta2: 0, respuesta3: 0, respuesta4: 0 };
+
+        $('.btn-ver-respuestas').on('click', function () {
+            const userId = $(this).data('user-id');
+            const eventId = $(this).data('event-id');
+
+            $('#modalRespuestasContent').html('<p>Cargando respuestas...</p>');
+            $('#graficoRespuestas').hide(); // Ocultar el gráfico inicialmente
+
+            $.ajax({
+                url: 'backend/get_respuestas.php',
+                method: 'GET',
+                data: { user_id: userId, event_id: eventId },
+                success: function (response) {
+                    $('#modalRespuestasContent').html(response);
+
+                    // Reiniciar el conteo
+                    conteoRespuestas = { respuesta1: 0, respuesta2: 0, respuesta3: 0, respuesta4: 0 };
+
+                    // Procesar respuestas seleccionadas para el gráfico
+                    procesarRespuestasParaGrafico();
+                },
+                error: function () {
+                    $('#modalRespuestasContent').html('<p>Error al cargar las respuestas.</p>');
+                }
+            });
+        });
+
+        $('#generarGrafico').on('click', function () {
+            generarGrafico();
+        });
+
+        function procesarRespuestasParaGrafico() {
+            // Buscar cada fila de respuestas dentro de la tabla
+            $('#modalRespuestasContent table tbody tr').each(function () {
+                const respuestasHtml = $(this).find('td:last').html(); // Extraer HTML de las respuestas
+
+                // Buscar cada respuesta seleccionada
+                $(respuestasHtml).find('li').each(function (index) {
+                    if ($(this).text().includes('(Seleccionada)')) {
+                        // Incrementar el conteo correspondiente
+                        if (index === 0) conteoRespuestas.respuesta1++;
+                        else if (index === 1) conteoRespuestas.respuesta2++;
+                        else if (index === 2) conteoRespuestas.respuesta3++;
+                        else if (index === 3) conteoRespuestas.respuesta4++;
+                    }
+                });
+            });
+        }
+
+        function generarGrafico() {
+            const labels = ["Respuesta 1", "Respuesta 2", "Respuesta 3", "Respuesta 4"];
+            const values = [
+                conteoRespuestas.respuesta1,
+                conteoRespuestas.respuesta2,
+                conteoRespuestas.respuesta3,
+                conteoRespuestas.respuesta4
+            ];
+
+            const ctx = document.getElementById('graficoRespuestas').getContext('2d');
+            $('#graficoRespuestas').show(); // Mostrar el canvas del gráfico
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Veces seleccionadas',
+                        data: values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+
 </body>
 </html>
