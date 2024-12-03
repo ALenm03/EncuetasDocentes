@@ -105,7 +105,7 @@ $result2 = $stmt2->get_result();
                                     echo "<tr>";
                                     echo "<td>{$count}</td>";
                                     echo "<td>{$row['nombre_formulario']}</td>";
-                                    echo "<td><a href='verFormulario.php?nombre_formulario={$row['nombre_formulario']}' class='btn_ver' style='padding:3px; color:white; margin-right:5px;'> Ver </a> <a class='btn_ver' style='padding: 3.5px; color:white; '>Respuesta de usuario</a> <a class='btn_ver' style='padding:3px; color:white;'>Grafica</a></td>";
+                                    echo "<td><a href='verFormulario.php?nombre_formulario={$row['nombre_formulario']}' class='btn_ver' style='padding:3px; color:white; margin-right:5px;'> Ver </a></td>";
                                     echo "<td><a href='EditarEncuesta.php?nombre_formulario={$row['nombre_formulario']}' class='btn_editar' style='padding:3px; color:white;'>Editar</a></td>";
                                     echo "<td><a class='btn_eliminar_encuesta' data-id='{$row['id']}' data-nombre='{$row['nombre_formulario']}' style='padding:3px; color:white;'>Eliminar</a></td>";
                                     echo "</tr>";
@@ -151,7 +151,7 @@ $result2 = $stmt2->get_result();
                                             <a href="<?= htmlspecialchars($row2['link']) ?>" target="_blank"><?= htmlspecialchars($row2['link']) ?></a>
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary btn-copy-link" data-link="<?= htmlspecialchars($row2['link']) ?>">Copiar Link</button>
+                                            <button class="btn btn-copy-link" data-link="<?= htmlspecialchars($row2['link']) ?>">Copiar Link</button>
                                             <button class="btn btn-secondary btn-view-responses" data-event-id="<?= htmlspecialchars($row2['id']) ?>">Ver Respuestas</button>
                                         </td>
                                     </tr>
@@ -238,20 +238,9 @@ $result2 = $stmt2->get_result();
         });
         // Redirigir para crear un nuevo evento
         document.getElementById('crear_evento').addEventListener('click', function() {
-            Swal.fire({
-                title: '¿Estas seguro de que quieres crear un evento?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#4281A4',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, crear',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'crearevento.php';
-                }
-            });
+            window.location.href = 'crearevento.php';
         });
+ 
 
     </script>
     <script>

@@ -1,0 +1,112 @@
+/*Estilos del header*/
+#adm_logout{
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 100%;
+}
+#adm_logout:hover {
+    background-color: red;
+}
+#adm_regresar {
+    background-color: #1A1423;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#adm_regresar:hover {
+    background-color: #366a86;
+}
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    transition: 0.5s ease;
+}
+
+/*Estilos del BODY*/
+.container {
+    margin-top: 120px;
+}
+#body{
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+
+/*Estilos de card*/
+.adm_CabezaTabla{
+    background-color:  #372549;
+    color: white;
+    margin: 0.5%;
+    border-radius: 5px;
+    transition: 0.5s ease;
+
+}
+.btn-ver-respuestas{
+    background-color: #777da7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s ease;
+}
+.btn-ver-respuestas:hover {
+    color: white;
+    background-color: #5c6181;
+    transition: 0.5s ease;
+}
+
+/*Estilos modal*/
+.modal-header{
+    background-color: #777da7;
+}
+#respuestasModalLabel{
+    color: white;
+}
+
+
+
+
+/*Modo oscuro*/
+.dark-mode {
+    background-color: #212121;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+/* Ajustar colores específicos si es necesario */
+.dark-mode .card {
+    background-color: #333333;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+.dark-mode .adm_CabezaTabla {
+    background-color: #777DA7;
+    color: white;
+    transition: background-color 0.5s ease, color 0.5s ease; /* Transición suave */
+}
+
+.dark-mode #toggle-dark-mode {
+    color: #FFD700;
+}
+.dark-mode #toggle-dark-mode:hover {
+    color: white;
+}
+
+#toggle-dark-mode {
+    font-size: 24px; /* Tamaño del ícono */
+    cursor: pointer;
+    color: white;
+    display: flex; /* Asegura que el ícono se comporte como un elemento en línea */
+    align-items: center; /* Alineación vertical */
+    justify-content: center; /* Centrado en el espacio del ícono */
+    height: 45px; 
+    width: 45px; 
+}
+
+#toggle-dark-mode:hover {
+    transition: color 0.5s ease;
+    color: #FFD700; 
+}

@@ -41,51 +41,66 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Respuestas del Evento</title>
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <style>
-        .respuesta-seleccionada {
-            background-color: #d4edda;
-            font-weight: bold;
-        }
-    </style>
-    <style>
-    .respuesta-seleccionada {
-            background-color: #d4edda;
-            font-weight: bold;
-            padding: 2px 5px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="assets/StylesVerResultados.css">
 </head>
-<body>
-    <div class="container mt-5">
-        <h1>Usuarios que Respondieron</h1>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row['nombre_usuario']) ?></td>
-                        <td>
-                            <button 
-                                class="btn btn-primary btn-ver-respuestas" 
-                                data-user-id="<?= htmlspecialchars($row['id']) ?>"
-                                data-event-id="<?= htmlspecialchars($eventId) ?>"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#respuestasModal">
-                                Ver Respuestas
-                            </button>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+<body id="body">
+    <header class="p-3 fixed-top" style="background-color: #372549;">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="mb-2 mb-md-0">
+                <h1 class="h5 m-0" style="color:white;">Panel de Administrador</h1>
+            </div>
+            
+            <div class="d-flex header-buttons">
+                <i id="toggle-dark-mode" class="fas fa-moon"></i>
+                <button class="btn btn-primary mr-2" id="adm_regresar">Regresar</button>
+                <form action="backend/logout.php" method="POST" style="margin: 0;">
+                    <button class="btn btn-primary" type="submit" id="adm_logout">Cerrar sesión</button>
+                </form>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header adm_CabezaTabla">
+                        <h1>Usuarios que Respondieron</h1>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $result->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row['nombre_usuario']) ?></td>
+                                        <td>
+                                            <button 
+                                                class="btn btn-ver-respuestas" 
+                                                data-user-id="<?= htmlspecialchars($row['id']) ?>"
+                                                data-event-id="<?= htmlspecialchars($eventId) ?>"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#respuestasModal">
+                                                Ver Respuestas
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal para mostrar las respuestas -->
@@ -94,7 +109,6 @@ $result = $stmt->get_result();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="respuestasModalLabel">Respuestas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <div id="modalRespuestasContent">
@@ -108,8 +122,13 @@ $result = $stmt->get_result();
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/jquery/jquery.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="assets/AdminLTE-3.2.0/plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('adm_regresar').addEventListener('click', function () {window.location.href = 'admin.php';});
+    </script>
     <script>
         $(document).ready(function () {
             $('.btn-ver-respuestas').on('click', function () {
@@ -128,6 +147,39 @@ $result = $stmt->get_result();
                         $('#modalRespuestasContent').html('<p>Error al cargar las respuestas.</p>');
                     }
                 });
+            });
+        });
+    </script>
+    <script>
+        // Selecciona el ícono y el cuerpo
+        const toggleDarkModeIcon = document.getElementById('toggle-dark-mode');
+        const bodyElement = document.getElementById('body');
+
+        // Función para aplicar el modo oscuro
+        function applyDarkMode(isDarkMode) {
+            if (isDarkMode) {
+                bodyElement.classList.add('dark-mode');
+            } else {
+                bodyElement.classList.remove('dark-mode');
+            }
+        }
+
+        // Leer el estado del modo oscuro desde LocalStorage al cargar la página
+        const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+        applyDarkMode(isDarkMode);
+
+        // Agregar evento al ícono
+        toggleDarkModeIcon.addEventListener('click', function () {
+            // Alternar el modo oscuro
+            const darkModeActive = bodyElement.classList.toggle('dark-mode');
+
+            // Guardar el estado en LocalStorage
+            localStorage.setItem('dark-mode', darkModeActive);
+        });
+        document.querySelectorAll('.btn-view-responses').forEach(button => {
+            button.addEventListener('click', function () {
+                const eventId = this.getAttribute('data-event-id');
+                window.location.href = `verResultados.php?id_evento=${eventId}`;
             });
         });
     </script>
