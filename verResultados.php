@@ -120,7 +120,7 @@ $result = $stmt->get_result();
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button id="generarGrafico" class="btn btn-primary">Generar Gráfico</button>
+                    <!--<button id="generarGrafico" class="btn btn-primary">Generar Gráfico</button>-->
                 </div>
             </div>
         </div>
