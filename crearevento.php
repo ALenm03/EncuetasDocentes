@@ -169,5 +169,26 @@ while ($row = $result->fetch_assoc()) {
             window.location.href = 'admin.php';
         });
      </script>
+
+     <script>
+        document.getElementById('btn_crear_evento').addEventListener('click', function(event) {
+            event.preventDefault();  // Evitar el envío del formulario de inmediato
+
+            Swal.fire({
+                title: '¿Estás seguro de que quieres crear un evento?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4281A4',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, crear',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, entonces enviamos el formulario
+                    document.getElementById('form_crear_evento').submit();
+                }
+            });
+        });
+     </script>
 </body>
 </html>

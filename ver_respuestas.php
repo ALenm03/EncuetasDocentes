@@ -88,7 +88,7 @@ while ($row = $result_preguntas_respuestas->fetch_assoc()) {
     <header class="p-3 fixed-top" style="background-color: #372549;">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div class="mb-2 mb-md-0">
-                <h1 class="h5 m-0" style="color:white;">Encuesta Respondida</h1>
+                <h1 class="h5 m-0" style="color:white;">Panel de Usuario</h1>
             </div>
             <div class="d-flex">
                 <i id="toggle-dark-mode" class="fas fa-moon"></i>
