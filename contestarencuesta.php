@@ -133,10 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/dist/css/adminlte.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/AdminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    <link rel="sttylesheet" href="assets/stylesContestarEncuesta.css">
+    <link rel="stylesheet" href="assets/stylesContestarEncuesta.css">
 </head>
 
-<body>
+<body id="body">
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -149,32 +149,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="card-body">
                         <form method="POST" action="">
                             <?php foreach ($preguntas as $index => $pregunta): ?>
-                                <div class="form-group">
-                                    <label><strong><?= $index + 1 ?>. <?= htmlspecialchars($pregunta['pregunta']) ?></strong></label>
+                                <div class="form-group" style="margin-bottom:30px">
+                                    <label class="label_pregunta" style="font-size: small; color: gray; margin-bottom: 1px;"><strong>Pregunta <?= $index + 1 ?>:</label> <br>
+                                    <label style="margin-bottom: 10px; font-size: larger; font-weight:600;"> <?= htmlspecialchars($pregunta['pregunta']) ?> </label>
                                     <?php if ($pregunta['tipo_respuesta'] === 'parrafo'): ?>
-                                        <textarea name="respuesta[<?= $pregunta['pregunta_num'] ?>]" class="form-control" rows="4" required></textarea>
+                                        <textarea name="respuesta[<?= $pregunta['pregunta_num'] ?>]" class="form-control" style="max-height: 100px; min-height:100px;" rows="4" required></textarea>
                                     <?php elseif ($pregunta['tipo_respuesta'] === 'opcion_multiple'): ?>
                                         <?php for ($i = 1; $i <= 4; $i++): ?>
                                             <?php if (!empty($pregunta["respuesta_$i"])): ?>
-                                                <div class="form-check">
+                                                <div class="form-check" style="margin-bottom: 10px;">
                                                     <input type="radio" name="respuesta[<?= $pregunta['pregunta_num'] ?>]" value="<?= htmlspecialchars($pregunta["respuesta_$i"]) ?>" class="form-check-input" required>
-                                                    <label class="form-check-label"><?= htmlspecialchars($pregunta["respuesta_$i"]) ?></label>
+                                                    <label class="form-check-label" style="font-weight:300;" ><?= htmlspecialchars($pregunta["respuesta_$i"]) ?></label>
                                                 </div>
                                             <?php endif; ?>
                                         <?php endfor; ?>
                                     <?php elseif ($pregunta['tipo_respuesta'] === 'checkbox'): ?>
                                         <?php for ($i = 1; $i <= 4; $i++): ?>
                                             <?php if (!empty($pregunta["respuesta_$i"])): ?>
-                                                <div class="form-check">
+                                                <div class="form-check" style="margin-bottom: 10px;">
                                                     <input type="checkbox" name="respuesta[<?= $pregunta['pregunta_num'] ?>][]" value="<?= htmlspecialchars($pregunta["respuesta_$i"]) ?>" class="form-check-input">
-                                                    <label class="form-check-label"><?= htmlspecialchars($pregunta["respuesta_$i"]) ?></label>
+                                                    <label class="form-check-label" style="font-weight:300;"><?= htmlspecialchars($pregunta["respuesta_$i"]) ?></label>
                                                 </div>
                                             <?php endif; ?>
                                         <?php endfor; ?>
                                     <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
-                            <button type="submit" class="btn btn-primary btn-block">Enviar Respuestas</button>
+                            <button type="submit" class="btn btn-block EnviarRespuesta">Enviar Respuestas</button>
                         </form>
                     </div>
                 </div>
@@ -221,6 +222,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 });
             });
+        });
+    </script>
+        <script>
+        // Selecciona el ícono y el cuerpo
+        const toggleDarkModeIcon = document.getElementById('toggle-dark-mode');
+        const bodyElement = document.getElementById('body');
+
+        // Función para aplicar el modo oscuro
+        function applyDarkMode(isDarkMode) {
+            if (isDarkMode) {
+                bodyElement.classList.add('dark-mode');
+            } else {
+                bodyElement.classList.remove('dark-mode');
+            }
+        }
+
+        // Leer el estado del modo oscuro desde LocalStorage al cargar la página
+        const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+        applyDarkMode(isDarkMode);
+
+        // Agregar evento al ícono
+        toggleDarkModeIcon.addEventListener('click', function () {
+            // Alternar el modo oscuro
+            const darkModeActive = bodyElement.classList.toggle('dark-mode');
+
+            // Guardar el estado en LocalStorage
+            localStorage.setItem('dark-mode', darkModeActive);
         });
     </script>
 
